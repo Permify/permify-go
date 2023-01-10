@@ -1,0 +1,1165 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Permify API",
+    "description": "Permify is an open-source authorization service for creating and maintaining fine-grained authorizations across your individual applications and services. Permify converts authorization data as relational tuples into a database you point at. We called that database a Write Database (WriteDB) and it behaves as a centralized data source for your authorization system. You can model of your authorization with Permify's DSL - Permify Schema - and perform access checks with a single API call anywhere on your stack. Access decisions made according to stored relational tuples.",
+    "version": "v0.2.0",
+    "contact": {
+      "name": "API Support",
+      "url": "https://github.com/Permify/permify/issues",
+      "email": "hello@permify.co"
+    },
+    "license": {
+      "name": "GNU Affero General Public License v3.0",
+      "url": "https://github.com/Permify/permify/blob/master/LICENSE"
+    }
+  },
+  "tags": [
+    {
+      "name": "Permission"
+    },
+    {
+      "name": "Schema"
+    },
+    {
+      "name": "Relationship"
+    },
+    {
+      "name": "Welcome"
+    }
+  ],
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "summary": "welcome to permify",
+        "operationId": "welcome.hello",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1welcomeResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "Welcome"
+        ]
+      }
+    },
+    "/v1/permissions/check": {
+      "post": {
+        "summary": "This method returns a decision about whether user can perform an action on a certain resource. For example, Can the user 1 push to repository 1?",
+        "operationId": "permissions.check",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1PermissionCheckResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1PermissionCheckRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Permission"
+        ]
+      }
+    },
+    "/v1/permissions/expand": {
+      "post": {
+        "summary": "expand relationships according to schema",
+        "operationId": "permissions.expand",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1PermissionExpandResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1PermissionExpandRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Permission"
+        ]
+      }
+    },
+    "/v1/permissions/lookup-entity": {
+      "post": {
+        "operationId": "permissions.lookupEntity",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1PermissionLookupEntityResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1PermissionLookupEntityRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Permission"
+        ]
+      }
+    },
+    "/v1/permissions/lookup-entity-stream": {
+      "post": {
+        "operationId": "permissions.lookupEntityStream",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "$ref": "#/definitions/v1PermissionLookupEntityStreamResponse"
+                },
+                "error": {
+                  "$ref": "#/definitions/rpcStatus"
+                }
+              },
+              "title": "Stream result of v1PermissionLookupEntityStreamResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1PermissionLookupEntityRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Permission"
+        ]
+      }
+    },
+    "/v1/permissions/lookup-schema": {
+      "post": {
+        "operationId": "permissions.lookupSchema",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1PermissionLookupSchemaResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1PermissionLookupSchemaRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Permission"
+        ]
+      }
+    },
+    "/v1/relationships/delete": {
+      "post": {
+        "summary": "delete relation tuple",
+        "operationId": "relationships.delete",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1RelationshipDeleteResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1RelationshipDeleteRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Relationship"
+        ]
+      }
+    },
+    "/v1/relationships/read": {
+      "post": {
+        "summary": "read relation tuple(s)",
+        "operationId": "relationships.read",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1RelationshipReadResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1RelationshipReadRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Relationship"
+        ]
+      }
+    },
+    "/v1/relationships/write": {
+      "post": {
+        "summary": "create new relation tuple",
+        "operationId": "relationships.write",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1RelationshipWriteResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1RelationshipWriteRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Relationship"
+        ]
+      }
+    },
+    "/v1/schemas/read": {
+      "post": {
+        "summary": "read your authorization model",
+        "operationId": "schemas.read",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SchemaReadResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1SchemaReadRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Schema"
+        ]
+      }
+    },
+    "/v1/schemas/write": {
+      "post": {
+        "summary": "write your authorization model",
+        "operationId": "schemas.write",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SchemaWriteResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1SchemaWriteRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Schema"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "EntityDefinitionRelationalReference": {
+      "type": "string",
+      "enum": [
+        "RELATIONAL_REFERENCE_UNSPECIFIED",
+        "RELATIONAL_REFERENCE_RELATION",
+        "RELATIONAL_REFERENCE_ACTION"
+      ],
+      "default": "RELATIONAL_REFERENCE_UNSPECIFIED",
+      "title": "RelationalReference"
+    },
+    "basev1Result": {
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/definitions/v1EntityAndRelation"
+        },
+        "exclusion": {
+          "type": "boolean"
+        },
+        "subjects": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Subject"
+          }
+        }
+      },
+      "title": "Result"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1ActionDefinition": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "child": {
+          "$ref": "#/definitions/v1Child"
+        }
+      },
+      "title": "ActionDefinition"
+    },
+    "v1Child": {
+      "type": "object",
+      "properties": {
+        "leaf": {
+          "$ref": "#/definitions/v1Leaf"
+        },
+        "rewrite": {
+          "$ref": "#/definitions/v1Rewrite"
+        }
+      },
+      "title": "Child"
+    },
+    "v1ComputedUserSet": {
+      "type": "object",
+      "properties": {
+        "relation": {
+          "type": "string"
+        }
+      },
+      "title": "ComputedUserSet"
+    },
+    "v1Entity": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "title": "Entity"
+    },
+    "v1EntityAndRelation": {
+      "type": "object",
+      "properties": {
+        "entity": {
+          "$ref": "#/definitions/v1Entity"
+        },
+        "relation": {
+          "type": "string"
+        }
+      }
+    },
+    "v1EntityDefinition": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "relations": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/v1RelationDefinition"
+          },
+          "title": "[\"relation_name\"] =\u003e RelationDefinition"
+        },
+        "actions": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/v1ActionDefinition"
+          },
+          "title": "[\"action_name\"] =\u003e ActionDefinition"
+        },
+        "references": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/EntityDefinitionRelationalReference"
+          },
+          "title": "[\"relation_name or action_name\"] =\u003e RelationalReference"
+        },
+        "option": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      },
+      "title": "EntityDefinition"
+    },
+    "v1EntityFilter": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "title": "EntityFilter is used to filter entities"
+    },
+    "v1Expand": {
+      "type": "object",
+      "properties": {
+        "expand": {
+          "$ref": "#/definitions/v1ExpandTreeNode"
+        },
+        "leaf": {
+          "$ref": "#/definitions/basev1Result"
+        }
+      },
+      "title": "Expand"
+    },
+    "v1ExpandTreeNode": {
+      "type": "object",
+      "properties": {
+        "operation": {
+          "$ref": "#/definitions/v1ExpandTreeNodeOperation"
+        },
+        "children": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Expand"
+          }
+        }
+      },
+      "title": "ExpandTreeNode"
+    },
+    "v1ExpandTreeNodeOperation": {
+      "type": "string",
+      "enum": [
+        "OPERATION_UNSPECIFIED",
+        "OPERATION_UNION",
+        "OPERATION_INTERSECTION"
+      ],
+      "default": "OPERATION_UNSPECIFIED",
+      "title": "Operation"
+    },
+    "v1IndexedSchema": {
+      "type": "object",
+      "properties": {
+        "entityDefinitions": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/v1EntityDefinition"
+          }
+        },
+        "relationDefinitions": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/v1RelationDefinition"
+          },
+          "title": "[\"entity_name#relation_name\"] =\u003e RelationDefinition"
+        },
+        "actionDefinitions": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/v1ActionDefinition"
+          },
+          "title": "[\"entity_name#action_name\"] =\u003e ActionDefinition"
+        }
+      },
+      "title": "IndexedSchema"
+    },
+    "v1Leaf": {
+      "type": "object",
+      "properties": {
+        "exclusion": {
+          "type": "boolean"
+        },
+        "computedUserSet": {
+          "$ref": "#/definitions/v1ComputedUserSet"
+        },
+        "tupleToUserSet": {
+          "$ref": "#/definitions/v1TupleToUserSet"
+        }
+      },
+      "title": "Leaf"
+    },
+    "v1PermissionCheckRequest": {
+      "type": "object",
+      "properties": {
+        "metadata": {
+          "$ref": "#/definitions/v1PermissionCheckRequestMetadata"
+        },
+        "entity": {
+          "$ref": "#/definitions/v1Entity"
+        },
+        "permission": {
+          "type": "string",
+          "title": "its can be action or relation"
+        },
+        "subject": {
+          "$ref": "#/definitions/v1Subject"
+        }
+      },
+      "title": "CheckRequest"
+    },
+    "v1PermissionCheckRequestMetadata": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "type": "string"
+        },
+        "snap_token": {
+          "type": "string"
+        },
+        "exclusion": {
+          "type": "boolean"
+        },
+        "depth": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "PermissionCheckRequestMetadata"
+    },
+    "v1PermissionCheckResponse": {
+      "type": "object",
+      "properties": {
+        "can": {
+          "$ref": "#/definitions/v1PermissionCheckResponseResult"
+        },
+        "metadata": {
+          "$ref": "#/definitions/v1PermissionCheckResponseMetadata"
+        }
+      },
+      "title": "PermissionCheckResponse"
+    },
+    "v1PermissionCheckResponseMetadata": {
+      "type": "object",
+      "properties": {
+        "check_count": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "CheckResponseMetadata"
+    },
+    "v1PermissionCheckResponseResult": {
+      "type": "string",
+      "enum": [
+        "RESULT_UNKNOWN",
+        "RESULT_ALLOWED",
+        "RESULT_DENIED"
+      ],
+      "default": "RESULT_UNKNOWN",
+      "title": "Result"
+    },
+    "v1PermissionExpandRequest": {
+      "type": "object",
+      "properties": {
+        "metadata": {
+          "$ref": "#/definitions/v1PermissionExpandRequestMetadata"
+        },
+        "entity": {
+          "$ref": "#/definitions/v1Entity"
+        },
+        "permission": {
+          "type": "string"
+        }
+      },
+      "title": "PermissionExpandRequest"
+    },
+    "v1PermissionExpandRequestMetadata": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "type": "string"
+        },
+        "snap_token": {
+          "type": "string"
+        }
+      },
+      "title": "ExpandRequestMetadata"
+    },
+    "v1PermissionExpandResponse": {
+      "type": "object",
+      "properties": {
+        "tree": {
+          "$ref": "#/definitions/v1Expand"
+        }
+      },
+      "title": "PermissionExpandResponse"
+    },
+    "v1PermissionLookupEntityRequest": {
+      "type": "object",
+      "properties": {
+        "metadata": {
+          "$ref": "#/definitions/v1PermissionLookupEntityRequestMetadata"
+        },
+        "entity_type": {
+          "type": "string"
+        },
+        "permission": {
+          "type": "string"
+        },
+        "subject": {
+          "$ref": "#/definitions/v1Subject"
+        }
+      },
+      "title": "PermissionLookupEntityRequest"
+    },
+    "v1PermissionLookupEntityRequestMetadata": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "type": "string"
+        },
+        "snap_token": {
+          "type": "string"
+        },
+        "depth": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "LookupEntityRequestMetadata"
+    },
+    "v1PermissionLookupEntityResponse": {
+      "type": "object",
+      "properties": {
+        "entity_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "title": "PermissionLookupEntityResponse"
+    },
+    "v1PermissionLookupEntityStreamResponse": {
+      "type": "object",
+      "properties": {
+        "entity_id": {
+          "type": "string"
+        }
+      },
+      "title": "PermissionLookupEntityStreamResponse"
+    },
+    "v1PermissionLookupSchemaRequest": {
+      "type": "object",
+      "properties": {
+        "metadata": {
+          "$ref": "#/definitions/v1PermissionLookupSchemaRequestMetadata"
+        },
+        "entity_type": {
+          "type": "string"
+        },
+        "relation_names": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "title": "PermissionLookupSchemaRequest"
+    },
+    "v1PermissionLookupSchemaRequestMetadata": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "type": "string"
+        }
+      },
+      "title": "LookupSchemaRequestMetadata"
+    },
+    "v1PermissionLookupSchemaResponse": {
+      "type": "object",
+      "properties": {
+        "action_names": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "title": "PermissionLookupSchemaResponse"
+    },
+    "v1RelationDefinition": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "entityReference": {
+          "$ref": "#/definitions/v1RelationReference"
+        },
+        "relationReferences": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1RelationReference"
+          },
+          "title": "relation reference includes entity reference"
+        },
+        "option": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      },
+      "title": "RelationDefinition"
+    },
+    "v1RelationReference": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "title": "RelationReference"
+    },
+    "v1RelationshipDeleteRequest": {
+      "type": "object",
+      "properties": {
+        "filter": {
+          "$ref": "#/definitions/v1TupleFilter"
+        }
+      },
+      "title": "RelationshipDeleteRequest"
+    },
+    "v1RelationshipDeleteResponse": {
+      "type": "object",
+      "properties": {
+        "snap_token": {
+          "type": "string"
+        }
+      },
+      "title": "RelationshipDeleteResponse"
+    },
+    "v1RelationshipReadRequest": {
+      "type": "object",
+      "properties": {
+        "metadata": {
+          "$ref": "#/definitions/v1RelationshipReadRequestMetadata"
+        },
+        "filter": {
+          "$ref": "#/definitions/v1TupleFilter"
+        }
+      },
+      "title": "RelationshipReadRequest"
+    },
+    "v1RelationshipReadRequestMetadata": {
+      "type": "object",
+      "properties": {
+        "snap_token": {
+          "type": "string"
+        }
+      },
+      "title": "RelationshipWriteRequestMetadata"
+    },
+    "v1RelationshipReadResponse": {
+      "type": "object",
+      "properties": {
+        "tuples": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Tuple"
+          }
+        }
+      },
+      "title": "RelationshipReadResponse"
+    },
+    "v1RelationshipWriteRequest": {
+      "type": "object",
+      "properties": {
+        "metadata": {
+          "$ref": "#/definitions/v1RelationshipWriteRequestMetadata"
+        },
+        "tuples": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Tuple"
+          }
+        }
+      },
+      "title": "RelationshipWriteRequest"
+    },
+    "v1RelationshipWriteRequestMetadata": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "type": "string"
+        }
+      },
+      "title": "RelationshipWriteRequestMetadata"
+    },
+    "v1RelationshipWriteResponse": {
+      "type": "object",
+      "properties": {
+        "snap_token": {
+          "type": "string"
+        }
+      },
+      "title": "RelationshipWriteResponse"
+    },
+    "v1Rewrite": {
+      "type": "object",
+      "properties": {
+        "rewriteOperation": {
+          "$ref": "#/definitions/v1RewriteOperation"
+        },
+        "children": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Child"
+          }
+        }
+      },
+      "title": "Rewrite"
+    },
+    "v1RewriteOperation": {
+      "type": "string",
+      "enum": [
+        "OPERATION_UNSPECIFIED",
+        "OPERATION_UNION",
+        "OPERATION_INTERSECTION"
+      ],
+      "default": "OPERATION_UNSPECIFIED",
+      "title": "Operation"
+    },
+    "v1SchemaReadRequest": {
+      "type": "object",
+      "properties": {
+        "metadata": {
+          "$ref": "#/definitions/v1SchemaReadRequestMetadata"
+        }
+      },
+      "title": "SchemaReadRequest"
+    },
+    "v1SchemaReadRequestMetadata": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "type": "string"
+        }
+      },
+      "title": "SchemaReadRequestMetadata"
+    },
+    "v1SchemaReadResponse": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "$ref": "#/definitions/v1IndexedSchema"
+        }
+      },
+      "title": "SchemaReadRequest"
+    },
+    "v1SchemaWriteRequest": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string"
+        }
+      },
+      "title": "SchemaWriteRequest"
+    },
+    "v1SchemaWriteResponse": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "type": "string"
+        }
+      },
+      "title": "SchemaWriteResponse"
+    },
+    "v1Subject": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "relation": {
+          "type": "string"
+        }
+      },
+      "title": "Subject"
+    },
+    "v1SubjectFilter": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "relation": {
+          "type": "string"
+        }
+      },
+      "title": "SubjectFilter is used to filter subjects"
+    },
+    "v1Tuple": {
+      "type": "object",
+      "properties": {
+        "entity": {
+          "$ref": "#/definitions/v1Entity"
+        },
+        "relation": {
+          "type": "string"
+        },
+        "subject": {
+          "$ref": "#/definitions/v1Subject"
+        }
+      },
+      "title": "Tuple"
+    },
+    "v1TupleFilter": {
+      "type": "object",
+      "properties": {
+        "entity": {
+          "$ref": "#/definitions/v1EntityFilter"
+        },
+        "relation": {
+          "type": "string"
+        },
+        "subject": {
+          "$ref": "#/definitions/v1SubjectFilter"
+        }
+      },
+      "title": "TupleFilter is used to filter tuples"
+    },
+    "v1TupleSet": {
+      "type": "object",
+      "properties": {
+        "relation": {
+          "type": "string"
+        }
+      },
+      "title": "TupleSet"
+    },
+    "v1TupleToUserSet": {
+      "type": "object",
+      "properties": {
+        "tupleSet": {
+          "$ref": "#/definitions/v1TupleSet"
+        },
+        "computed": {
+          "$ref": "#/definitions/v1ComputedUserSet"
+        }
+      },
+      "title": "TupleToUserSet"
+    },
+    "v1welcomeResponse": {
+      "type": "object",
+      "properties": {
+        "permify": {
+          "type": "string"
+        },
+        "sources": {
+          "$ref": "#/definitions/welcomeResponseSources"
+        },
+        "socials": {
+          "$ref": "#/definitions/welcomeResponseSocials"
+        }
+      },
+      "title": "WelcomeResponse"
+    },
+    "welcomeResponseSocials": {
+      "type": "object",
+      "properties": {
+        "discord": {
+          "type": "string"
+        },
+        "twitter": {
+          "type": "string"
+        },
+        "linkedin": {
+          "type": "string"
+        }
+      }
+    },
+    "welcomeResponseSources": {
+      "type": "object",
+      "properties": {
+        "docs": {
+          "type": "string"
+        },
+        "gitHub": {
+          "type": "string"
+        },
+        "blog": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "ApiKeyAuth": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  }
+}
