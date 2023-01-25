@@ -41,6 +41,20 @@ func (m *PermissionCheckRequest) Validate() error {
 		return nil
 	}
 
+	if len(m.GetTenantId()) > 64 {
+		return PermissionCheckRequestValidationError{
+			field:  "TenantId",
+			reason: "value length must be at most 64 bytes",
+		}
+	}
+
+	if !_PermissionCheckRequest_TenantId_Pattern.MatchString(m.GetTenantId()) {
+		return PermissionCheckRequestValidationError{
+			field:  "TenantId",
+			reason: "value does not match regex pattern \"^[a-zA-Z0-9]+$\"",
+		}
+	}
+
 	if m.GetMetadata() == nil {
 		return PermissionCheckRequestValidationError{
 			field:  "Metadata",
@@ -164,6 +178,8 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = PermissionCheckRequestValidationError{}
+
+var _PermissionCheckRequest_TenantId_Pattern = regexp.MustCompile("^[a-zA-Z0-9]+$")
 
 var _PermissionCheckRequest_Permission_Pattern = regexp.MustCompile("^([a-z][a-z0-9_]{1,62}[a-z0-9])$")
 
@@ -405,6 +421,20 @@ func (m *PermissionExpandRequest) Validate() error {
 		return nil
 	}
 
+	if len(m.GetTenantId()) > 64 {
+		return PermissionExpandRequestValidationError{
+			field:  "TenantId",
+			reason: "value length must be at most 64 bytes",
+		}
+	}
+
+	if !_PermissionExpandRequest_TenantId_Pattern.MatchString(m.GetTenantId()) {
+		return PermissionExpandRequestValidationError{
+			field:  "TenantId",
+			reason: "value does not match regex pattern \"^[a-zA-Z0-9]+$\"",
+		}
+	}
+
 	if m.GetMetadata() == nil {
 		return PermissionExpandRequestValidationError{
 			field:  "Metadata",
@@ -515,6 +545,8 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = PermissionExpandRequestValidationError{}
+
+var _PermissionExpandRequest_TenantId_Pattern = regexp.MustCompile("^[a-zA-Z0-9]+$")
 
 var _PermissionExpandRequest_Permission_Pattern = regexp.MustCompile("^([a-z][a-z0-9_]{1,62}[a-z0-9])$")
 
@@ -675,6 +707,20 @@ func (m *PermissionLookupSchemaRequest) Validate() error {
 		return nil
 	}
 
+	if len(m.GetTenantId()) > 64 {
+		return PermissionLookupSchemaRequestValidationError{
+			field:  "TenantId",
+			reason: "value length must be at most 64 bytes",
+		}
+	}
+
+	if !_PermissionLookupSchemaRequest_TenantId_Pattern.MatchString(m.GetTenantId()) {
+		return PermissionLookupSchemaRequestValidationError{
+			field:  "TenantId",
+			reason: "value does not match regex pattern \"^[a-zA-Z0-9]+$\"",
+		}
+	}
+
 	if m.GetMetadata() == nil {
 		return PermissionLookupSchemaRequestValidationError{
 			field:  "Metadata",
@@ -765,6 +811,8 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = PermissionLookupSchemaRequestValidationError{}
+
+var _PermissionLookupSchemaRequest_TenantId_Pattern = regexp.MustCompile("^[a-zA-Z0-9]+$")
 
 var _PermissionLookupSchemaRequest_EntityType_Pattern = regexp.MustCompile("^([a-z][a-z0-9_]{1,62}[a-z0-9])$")
 
@@ -914,6 +962,20 @@ func (m *PermissionLookupEntityRequest) Validate() error {
 		return nil
 	}
 
+	if len(m.GetTenantId()) > 64 {
+		return PermissionLookupEntityRequestValidationError{
+			field:  "TenantId",
+			reason: "value length must be at most 64 bytes",
+		}
+	}
+
+	if !_PermissionLookupEntityRequest_TenantId_Pattern.MatchString(m.GetTenantId()) {
+		return PermissionLookupEntityRequestValidationError{
+			field:  "TenantId",
+			reason: "value does not match regex pattern \"^[a-zA-Z0-9]+$\"",
+		}
+	}
+
 	if m.GetMetadata() == nil {
 		return PermissionLookupEntityRequestValidationError{
 			field:  "Metadata",
@@ -1035,6 +1097,8 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = PermissionLookupEntityRequestValidationError{}
+
+var _PermissionLookupEntityRequest_TenantId_Pattern = regexp.MustCompile("^[a-zA-Z0-9]+$")
 
 var _PermissionLookupEntityRequest_EntityType_Pattern = regexp.MustCompile("^([a-z][a-z0-9_]{1,62}[a-z0-9])$")
 
@@ -1265,6 +1329,20 @@ func (m *SchemaWriteRequest) Validate() error {
 		return nil
 	}
 
+	if len(m.GetTenantId()) > 64 {
+		return SchemaWriteRequestValidationError{
+			field:  "TenantId",
+			reason: "value length must be at most 64 bytes",
+		}
+	}
+
+	if !_SchemaWriteRequest_TenantId_Pattern.MatchString(m.GetTenantId()) {
+		return SchemaWriteRequestValidationError{
+			field:  "TenantId",
+			reason: "value does not match regex pattern \"^[a-zA-Z0-9]+$\"",
+		}
+	}
+
 	// no validation rules for Schema
 
 	return nil
@@ -1325,6 +1403,8 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = SchemaWriteRequestValidationError{}
+
+var _SchemaWriteRequest_TenantId_Pattern = regexp.MustCompile("^[a-zA-Z0-9]+$")
 
 // Validate checks the field values on SchemaWriteResponse with the rules
 // defined in the proto definition for this message. If any rules are
@@ -1403,6 +1483,20 @@ func (m *SchemaReadRequest) Validate() error {
 		return nil
 	}
 
+	if len(m.GetTenantId()) > 64 {
+		return SchemaReadRequestValidationError{
+			field:  "TenantId",
+			reason: "value length must be at most 64 bytes",
+		}
+	}
+
+	if !_SchemaReadRequest_TenantId_Pattern.MatchString(m.GetTenantId()) {
+		return SchemaReadRequestValidationError{
+			field:  "TenantId",
+			reason: "value does not match regex pattern \"^[a-zA-Z0-9]+$\"",
+		}
+	}
+
 	if m.GetMetadata() == nil {
 		return SchemaReadRequestValidationError{
 			field:  "Metadata",
@@ -1478,6 +1572,8 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = SchemaReadRequestValidationError{}
+
+var _SchemaReadRequest_TenantId_Pattern = regexp.MustCompile("^[a-zA-Z0-9]+$")
 
 // Validate checks the field values on SchemaReadRequestMetadata with the rules
 // defined in the proto definition for this message. If any rules are
@@ -1633,6 +1729,20 @@ func (m *RelationshipWriteRequest) Validate() error {
 		return nil
 	}
 
+	if len(m.GetTenantId()) > 64 {
+		return RelationshipWriteRequestValidationError{
+			field:  "TenantId",
+			reason: "value length must be at most 64 bytes",
+		}
+	}
+
+	if !_RelationshipWriteRequest_TenantId_Pattern.MatchString(m.GetTenantId()) {
+		return RelationshipWriteRequestValidationError{
+			field:  "TenantId",
+			reason: "value does not match regex pattern \"^[a-zA-Z0-9]+$\"",
+		}
+	}
+
 	if m.GetMetadata() == nil {
 		return RelationshipWriteRequestValidationError{
 			field:  "Metadata",
@@ -1737,6 +1847,8 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = RelationshipWriteRequestValidationError{}
+
+var _RelationshipWriteRequest_TenantId_Pattern = regexp.MustCompile("^[a-zA-Z0-9]+$")
 
 // Validate checks the field values on RelationshipWriteRequestMetadata with
 // the rules defined in the proto definition for this message. If any rules
@@ -1885,6 +1997,20 @@ func (m *RelationshipReadRequest) Validate() error {
 		return nil
 	}
 
+	if len(m.GetTenantId()) > 64 {
+		return RelationshipReadRequestValidationError{
+			field:  "TenantId",
+			reason: "value length must be at most 64 bytes",
+		}
+	}
+
+	if !_RelationshipReadRequest_TenantId_Pattern.MatchString(m.GetTenantId()) {
+		return RelationshipReadRequestValidationError{
+			field:  "TenantId",
+			reason: "value does not match regex pattern \"^[a-zA-Z0-9]+$\"",
+		}
+	}
+
 	if m.GetMetadata() == nil {
 		return RelationshipReadRequestValidationError{
 			field:  "Metadata",
@@ -1910,6 +2036,21 @@ func (m *RelationshipReadRequest) Validate() error {
 				cause:  err,
 			}
 		}
+	}
+
+	if m.GetPageSize() != 0 {
+
+		if val := m.GetPageSize(); val < 1 || val > 100 {
+			return RelationshipReadRequestValidationError{
+				field:  "PageSize",
+				reason: "value must be inside range [1, 100]",
+			}
+		}
+
+	}
+
+	if m.GetContinuousToken() != "" {
+
 	}
 
 	return nil
@@ -1970,6 +2111,8 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = RelationshipReadRequestValidationError{}
+
+var _RelationshipReadRequest_TenantId_Pattern = regexp.MustCompile("^[a-zA-Z0-9]+$")
 
 // Validate checks the field values on RelationshipReadRequestMetadata with the
 // rules defined in the proto definition for this message. If any rules are
@@ -2064,6 +2207,8 @@ func (m *RelationshipReadResponse) Validate() error {
 
 	}
 
+	// no validation rules for ContinuousToken
+
 	return nil
 }
 
@@ -2129,6 +2274,20 @@ var _ interface {
 func (m *RelationshipDeleteRequest) Validate() error {
 	if m == nil {
 		return nil
+	}
+
+	if len(m.GetTenantId()) > 64 {
+		return RelationshipDeleteRequestValidationError{
+			field:  "TenantId",
+			reason: "value length must be at most 64 bytes",
+		}
+	}
+
+	if !_RelationshipDeleteRequest_TenantId_Pattern.MatchString(m.GetTenantId()) {
+		return RelationshipDeleteRequestValidationError{
+			field:  "TenantId",
+			reason: "value does not match regex pattern \"^[a-zA-Z0-9]+$\"",
+		}
 	}
 
 	if v, ok := interface{}(m.GetFilter()).(interface{ Validate() error }); ok {
@@ -2200,6 +2359,8 @@ var _ interface {
 	ErrorName() string
 } = RelationshipDeleteRequestValidationError{}
 
+var _RelationshipDeleteRequest_TenantId_Pattern = regexp.MustCompile("^[a-zA-Z0-9]+$")
+
 // Validate checks the field values on RelationshipDeleteResponse with the
 // rules defined in the proto definition for this message. If any rules are
 // violated, an error is returned.
@@ -2268,6 +2429,474 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = RelationshipDeleteResponseValidationError{}
+
+// Validate checks the field values on TenantCreateRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *TenantCreateRequest) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if len(m.GetId()) > 64 {
+		return TenantCreateRequestValidationError{
+			field:  "Id",
+			reason: "value length must be at most 64 bytes",
+		}
+	}
+
+	if len(m.GetName()) > 64 {
+		return TenantCreateRequestValidationError{
+			field:  "Name",
+			reason: "value length must be at most 64 bytes",
+		}
+	}
+
+	return nil
+}
+
+// TenantCreateRequestValidationError is the validation error returned by
+// TenantCreateRequest.Validate if the designated constraints aren't met.
+type TenantCreateRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e TenantCreateRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e TenantCreateRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e TenantCreateRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e TenantCreateRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e TenantCreateRequestValidationError) ErrorName() string {
+	return "TenantCreateRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e TenantCreateRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sTenantCreateRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = TenantCreateRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = TenantCreateRequestValidationError{}
+
+// Validate checks the field values on TenantCreateResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *TenantCreateResponse) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if v, ok := interface{}(m.GetTenant()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return TenantCreateResponseValidationError{
+				field:  "Tenant",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	return nil
+}
+
+// TenantCreateResponseValidationError is the validation error returned by
+// TenantCreateResponse.Validate if the designated constraints aren't met.
+type TenantCreateResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e TenantCreateResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e TenantCreateResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e TenantCreateResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e TenantCreateResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e TenantCreateResponseValidationError) ErrorName() string {
+	return "TenantCreateResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e TenantCreateResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sTenantCreateResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = TenantCreateResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = TenantCreateResponseValidationError{}
+
+// Validate checks the field values on TenantDeleteRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *TenantDeleteRequest) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	return nil
+}
+
+// TenantDeleteRequestValidationError is the validation error returned by
+// TenantDeleteRequest.Validate if the designated constraints aren't met.
+type TenantDeleteRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e TenantDeleteRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e TenantDeleteRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e TenantDeleteRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e TenantDeleteRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e TenantDeleteRequestValidationError) ErrorName() string {
+	return "TenantDeleteRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e TenantDeleteRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sTenantDeleteRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = TenantDeleteRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = TenantDeleteRequestValidationError{}
+
+// Validate checks the field values on TenantDeleteResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *TenantDeleteResponse) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if v, ok := interface{}(m.GetTenant()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return TenantDeleteResponseValidationError{
+				field:  "Tenant",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	return nil
+}
+
+// TenantDeleteResponseValidationError is the validation error returned by
+// TenantDeleteResponse.Validate if the designated constraints aren't met.
+type TenantDeleteResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e TenantDeleteResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e TenantDeleteResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e TenantDeleteResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e TenantDeleteResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e TenantDeleteResponseValidationError) ErrorName() string {
+	return "TenantDeleteResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e TenantDeleteResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sTenantDeleteResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = TenantDeleteResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = TenantDeleteResponseValidationError{}
+
+// Validate checks the field values on TenantListRequest with the rules defined
+// in the proto definition for this message. If any rules are violated, an
+// error is returned.
+func (m *TenantListRequest) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if m.GetPageSize() != 0 {
+
+		if val := m.GetPageSize(); val < 1 || val > 100 {
+			return TenantListRequestValidationError{
+				field:  "PageSize",
+				reason: "value must be inside range [1, 100]",
+			}
+		}
+
+	}
+
+	if m.GetContinuousToken() != "" {
+
+	}
+
+	return nil
+}
+
+// TenantListRequestValidationError is the validation error returned by
+// TenantListRequest.Validate if the designated constraints aren't met.
+type TenantListRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e TenantListRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e TenantListRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e TenantListRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e TenantListRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e TenantListRequestValidationError) ErrorName() string {
+	return "TenantListRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e TenantListRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sTenantListRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = TenantListRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = TenantListRequestValidationError{}
+
+// Validate checks the field values on TenantListResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *TenantListResponse) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	for idx, item := range m.GetTenants() {
+		_, _ = idx, item
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return TenantListResponseValidationError{
+					field:  fmt.Sprintf("Tenants[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	// no validation rules for ContinuousToken
+
+	return nil
+}
+
+// TenantListResponseValidationError is the validation error returned by
+// TenantListResponse.Validate if the designated constraints aren't met.
+type TenantListResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e TenantListResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e TenantListResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e TenantListResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e TenantListResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e TenantListResponseValidationError) ErrorName() string {
+	return "TenantListResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e TenantListResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sTenantListResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = TenantListResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = TenantListResponseValidationError{}
 
 // Validate checks the field values on WelcomeResponse with the rules defined
 // in the proto definition for this message. If any rules are violated, an

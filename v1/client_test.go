@@ -39,6 +39,7 @@ var _ = Describe("Client Test", func() {
 		It("document schema", func() {
 
 			wr, err := client.Schema.Write(context.Background(), &v1.SchemaWriteRequest{
+				TenantId: "t1",
 				Schema: `
             entity user {}
             
@@ -52,6 +53,7 @@ var _ = Describe("Client Test", func() {
 			Expect(err).ShouldNot(HaveOccurred())
 
 			cr, err := client.Permission.Check(context.Background(), &v1.PermissionCheckRequest{
+				TenantId: "t1",
 				Metadata: &v1.PermissionCheckRequestMetadata{
 					SnapToken:     "",
 					SchemaVersion: wr.SchemaVersion,
@@ -75,6 +77,7 @@ var _ = Describe("Client Test", func() {
 		It("Lookup entity request", func() {
 
 			wr, err := client.Schema.Write(context.Background(), &v1.SchemaWriteRequest{
+				TenantId: "t1",
 				Schema: `
 				entity user {}
             
@@ -86,6 +89,7 @@ var _ = Describe("Client Test", func() {
 			})
 
 			rr, err := client.Relationship.Write(context.Background(), &v1.RelationshipWriteRequest{
+				TenantId: "t1",
 				Metadata: &v1.RelationshipWriteRequestMetadata{
 					SchemaVersion: wr.SchemaVersion,
 				},
@@ -129,6 +133,7 @@ var _ = Describe("Client Test", func() {
 			Expect(err).ShouldNot(HaveOccurred())
 
 			cr, err := client.Permission.LookupEntityStream(context.Background(), &v1.PermissionLookupEntityRequest{
+				TenantId: "t1",
 				Metadata: &v1.PermissionLookupEntityRequestMetadata{
 					SnapToken:     rr.SnapToken,
 					SchemaVersion: wr.SchemaVersion,

@@ -55,14 +55,14 @@ func (m *PermissionCheckRequest) MarshalToSizedBufferVT(dAtA []byte) (int, error
 		i -= size
 		i = encodeVarint(dAtA, i, uint64(size))
 		i--
-		dAtA[i] = 0x22
+		dAtA[i] = 0x2a
 	}
 	if len(m.Permission) > 0 {
 		i -= len(m.Permission)
 		copy(dAtA[i:], m.Permission)
 		i = encodeVarint(dAtA, i, uint64(len(m.Permission)))
 		i--
-		dAtA[i] = 0x1a
+		dAtA[i] = 0x22
 	}
 	if m.Entity != nil {
 		size, err := m.Entity.MarshalToSizedBufferVT(dAtA[:i])
@@ -72,7 +72,7 @@ func (m *PermissionCheckRequest) MarshalToSizedBufferVT(dAtA []byte) (int, error
 		i -= size
 		i = encodeVarint(dAtA, i, uint64(size))
 		i--
-		dAtA[i] = 0x12
+		dAtA[i] = 0x1a
 	}
 	if m.Metadata != nil {
 		size, err := m.Metadata.MarshalToSizedBufferVT(dAtA[:i])
@@ -81,6 +81,13 @@ func (m *PermissionCheckRequest) MarshalToSizedBufferVT(dAtA []byte) (int, error
 		}
 		i -= size
 		i = encodeVarint(dAtA, i, uint64(size))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.TenantId) > 0 {
+		i -= len(m.TenantId)
+		copy(dAtA[i:], m.TenantId)
+		i = encodeVarint(dAtA, i, uint64(len(m.TenantId)))
 		i--
 		dAtA[i] = 0xa
 	}
@@ -270,7 +277,7 @@ func (m *PermissionExpandRequest) MarshalToSizedBufferVT(dAtA []byte) (int, erro
 		copy(dAtA[i:], m.Permission)
 		i = encodeVarint(dAtA, i, uint64(len(m.Permission)))
 		i--
-		dAtA[i] = 0x1a
+		dAtA[i] = 0x22
 	}
 	if m.Entity != nil {
 		size, err := m.Entity.MarshalToSizedBufferVT(dAtA[:i])
@@ -280,7 +287,7 @@ func (m *PermissionExpandRequest) MarshalToSizedBufferVT(dAtA []byte) (int, erro
 		i -= size
 		i = encodeVarint(dAtA, i, uint64(size))
 		i--
-		dAtA[i] = 0x12
+		dAtA[i] = 0x1a
 	}
 	if m.Metadata != nil {
 		size, err := m.Metadata.MarshalToSizedBufferVT(dAtA[:i])
@@ -289,6 +296,13 @@ func (m *PermissionExpandRequest) MarshalToSizedBufferVT(dAtA []byte) (int, erro
 		}
 		i -= size
 		i = encodeVarint(dAtA, i, uint64(size))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.TenantId) > 0 {
+		i -= len(m.TenantId)
+		copy(dAtA[i:], m.TenantId)
+		i = encodeVarint(dAtA, i, uint64(len(m.TenantId)))
 		i--
 		dAtA[i] = 0xa
 	}
@@ -421,7 +435,7 @@ func (m *PermissionLookupSchemaRequest) MarshalToSizedBufferVT(dAtA []byte) (int
 			copy(dAtA[i:], m.RelationNames[iNdEx])
 			i = encodeVarint(dAtA, i, uint64(len(m.RelationNames[iNdEx])))
 			i--
-			dAtA[i] = 0x1a
+			dAtA[i] = 0x22
 		}
 	}
 	if len(m.EntityType) > 0 {
@@ -429,7 +443,7 @@ func (m *PermissionLookupSchemaRequest) MarshalToSizedBufferVT(dAtA []byte) (int
 		copy(dAtA[i:], m.EntityType)
 		i = encodeVarint(dAtA, i, uint64(len(m.EntityType)))
 		i--
-		dAtA[i] = 0x12
+		dAtA[i] = 0x1a
 	}
 	if m.Metadata != nil {
 		size, err := m.Metadata.MarshalToSizedBufferVT(dAtA[:i])
@@ -438,6 +452,13 @@ func (m *PermissionLookupSchemaRequest) MarshalToSizedBufferVT(dAtA []byte) (int
 		}
 		i -= size
 		i = encodeVarint(dAtA, i, uint64(size))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.TenantId) > 0 {
+		i -= len(m.TenantId)
+		copy(dAtA[i:], m.TenantId)
+		i = encodeVarint(dAtA, i, uint64(len(m.TenantId)))
 		i--
 		dAtA[i] = 0xa
 	}
@@ -564,21 +585,21 @@ func (m *PermissionLookupEntityRequest) MarshalToSizedBufferVT(dAtA []byte) (int
 		i -= size
 		i = encodeVarint(dAtA, i, uint64(size))
 		i--
-		dAtA[i] = 0x22
+		dAtA[i] = 0x2a
 	}
 	if len(m.Permission) > 0 {
 		i -= len(m.Permission)
 		copy(dAtA[i:], m.Permission)
 		i = encodeVarint(dAtA, i, uint64(len(m.Permission)))
 		i--
-		dAtA[i] = 0x1a
+		dAtA[i] = 0x22
 	}
 	if len(m.EntityType) > 0 {
 		i -= len(m.EntityType)
 		copy(dAtA[i:], m.EntityType)
 		i = encodeVarint(dAtA, i, uint64(len(m.EntityType)))
 		i--
-		dAtA[i] = 0x12
+		dAtA[i] = 0x1a
 	}
 	if m.Metadata != nil {
 		size, err := m.Metadata.MarshalToSizedBufferVT(dAtA[:i])
@@ -587,6 +608,13 @@ func (m *PermissionLookupEntityRequest) MarshalToSizedBufferVT(dAtA []byte) (int
 		}
 		i -= size
 		i = encodeVarint(dAtA, i, uint64(size))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.TenantId) > 0 {
+		i -= len(m.TenantId)
+		copy(dAtA[i:], m.TenantId)
+		i = encodeVarint(dAtA, i, uint64(len(m.TenantId)))
 		i--
 		dAtA[i] = 0xa
 	}
@@ -762,6 +790,13 @@ func (m *SchemaWriteRequest) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 		copy(dAtA[i:], m.Schema)
 		i = encodeVarint(dAtA, i, uint64(len(m.Schema)))
 		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.TenantId) > 0 {
+		i -= len(m.TenantId)
+		copy(dAtA[i:], m.TenantId)
+		i = encodeVarint(dAtA, i, uint64(len(m.TenantId)))
+		i--
 		dAtA[i] = 0xa
 	}
 	return len(dAtA) - i, nil
@@ -844,6 +879,13 @@ func (m *SchemaReadRequest) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 		}
 		i -= size
 		i = encodeVarint(dAtA, i, uint64(size))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.TenantId) > 0 {
+		i -= len(m.TenantId)
+		copy(dAtA[i:], m.TenantId)
+		i = encodeVarint(dAtA, i, uint64(len(m.TenantId)))
 		i--
 		dAtA[i] = 0xa
 	}
@@ -972,7 +1014,7 @@ func (m *RelationshipWriteRequest) MarshalToSizedBufferVT(dAtA []byte) (int, err
 			i -= size
 			i = encodeVarint(dAtA, i, uint64(size))
 			i--
-			dAtA[i] = 0x12
+			dAtA[i] = 0x1a
 		}
 	}
 	if m.Metadata != nil {
@@ -982,6 +1024,13 @@ func (m *RelationshipWriteRequest) MarshalToSizedBufferVT(dAtA []byte) (int, err
 		}
 		i -= size
 		i = encodeVarint(dAtA, i, uint64(size))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.TenantId) > 0 {
+		i -= len(m.TenantId)
+		copy(dAtA[i:], m.TenantId)
+		i = encodeVarint(dAtA, i, uint64(len(m.TenantId)))
 		i--
 		dAtA[i] = 0xa
 	}
@@ -1098,6 +1147,18 @@ func (m *RelationshipReadRequest) MarshalToSizedBufferVT(dAtA []byte) (int, erro
 		i -= len(m.unknownFields)
 		copy(dAtA[i:], m.unknownFields)
 	}
+	if len(m.ContinuousToken) > 0 {
+		i -= len(m.ContinuousToken)
+		copy(dAtA[i:], m.ContinuousToken)
+		i = encodeVarint(dAtA, i, uint64(len(m.ContinuousToken)))
+		i--
+		dAtA[i] = 0x2a
+	}
+	if m.PageSize != 0 {
+		i = encodeVarint(dAtA, i, uint64(m.PageSize))
+		i--
+		dAtA[i] = 0x20
+	}
 	if m.Filter != nil {
 		size, err := m.Filter.MarshalToSizedBufferVT(dAtA[:i])
 		if err != nil {
@@ -1106,7 +1167,7 @@ func (m *RelationshipReadRequest) MarshalToSizedBufferVT(dAtA []byte) (int, erro
 		i -= size
 		i = encodeVarint(dAtA, i, uint64(size))
 		i--
-		dAtA[i] = 0x12
+		dAtA[i] = 0x1a
 	}
 	if m.Metadata != nil {
 		size, err := m.Metadata.MarshalToSizedBufferVT(dAtA[:i])
@@ -1115,6 +1176,13 @@ func (m *RelationshipReadRequest) MarshalToSizedBufferVT(dAtA []byte) (int, erro
 		}
 		i -= size
 		i = encodeVarint(dAtA, i, uint64(size))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.TenantId) > 0 {
+		i -= len(m.TenantId)
+		copy(dAtA[i:], m.TenantId)
+		i = encodeVarint(dAtA, i, uint64(len(m.TenantId)))
 		i--
 		dAtA[i] = 0xa
 	}
@@ -1191,6 +1259,13 @@ func (m *RelationshipReadResponse) MarshalToSizedBufferVT(dAtA []byte) (int, err
 		i -= len(m.unknownFields)
 		copy(dAtA[i:], m.unknownFields)
 	}
+	if len(m.ContinuousToken) > 0 {
+		i -= len(m.ContinuousToken)
+		copy(dAtA[i:], m.ContinuousToken)
+		i = encodeVarint(dAtA, i, uint64(len(m.ContinuousToken)))
+		i--
+		dAtA[i] = 0x12
+	}
 	if len(m.Tuples) > 0 {
 		for iNdEx := len(m.Tuples) - 1; iNdEx >= 0; iNdEx-- {
 			size, err := m.Tuples[iNdEx].MarshalToSizedBufferVT(dAtA[:i])
@@ -1244,6 +1319,13 @@ func (m *RelationshipDeleteRequest) MarshalToSizedBufferVT(dAtA []byte) (int, er
 		i -= size
 		i = encodeVarint(dAtA, i, uint64(size))
 		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.TenantId) > 0 {
+		i -= len(m.TenantId)
+		copy(dAtA[i:], m.TenantId)
+		i = encodeVarint(dAtA, i, uint64(len(m.TenantId)))
+		i--
 		dAtA[i] = 0xa
 	}
 	return len(dAtA) - i, nil
@@ -1285,6 +1367,276 @@ func (m *RelationshipDeleteResponse) MarshalToSizedBufferVT(dAtA []byte) (int, e
 		i = encodeVarint(dAtA, i, uint64(len(m.SnapToken)))
 		i--
 		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *TenantCreateRequest) MarshalVT() (dAtA []byte, err error) {
+	if m == nil {
+		return nil, nil
+	}
+	size := m.SizeVT()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBufferVT(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *TenantCreateRequest) MarshalToVT(dAtA []byte) (int, error) {
+	size := m.SizeVT()
+	return m.MarshalToSizedBufferVT(dAtA[:size])
+}
+
+func (m *TenantCreateRequest) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
+	if m == nil {
+		return 0, nil
+	}
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.unknownFields != nil {
+		i -= len(m.unknownFields)
+		copy(dAtA[i:], m.unknownFields)
+	}
+	if len(m.Name) > 0 {
+		i -= len(m.Name)
+		copy(dAtA[i:], m.Name)
+		i = encodeVarint(dAtA, i, uint64(len(m.Name)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Id) > 0 {
+		i -= len(m.Id)
+		copy(dAtA[i:], m.Id)
+		i = encodeVarint(dAtA, i, uint64(len(m.Id)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *TenantCreateResponse) MarshalVT() (dAtA []byte, err error) {
+	if m == nil {
+		return nil, nil
+	}
+	size := m.SizeVT()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBufferVT(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *TenantCreateResponse) MarshalToVT(dAtA []byte) (int, error) {
+	size := m.SizeVT()
+	return m.MarshalToSizedBufferVT(dAtA[:size])
+}
+
+func (m *TenantCreateResponse) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
+	if m == nil {
+		return 0, nil
+	}
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.unknownFields != nil {
+		i -= len(m.unknownFields)
+		copy(dAtA[i:], m.unknownFields)
+	}
+	if m.Tenant != nil {
+		size, err := m.Tenant.MarshalToSizedBufferVT(dAtA[:i])
+		if err != nil {
+			return 0, err
+		}
+		i -= size
+		i = encodeVarint(dAtA, i, uint64(size))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *TenantDeleteRequest) MarshalVT() (dAtA []byte, err error) {
+	if m == nil {
+		return nil, nil
+	}
+	size := m.SizeVT()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBufferVT(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *TenantDeleteRequest) MarshalToVT(dAtA []byte) (int, error) {
+	size := m.SizeVT()
+	return m.MarshalToSizedBufferVT(dAtA[:size])
+}
+
+func (m *TenantDeleteRequest) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
+	if m == nil {
+		return 0, nil
+	}
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.unknownFields != nil {
+		i -= len(m.unknownFields)
+		copy(dAtA[i:], m.unknownFields)
+	}
+	if len(m.Id) > 0 {
+		i -= len(m.Id)
+		copy(dAtA[i:], m.Id)
+		i = encodeVarint(dAtA, i, uint64(len(m.Id)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *TenantDeleteResponse) MarshalVT() (dAtA []byte, err error) {
+	if m == nil {
+		return nil, nil
+	}
+	size := m.SizeVT()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBufferVT(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *TenantDeleteResponse) MarshalToVT(dAtA []byte) (int, error) {
+	size := m.SizeVT()
+	return m.MarshalToSizedBufferVT(dAtA[:size])
+}
+
+func (m *TenantDeleteResponse) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
+	if m == nil {
+		return 0, nil
+	}
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.unknownFields != nil {
+		i -= len(m.unknownFields)
+		copy(dAtA[i:], m.unknownFields)
+	}
+	if m.Tenant != nil {
+		size, err := m.Tenant.MarshalToSizedBufferVT(dAtA[:i])
+		if err != nil {
+			return 0, err
+		}
+		i -= size
+		i = encodeVarint(dAtA, i, uint64(size))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *TenantListRequest) MarshalVT() (dAtA []byte, err error) {
+	if m == nil {
+		return nil, nil
+	}
+	size := m.SizeVT()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBufferVT(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *TenantListRequest) MarshalToVT(dAtA []byte) (int, error) {
+	size := m.SizeVT()
+	return m.MarshalToSizedBufferVT(dAtA[:size])
+}
+
+func (m *TenantListRequest) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
+	if m == nil {
+		return 0, nil
+	}
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.unknownFields != nil {
+		i -= len(m.unknownFields)
+		copy(dAtA[i:], m.unknownFields)
+	}
+	if len(m.ContinuousToken) > 0 {
+		i -= len(m.ContinuousToken)
+		copy(dAtA[i:], m.ContinuousToken)
+		i = encodeVarint(dAtA, i, uint64(len(m.ContinuousToken)))
+		i--
+		dAtA[i] = 0x2a
+	}
+	if m.PageSize != 0 {
+		i = encodeVarint(dAtA, i, uint64(m.PageSize))
+		i--
+		dAtA[i] = 0x20
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *TenantListResponse) MarshalVT() (dAtA []byte, err error) {
+	if m == nil {
+		return nil, nil
+	}
+	size := m.SizeVT()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBufferVT(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *TenantListResponse) MarshalToVT(dAtA []byte) (int, error) {
+	size := m.SizeVT()
+	return m.MarshalToSizedBufferVT(dAtA[:size])
+}
+
+func (m *TenantListResponse) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
+	if m == nil {
+		return 0, nil
+	}
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.unknownFields != nil {
+		i -= len(m.unknownFields)
+		copy(dAtA[i:], m.unknownFields)
+	}
+	if len(m.ContinuousToken) > 0 {
+		i -= len(m.ContinuousToken)
+		copy(dAtA[i:], m.ContinuousToken)
+		i = encodeVarint(dAtA, i, uint64(len(m.ContinuousToken)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Tenants) > 0 {
+		for iNdEx := len(m.Tenants) - 1; iNdEx >= 0; iNdEx-- {
+			size, err := m.Tenants[iNdEx].MarshalToSizedBufferVT(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarint(dAtA, i, uint64(size))
+			i--
+			dAtA[i] = 0xa
+		}
 	}
 	return len(dAtA) - i, nil
 }
@@ -1463,6 +1815,10 @@ func (m *PermissionCheckRequest) SizeVT() (n int) {
 	}
 	var l int
 	_ = l
+	l = len(m.TenantId)
+	if l > 0 {
+		n += 1 + l + sov(uint64(l))
+	}
 	if m.Metadata != nil {
 		l = m.Metadata.SizeVT()
 		n += 1 + l + sov(uint64(l))
@@ -1551,6 +1907,10 @@ func (m *PermissionExpandRequest) SizeVT() (n int) {
 	}
 	var l int
 	_ = l
+	l = len(m.TenantId)
+	if l > 0 {
+		n += 1 + l + sov(uint64(l))
+	}
 	if m.Metadata != nil {
 		l = m.Metadata.SizeVT()
 		n += 1 + l + sov(uint64(l))
@@ -1611,6 +1971,10 @@ func (m *PermissionLookupSchemaRequest) SizeVT() (n int) {
 	}
 	var l int
 	_ = l
+	l = len(m.TenantId)
+	if l > 0 {
+		n += 1 + l + sov(uint64(l))
+	}
 	if m.Metadata != nil {
 		l = m.Metadata.SizeVT()
 		n += 1 + l + sov(uint64(l))
@@ -1671,6 +2035,10 @@ func (m *PermissionLookupEntityRequest) SizeVT() (n int) {
 	}
 	var l int
 	_ = l
+	l = len(m.TenantId)
+	if l > 0 {
+		n += 1 + l + sov(uint64(l))
+	}
 	if m.Metadata != nil {
 		l = m.Metadata.SizeVT()
 		n += 1 + l + sov(uint64(l))
@@ -1756,6 +2124,10 @@ func (m *SchemaWriteRequest) SizeVT() (n int) {
 	}
 	var l int
 	_ = l
+	l = len(m.TenantId)
+	if l > 0 {
+		n += 1 + l + sov(uint64(l))
+	}
 	l = len(m.Schema)
 	if l > 0 {
 		n += 1 + l + sov(uint64(l))
@@ -1788,6 +2160,10 @@ func (m *SchemaReadRequest) SizeVT() (n int) {
 	}
 	var l int
 	_ = l
+	l = len(m.TenantId)
+	if l > 0 {
+		n += 1 + l + sov(uint64(l))
+	}
 	if m.Metadata != nil {
 		l = m.Metadata.SizeVT()
 		n += 1 + l + sov(uint64(l))
@@ -1836,6 +2212,10 @@ func (m *RelationshipWriteRequest) SizeVT() (n int) {
 	}
 	var l int
 	_ = l
+	l = len(m.TenantId)
+	if l > 0 {
+		n += 1 + l + sov(uint64(l))
+	}
 	if m.Metadata != nil {
 		l = m.Metadata.SizeVT()
 		n += 1 + l + sov(uint64(l))
@@ -1890,12 +2270,23 @@ func (m *RelationshipReadRequest) SizeVT() (n int) {
 	}
 	var l int
 	_ = l
+	l = len(m.TenantId)
+	if l > 0 {
+		n += 1 + l + sov(uint64(l))
+	}
 	if m.Metadata != nil {
 		l = m.Metadata.SizeVT()
 		n += 1 + l + sov(uint64(l))
 	}
 	if m.Filter != nil {
 		l = m.Filter.SizeVT()
+		n += 1 + l + sov(uint64(l))
+	}
+	if m.PageSize != 0 {
+		n += 1 + sov(uint64(m.PageSize))
+	}
+	l = len(m.ContinuousToken)
+	if l > 0 {
 		n += 1 + l + sov(uint64(l))
 	}
 	if m.unknownFields != nil {
@@ -1932,6 +2323,10 @@ func (m *RelationshipReadResponse) SizeVT() (n int) {
 			n += 1 + l + sov(uint64(l))
 		}
 	}
+	l = len(m.ContinuousToken)
+	if l > 0 {
+		n += 1 + l + sov(uint64(l))
+	}
 	if m.unknownFields != nil {
 		n += len(m.unknownFields)
 	}
@@ -1944,6 +2339,10 @@ func (m *RelationshipDeleteRequest) SizeVT() (n int) {
 	}
 	var l int
 	_ = l
+	l = len(m.TenantId)
+	if l > 0 {
+		n += 1 + l + sov(uint64(l))
+	}
 	if m.Filter != nil {
 		l = m.Filter.SizeVT()
 		n += 1 + l + sov(uint64(l))
@@ -1961,6 +2360,115 @@ func (m *RelationshipDeleteResponse) SizeVT() (n int) {
 	var l int
 	_ = l
 	l = len(m.SnapToken)
+	if l > 0 {
+		n += 1 + l + sov(uint64(l))
+	}
+	if m.unknownFields != nil {
+		n += len(m.unknownFields)
+	}
+	return n
+}
+
+func (m *TenantCreateRequest) SizeVT() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Id)
+	if l > 0 {
+		n += 1 + l + sov(uint64(l))
+	}
+	l = len(m.Name)
+	if l > 0 {
+		n += 1 + l + sov(uint64(l))
+	}
+	if m.unknownFields != nil {
+		n += len(m.unknownFields)
+	}
+	return n
+}
+
+func (m *TenantCreateResponse) SizeVT() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Tenant != nil {
+		l = m.Tenant.SizeVT()
+		n += 1 + l + sov(uint64(l))
+	}
+	if m.unknownFields != nil {
+		n += len(m.unknownFields)
+	}
+	return n
+}
+
+func (m *TenantDeleteRequest) SizeVT() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Id)
+	if l > 0 {
+		n += 1 + l + sov(uint64(l))
+	}
+	if m.unknownFields != nil {
+		n += len(m.unknownFields)
+	}
+	return n
+}
+
+func (m *TenantDeleteResponse) SizeVT() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Tenant != nil {
+		l = m.Tenant.SizeVT()
+		n += 1 + l + sov(uint64(l))
+	}
+	if m.unknownFields != nil {
+		n += len(m.unknownFields)
+	}
+	return n
+}
+
+func (m *TenantListRequest) SizeVT() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.PageSize != 0 {
+		n += 1 + sov(uint64(m.PageSize))
+	}
+	l = len(m.ContinuousToken)
+	if l > 0 {
+		n += 1 + l + sov(uint64(l))
+	}
+	if m.unknownFields != nil {
+		n += len(m.unknownFields)
+	}
+	return n
+}
+
+func (m *TenantListResponse) SizeVT() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if len(m.Tenants) > 0 {
+		for _, e := range m.Tenants {
+			l = e.SizeVT()
+			n += 1 + l + sov(uint64(l))
+		}
+	}
+	l = len(m.ContinuousToken)
 	if l > 0 {
 		n += 1 + l + sov(uint64(l))
 	}
@@ -2073,6 +2581,38 @@ func (m *PermissionCheckRequest) UnmarshalVT(dAtA []byte) error {
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TenantId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLength
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLength
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.TenantId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Metadata", wireType)
 			}
 			var msglen int
@@ -2107,7 +2647,7 @@ func (m *PermissionCheckRequest) UnmarshalVT(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
-		case 2:
+		case 3:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Entity", wireType)
 			}
@@ -2143,7 +2683,7 @@ func (m *PermissionCheckRequest) UnmarshalVT(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
-		case 3:
+		case 4:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Permission", wireType)
 			}
@@ -2175,7 +2715,7 @@ func (m *PermissionCheckRequest) UnmarshalVT(dAtA []byte) error {
 			}
 			m.Permission = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 4:
+		case 5:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Subject", wireType)
 			}
@@ -2594,6 +3134,38 @@ func (m *PermissionExpandRequest) UnmarshalVT(dAtA []byte) error {
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TenantId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLength
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLength
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.TenantId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Metadata", wireType)
 			}
 			var msglen int
@@ -2628,7 +3200,7 @@ func (m *PermissionExpandRequest) UnmarshalVT(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
-		case 2:
+		case 3:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Entity", wireType)
 			}
@@ -2664,7 +3236,7 @@ func (m *PermissionExpandRequest) UnmarshalVT(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
-		case 3:
+		case 4:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Permission", wireType)
 			}
@@ -2951,6 +3523,38 @@ func (m *PermissionLookupSchemaRequest) UnmarshalVT(dAtA []byte) error {
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TenantId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLength
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLength
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.TenantId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Metadata", wireType)
 			}
 			var msglen int
@@ -2985,7 +3589,7 @@ func (m *PermissionLookupSchemaRequest) UnmarshalVT(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
-		case 2:
+		case 3:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field EntityType", wireType)
 			}
@@ -3017,7 +3621,7 @@ func (m *PermissionLookupSchemaRequest) UnmarshalVT(dAtA []byte) error {
 			}
 			m.EntityType = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 3:
+		case 4:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field RelationNames", wireType)
 			}
@@ -3268,6 +3872,38 @@ func (m *PermissionLookupEntityRequest) UnmarshalVT(dAtA []byte) error {
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TenantId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLength
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLength
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.TenantId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Metadata", wireType)
 			}
 			var msglen int
@@ -3302,7 +3938,7 @@ func (m *PermissionLookupEntityRequest) UnmarshalVT(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
-		case 2:
+		case 3:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field EntityType", wireType)
 			}
@@ -3334,7 +3970,7 @@ func (m *PermissionLookupEntityRequest) UnmarshalVT(dAtA []byte) error {
 			}
 			m.EntityType = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 3:
+		case 4:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Permission", wireType)
 			}
@@ -3366,7 +4002,7 @@ func (m *PermissionLookupEntityRequest) UnmarshalVT(dAtA []byte) error {
 			}
 			m.Permission = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 4:
+		case 5:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Subject", wireType)
 			}
@@ -3755,6 +4391,38 @@ func (m *SchemaWriteRequest) UnmarshalVT(dAtA []byte) error {
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TenantId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLength
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLength
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.TenantId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Schema", wireType)
 			}
 			var stringLen uint64
@@ -3920,6 +4588,38 @@ func (m *SchemaReadRequest) UnmarshalVT(dAtA []byte) error {
 		}
 		switch fieldNum {
 		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TenantId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLength
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLength
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.TenantId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Metadata", wireType)
 			}
@@ -4178,6 +4878,38 @@ func (m *RelationshipWriteRequest) UnmarshalVT(dAtA []byte) error {
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TenantId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLength
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLength
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.TenantId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Metadata", wireType)
 			}
 			var msglen int
@@ -4212,7 +4944,7 @@ func (m *RelationshipWriteRequest) UnmarshalVT(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
-		case 2:
+		case 3:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Tuples", wireType)
 			}
@@ -4465,6 +5197,38 @@ func (m *RelationshipReadRequest) UnmarshalVT(dAtA []byte) error {
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TenantId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLength
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLength
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.TenantId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Metadata", wireType)
 			}
 			var msglen int
@@ -4499,7 +5263,7 @@ func (m *RelationshipReadRequest) UnmarshalVT(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
-		case 2:
+		case 3:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Filter", wireType)
 			}
@@ -4534,6 +5298,57 @@ func (m *RelationshipReadRequest) UnmarshalVT(dAtA []byte) error {
 			if err := m.Filter.UnmarshalVT(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
+			iNdEx = postIndex
+		case 4:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PageSize", wireType)
+			}
+			m.PageSize = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.PageSize |= uint32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ContinuousToken", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLength
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLength
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ContinuousToken = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -4703,6 +5518,38 @@ func (m *RelationshipReadResponse) UnmarshalVT(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ContinuousToken", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLength
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLength
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ContinuousToken = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skip(dAtA[iNdEx:])
@@ -4755,6 +5602,38 @@ func (m *RelationshipDeleteRequest) UnmarshalVT(dAtA []byte) error {
 		}
 		switch fieldNum {
 		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TenantId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLength
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLength
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.TenantId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Filter", wireType)
 			}
@@ -4872,6 +5751,597 @@ func (m *RelationshipDeleteResponse) UnmarshalVT(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			m.SnapToken = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skip(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLength
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.unknownFields = append(m.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *TenantCreateRequest) UnmarshalVT(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflow
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: TenantCreateRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: TenantCreateRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLength
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLength
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Id = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLength
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLength
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Name = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skip(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLength
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.unknownFields = append(m.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *TenantCreateResponse) UnmarshalVT(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflow
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: TenantCreateResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: TenantCreateResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Tenant", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLength
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLength
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Tenant == nil {
+				m.Tenant = &Tenant{}
+			}
+			if err := m.Tenant.UnmarshalVT(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skip(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLength
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.unknownFields = append(m.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *TenantDeleteRequest) UnmarshalVT(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflow
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: TenantDeleteRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: TenantDeleteRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLength
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLength
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Id = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skip(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLength
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.unknownFields = append(m.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *TenantDeleteResponse) UnmarshalVT(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflow
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: TenantDeleteResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: TenantDeleteResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Tenant", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLength
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLength
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Tenant == nil {
+				m.Tenant = &Tenant{}
+			}
+			if err := m.Tenant.UnmarshalVT(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skip(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLength
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.unknownFields = append(m.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *TenantListRequest) UnmarshalVT(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflow
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: TenantListRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: TenantListRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 4:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PageSize", wireType)
+			}
+			m.PageSize = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.PageSize |= uint32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ContinuousToken", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLength
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLength
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ContinuousToken = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skip(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLength
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.unknownFields = append(m.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *TenantListResponse) UnmarshalVT(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflow
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: TenantListResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: TenantListResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Tenants", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLength
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLength
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Tenants = append(m.Tenants, &Tenant{})
+			if err := m.Tenants[len(m.Tenants)-1].UnmarshalVT(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ContinuousToken", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLength
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLength
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ContinuousToken = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
