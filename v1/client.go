@@ -11,6 +11,7 @@ type Client struct {
 	Permission   v1.PermissionClient
 	Schema       v1.SchemaClient
 	Relationship v1.RelationshipClient
+	Tenancy      v1.TenancyClient
 }
 
 // Config - Permify client configuration
@@ -34,5 +35,6 @@ func NewClient(c Config, opts ...grpc.DialOption) (*Client, error) {
 		Permission:   v1.NewPermissionClient(conn),
 		Schema:       v1.NewSchemaClient(conn),
 		Relationship: v1.NewRelationshipClient(conn),
+		Tenancy:      v1.NewTenancyClient(conn),
 	}, nil
 }
