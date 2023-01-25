@@ -30,25 +30,26 @@ import permify `github.com/Permify/permify-go`
 
 // generate new client
 client, err = permify.NewClient(
-	Config{
-		endpoint: `localhost:3478`,
-	},
-	grpc.WithTransportCredentials(insecure.NewCredentials()),
-	)
+    Config{
+	    endpoint: `localhost:3478`,
+    },
+    grpc.WithTransportCredentials(insecure.NewCredentials()),
+)
 ```
 
 ### Write Schema
 
 ```go
 sr, err: = client.Schema.Write(context.Background(), &v1.SchemaWriteRequest {
+    TenantId: "t1",
     Schema: `
-            entity user {}
+        entity user {}
             
-            entity document {
-               relation viewer @user
-               
-               action view = viewer
-            }`,
+        entity document {
+    
+        relation viewer @user
+        action view = viewer
+    }`,
 })
 ```
 
@@ -57,6 +58,7 @@ sr, err: = client.Schema.Write(context.Background(), &v1.SchemaWriteRequest {
 ```go
 
 rr, err: = client.Relationship.Write(context.Background(), & v1.RelationshipWriteRequest {
+    TenantId: "t1",
     Metadata: & v1.RelationshipWriteRequestMetadata {
         SchemaVersion: sr.SchemaVersion, // sr --> schema write response
     },
@@ -90,7 +92,8 @@ rr, err: = client.Relationship.Write(context.Background(), & v1.RelationshipWrit
 
 ```go
 cr, err: = client.Permission.Check(context.Background(), & v1.PermissionCheckRequest {
-    Metadata: & v1.PermissionCheckRequestMetadata {
+    TenantId: "t1",
+	Metadata: & v1.PermissionCheckRequestMetadata {
         SnapToken: rr.SnapToken, // rr --> relationship write response
         SchemaVersion: sr.SchemaVersion, // sr --> schema write response
         Depth: 50,
@@ -117,7 +120,8 @@ cr, err: = client.Permission.Check(context.Background(), & v1.PermissionCheckReq
 
 ```go
 str, err: = client.Permission.LookupEntityStream(context.Background(), & v1.PermissionLookupEntityRequest {
-    Metadata: & v1.PermissionLookupEntityRequestMetadata {
+    TenantId: "t1",
+	Metadata: & v1.PermissionLookupEntityRequestMetadata {
         SnapToken: rr.SnapToken, // rr --> relationship write response
         SchemaVersion: sr.SchemaVersion, // sr --> schema write response
         Depth: 50,
