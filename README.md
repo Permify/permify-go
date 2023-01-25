@@ -37,6 +37,15 @@ client, err = permify.NewClient(
 )
 ```
 
+### Create a new tenant.
+
+```go
+ct, err := client.Tenancy.Create(context.Background(), &v1.TenantCreateRequest{
+    Id:   "t1",
+    Name: "tenant 1",
+})
+```
+
 ### Write Schema
 
 ```go
