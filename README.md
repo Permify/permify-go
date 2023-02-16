@@ -31,7 +31,7 @@ import permify `github.com/Permify/permify-go`
 // generate new client
 client, err = permify.NewClient(
     Config{
-	    endpoint: `localhost:3478`,
+	    Endpoint: `localhost:3478`,
     },
     grpc.WithTransportCredentials(insecure.NewCredentials()),
 )
