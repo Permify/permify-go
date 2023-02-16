@@ -3,7 +3,7 @@ package permifygotest
 import (
 	"google.golang.org/grpc"
 
-	v1 `github.com/Permify/permify-go-test/generated/base/v1`
+	v1 "github.com/Permify/permify-go/generated/base/v1"
 )
 
 // Client - Permify client
@@ -26,7 +26,6 @@ func NewClient(c Config, opts ...grpc.DialOption) (*Client, error) {
 		c.endpoint,
 		opts...,
 	)
-
 	if err != nil {
 		return nil, err
 	}

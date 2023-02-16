@@ -11,7 +11,7 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 
-	v1 "github.com/Permify/permify-go-test/generated/base/v1"
+	v1 "github.com/Permify/permify-go/generated/base/v1"
 )
 
 func TestClient(t *testing.T) {
@@ -20,7 +20,6 @@ func TestClient(t *testing.T) {
 }
 
 var _ = Describe("Client Test", func() {
-
 	var client *Client
 
 	BeforeEach(func() {
@@ -35,9 +34,7 @@ var _ = Describe("Client Test", func() {
 	})
 
 	Context("Check request", func() {
-
 		It("document schema", func() {
-
 			wr, err := client.Schema.Write(context.Background(), &v1.SchemaWriteRequest{
 				TenantId: "t1",
 				Schema: `
@@ -75,7 +72,6 @@ var _ = Describe("Client Test", func() {
 		})
 
 		It("Lookup entity request", func() {
-
 			wr, err := client.Schema.Write(context.Background(), &v1.SchemaWriteRequest{
 				TenantId: "t1",
 				Schema: `
@@ -149,7 +145,7 @@ var _ = Describe("Client Test", func() {
 
 			// handle(cr, ["1", "3", "4"])
 
-			var expected = map[string]struct{}{"1": {}, "3": {}, "4": {}}
+			expected := map[string]struct{}{"1": {}, "3": {}, "4": {}}
 
 			Expect(err).ShouldNot(HaveOccurred())
 
