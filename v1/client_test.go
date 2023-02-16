@@ -26,7 +26,7 @@ var _ = Describe("Client Test", func() {
 		var err error
 		client, err = NewClient(
 			Config{
-				endpoint: `localhost:3478`,
+				Endpoint: `localhost:3478`,
 			},
 			grpc.WithTransportCredentials(insecure.NewCredentials()),
 		)

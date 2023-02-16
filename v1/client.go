@@ -16,14 +16,14 @@ type Client struct {
 
 // Config - Permify client configuration
 type Config struct {
-	endpoint string
-	cert     byte
+	Endpoint string
+	Cert     byte
 }
 
 // NewClient - Creates new Permify client
 func NewClient(c Config, opts ...grpc.DialOption) (*Client, error) {
 	conn, err := grpc.Dial(
-		c.endpoint,
+		c.Endpoint,
 		opts...,
 	)
 	if err != nil {
