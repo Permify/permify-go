@@ -158,7 +158,7 @@ for {
 Permify is an **open-source authorization service** for creating and maintaining fine-grained authorizations across your individual applications and services.
 
 * [Permify website](https://permify.co)
-* [Permify documentation](https://docs.permify.co/docs/)
+* [Permify documentation](https://docs.permify.co)
 * [Permify playground](https://play.permify.co)
 * [Permify GitHub Repository](https://github.com/Permify/permify)
 
