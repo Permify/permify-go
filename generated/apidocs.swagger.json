@@ -3,7 +3,7 @@
   "info": {
     "title": "Permify API",
     "description": "Permify is an open-source authorization service for creating and maintaining fine-grained authorizations across your individual applications and services. Permify converts authorization data as relational tuples into a database you point at. We called that database a Write Database (WriteDB) and it behaves as a centralized data source for your authorization system. You can model of your authorization with Permify's DSL - Permify Schema - and perform access checks with a single API call anywhere on your stack. Access decisions made according to stored relational tuples.",
-    "version": "v0.3.0",
+    "version": "v0.3.9",
     "contact": {
       "name": "API Support",
       "url": "https://github.com/Permify/permify/issues",
@@ -26,9 +26,6 @@
     },
     {
       "name": "Tenancy"
-    },
-    {
-      "name": "Welcome"
     }
   ],
   "schemes": [
@@ -41,29 +38,6 @@
     "application/json"
   ],
   "paths": {
-    "/": {
-      "get": {
-        "summary": "welcome to permify",
-        "operationId": "welcome.hello",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1welcomeResponse"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "tags": [
-          "Welcome"
-        ]
-      }
-    },
     "/v1/tenants/create": {
       "post": {
         "summary": "create new tenant",
@@ -163,7 +137,7 @@
     },
     "/v1/tenants/{tenant_id}/permissions/check": {
       "post": {
-        "summary": "This method returns a decision about whether user can perform an action on a certain resource. For example, Can the user 1 push to repository 1?",
+        "summary": "This method returns a decision about whether user can perform an permission on a certain resource. For example, Can the user 1 push to repository 1?",
         "operationId": "permissions.check",
         "responses": {
           "200": {
@@ -201,7 +175,7 @@
                 },
                 "permission": {
                   "type": "string",
-                  "title": "its can be action or relation"
+                  "title": "its can be permission or relation"
                 },
                 "subject": {
                   "$ref": "#/definitions/v1Subject"
@@ -683,7 +657,7 @@
       "enum": [
         "RELATIONAL_REFERENCE_UNSPECIFIED",
         "RELATIONAL_REFERENCE_RELATION",
-        "RELATIONAL_REFERENCE_ACTION"
+        "RELATIONAL_REFERENCE_PERMISSION"
       ],
       "default": "RELATIONAL_REFERENCE_UNSPECIFIED",
       "title": "RelationalReference"
@@ -732,18 +706,6 @@
           }
         }
       }
-    },
-    "v1ActionDefinition": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "child": {
-          "$ref": "#/definitions/v1Child"
-        }
-      },
-      "title": "ActionDefinition"
     },
     "v1Child": {
       "type": "object",
@@ -802,25 +764,19 @@
           },
           "title": "[\"relation_name\"] =\u003e RelationDefinition"
         },
-        "actions": {
+        "permissions": {
           "type": "object",
           "additionalProperties": {
-            "$ref": "#/definitions/v1ActionDefinition"
+            "$ref": "#/definitions/v1PermissionDefinition"
           },
-          "title": "[\"action_name\"] =\u003e ActionDefinition"
+          "title": "[\"permission_name\"] =\u003e PermissionDefinition"
         },
         "references": {
           "type": "object",
           "additionalProperties": {
             "$ref": "#/definitions/EntityDefinitionRelationalReference"
           },
-          "title": "[\"relation_name or action_name\"] =\u003e RelationalReference"
-        },
-        "option": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          }
+          "title": "[\"relation_name or permission_name\"] =\u003e RelationalReference"
         }
       },
       "title": "EntityDefinition"
@@ -876,32 +832,6 @@
       ],
       "default": "OPERATION_UNSPECIFIED",
       "title": "Operation"
-    },
-    "v1IndexedSchema": {
-      "type": "object",
-      "properties": {
-        "entityDefinitions": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/v1EntityDefinition"
-          }
-        },
-        "relationDefinitions": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/v1RelationDefinition"
-          },
-          "title": "[\"entity_name#relation_name\"] =\u003e RelationDefinition"
-        },
-        "actionDefinitions": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/v1ActionDefinition"
-          },
-          "title": "[\"entity_name#action_name\"] =\u003e ActionDefinition"
-        }
-      },
-      "title": "IndexedSchema"
     },
     "v1Leaf": {
       "type": "object",
@@ -968,6 +898,18 @@
       ],
       "default": "RESULT_UNKNOWN",
       "title": "Result"
+    },
+    "v1PermissionDefinition": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "child": {
+          "$ref": "#/definitions/v1Child"
+        }
+      },
+      "title": "PermissionDefinition"
     },
     "v1PermissionExpandRequestMetadata": {
       "type": "object",
@@ -1039,7 +981,7 @@
     "v1PermissionLookupSchemaResponse": {
       "type": "object",
       "properties": {
-        "action_names": {
+        "permission_names": {
           "type": "array",
           "items": {
             "type": "string"
@@ -1054,20 +996,10 @@
         "name": {
           "type": "string"
         },
-        "entityReference": {
-          "$ref": "#/definitions/v1RelationReference"
-        },
         "relationReferences": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/v1RelationReference"
-          },
-          "title": "relation reference includes entity reference"
-        },
-        "option": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
           }
         }
       },
@@ -1076,7 +1008,10 @@
     "v1RelationReference": {
       "type": "object",
       "properties": {
-        "name": {
+        "type": {
+          "type": "string"
+        },
+        "relation": {
           "type": "string"
         }
       },
@@ -1158,6 +1093,18 @@
       "default": "OPERATION_UNSPECIFIED",
       "title": "Operation"
     },
+    "v1SchemaDefinition": {
+      "type": "object",
+      "properties": {
+        "entityDefinitions": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/v1EntityDefinition"
+          }
+        }
+      },
+      "title": "Definition"
+    },
     "v1SchemaReadRequestMetadata": {
       "type": "object",
       "properties": {
@@ -1171,7 +1118,7 @@
       "type": "object",
       "properties": {
         "schema": {
-          "$ref": "#/definitions/v1IndexedSchema"
+          "$ref": "#/definitions/v1SchemaDefinition"
         }
       },
       "title": "SchemaReadRequest"
@@ -1342,49 +1289,6 @@
         }
       },
       "title": "TupleToUserSet"
-    },
-    "v1welcomeResponse": {
-      "type": "object",
-      "properties": {
-        "permify": {
-          "type": "string"
-        },
-        "sources": {
-          "$ref": "#/definitions/welcomeResponseSources"
-        },
-        "socials": {
-          "$ref": "#/definitions/welcomeResponseSocials"
-        }
-      },
-      "title": "WelcomeResponse"
-    },
-    "welcomeResponseSocials": {
-      "type": "object",
-      "properties": {
-        "discord": {
-          "type": "string"
-        },
-        "twitter": {
-          "type": "string"
-        },
-        "linkedin": {
-          "type": "string"
-        }
-      }
-    },
-    "welcomeResponseSources": {
-      "type": "object",
-      "properties": {
-        "docs": {
-          "type": "string"
-        },
-        "gitHub": {
-          "type": "string"
-        },
-        "blog": {
-          "type": "string"
-        }
-      }
     }
   },
   "securityDefinitions": {

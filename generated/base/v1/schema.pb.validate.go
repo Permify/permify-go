@@ -340,10 +340,10 @@ var _ interface {
 	ErrorName() string
 } = RewriteValidationError{}
 
-// Validate checks the field values on IndexedSchema with the rules defined in
-// the proto definition for this message. If any rules are violated, an error
-// is returned.
-func (m *IndexedSchema) Validate() error {
+// Validate checks the field values on SchemaDefinition with the rules defined
+// in the proto definition for this message. If any rules are violated, an
+// error is returned.
+func (m *SchemaDefinition) Validate() error {
 	if m == nil {
 		return nil
 	}
@@ -355,42 +355,8 @@ func (m *IndexedSchema) Validate() error {
 
 		if v, ok := interface{}(val).(interface{ Validate() error }); ok {
 			if err := v.Validate(); err != nil {
-				return IndexedSchemaValidationError{
+				return SchemaDefinitionValidationError{
 					field:  fmt.Sprintf("EntityDefinitions[%v]", key),
-					reason: "embedded message failed validation",
-					cause:  err,
-				}
-			}
-		}
-
-	}
-
-	for key, val := range m.GetRelationDefinitions() {
-		_ = val
-
-		// no validation rules for RelationDefinitions[key]
-
-		if v, ok := interface{}(val).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return IndexedSchemaValidationError{
-					field:  fmt.Sprintf("RelationDefinitions[%v]", key),
-					reason: "embedded message failed validation",
-					cause:  err,
-				}
-			}
-		}
-
-	}
-
-	for key, val := range m.GetActionDefinitions() {
-		_ = val
-
-		// no validation rules for ActionDefinitions[key]
-
-		if v, ok := interface{}(val).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return IndexedSchemaValidationError{
-					field:  fmt.Sprintf("ActionDefinitions[%v]", key),
 					reason: "embedded message failed validation",
 					cause:  err,
 				}
@@ -402,9 +368,9 @@ func (m *IndexedSchema) Validate() error {
 	return nil
 }
 
-// IndexedSchemaValidationError is the validation error returned by
-// IndexedSchema.Validate if the designated constraints aren't met.
-type IndexedSchemaValidationError struct {
+// SchemaDefinitionValidationError is the validation error returned by
+// SchemaDefinition.Validate if the designated constraints aren't met.
+type SchemaDefinitionValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -412,22 +378,22 @@ type IndexedSchemaValidationError struct {
 }
 
 // Field function returns field value.
-func (e IndexedSchemaValidationError) Field() string { return e.field }
+func (e SchemaDefinitionValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e IndexedSchemaValidationError) Reason() string { return e.reason }
+func (e SchemaDefinitionValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e IndexedSchemaValidationError) Cause() error { return e.cause }
+func (e SchemaDefinitionValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e IndexedSchemaValidationError) Key() bool { return e.key }
+func (e SchemaDefinitionValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e IndexedSchemaValidationError) ErrorName() string { return "IndexedSchemaValidationError" }
+func (e SchemaDefinitionValidationError) ErrorName() string { return "SchemaDefinitionValidationError" }
 
 // Error satisfies the builtin error interface
-func (e IndexedSchemaValidationError) Error() string {
+func (e SchemaDefinitionValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -439,14 +405,14 @@ func (e IndexedSchemaValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sIndexedSchema.%s: %s%s",
+		"invalid %sSchemaDefinition.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = IndexedSchemaValidationError{}
+var _ error = SchemaDefinitionValidationError{}
 
 var _ interface {
 	Field() string
@@ -454,7 +420,7 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = IndexedSchemaValidationError{}
+} = SchemaDefinitionValidationError{}
 
 // Validate checks the field values on EntityDefinition with the rules defined
 // in the proto definition for this message. If any rules are violated, an
@@ -495,15 +461,15 @@ func (m *EntityDefinition) Validate() error {
 
 	}
 
-	for key, val := range m.GetActions() {
+	for key, val := range m.GetPermissions() {
 		_ = val
 
-		// no validation rules for Actions[key]
+		// no validation rules for Permissions[key]
 
 		if v, ok := interface{}(val).(interface{ Validate() error }); ok {
 			if err := v.Validate(); err != nil {
 				return EntityDefinitionValidationError{
-					field:  fmt.Sprintf("Actions[%v]", key),
+					field:  fmt.Sprintf("Permissions[%v]", key),
 					reason: "embedded message failed validation",
 					cause:  err,
 				}
@@ -513,8 +479,6 @@ func (m *EntityDefinition) Validate() error {
 	}
 
 	// no validation rules for References
-
-	// no validation rules for Option
 
 	return nil
 }
@@ -597,16 +561,6 @@ func (m *RelationDefinition) Validate() error {
 		}
 	}
 
-	if v, ok := interface{}(m.GetEntityReference()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return RelationDefinitionValidationError{
-				field:  "EntityReference",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
-
 	for idx, item := range m.GetRelationReferences() {
 		_, _ = idx, item
 
@@ -621,8 +575,6 @@ func (m *RelationDefinition) Validate() error {
 		}
 
 	}
-
-	// no validation rules for Option
 
 	return nil
 }
@@ -685,23 +637,23 @@ var _ interface {
 
 var _RelationDefinition_Name_Pattern = regexp.MustCompile("^([a-z][a-z0-9_]{1,62}[a-z0-9])$")
 
-// Validate checks the field values on ActionDefinition with the rules defined
-// in the proto definition for this message. If any rules are violated, an
-// error is returned.
-func (m *ActionDefinition) Validate() error {
+// Validate checks the field values on PermissionDefinition with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *PermissionDefinition) Validate() error {
 	if m == nil {
 		return nil
 	}
 
 	if len(m.GetName()) > 64 {
-		return ActionDefinitionValidationError{
+		return PermissionDefinitionValidationError{
 			field:  "Name",
 			reason: "value length must be at most 64 bytes",
 		}
 	}
 
-	if !_ActionDefinition_Name_Pattern.MatchString(m.GetName()) {
-		return ActionDefinitionValidationError{
+	if !_PermissionDefinition_Name_Pattern.MatchString(m.GetName()) {
+		return PermissionDefinitionValidationError{
 			field:  "Name",
 			reason: "value does not match regex pattern \"^([a-z][a-z0-9_]{1,62}[a-z0-9])$\"",
 		}
@@ -709,7 +661,7 @@ func (m *ActionDefinition) Validate() error {
 
 	if v, ok := interface{}(m.GetChild()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return ActionDefinitionValidationError{
+			return PermissionDefinitionValidationError{
 				field:  "Child",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -720,9 +672,9 @@ func (m *ActionDefinition) Validate() error {
 	return nil
 }
 
-// ActionDefinitionValidationError is the validation error returned by
-// ActionDefinition.Validate if the designated constraints aren't met.
-type ActionDefinitionValidationError struct {
+// PermissionDefinitionValidationError is the validation error returned by
+// PermissionDefinition.Validate if the designated constraints aren't met.
+type PermissionDefinitionValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -730,22 +682,24 @@ type ActionDefinitionValidationError struct {
 }
 
 // Field function returns field value.
-func (e ActionDefinitionValidationError) Field() string { return e.field }
+func (e PermissionDefinitionValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e ActionDefinitionValidationError) Reason() string { return e.reason }
+func (e PermissionDefinitionValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e ActionDefinitionValidationError) Cause() error { return e.cause }
+func (e PermissionDefinitionValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e ActionDefinitionValidationError) Key() bool { return e.key }
+func (e PermissionDefinitionValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e ActionDefinitionValidationError) ErrorName() string { return "ActionDefinitionValidationError" }
+func (e PermissionDefinitionValidationError) ErrorName() string {
+	return "PermissionDefinitionValidationError"
+}
 
 // Error satisfies the builtin error interface
-func (e ActionDefinitionValidationError) Error() string {
+func (e PermissionDefinitionValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -757,14 +711,14 @@ func (e ActionDefinitionValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sActionDefinition.%s: %s%s",
+		"invalid %sPermissionDefinition.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = ActionDefinitionValidationError{}
+var _ error = PermissionDefinitionValidationError{}
 
 var _ interface {
 	Field() string
@@ -772,9 +726,9 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = ActionDefinitionValidationError{}
+} = PermissionDefinitionValidationError{}
 
-var _ActionDefinition_Name_Pattern = regexp.MustCompile("^([a-z][a-z0-9_]{1,62}[a-z0-9])$")
+var _PermissionDefinition_Name_Pattern = regexp.MustCompile("^([a-z][a-z0-9_]{1,62}[a-z0-9])$")
 
 // Validate checks the field values on RelationReference with the rules defined
 // in the proto definition for this message. If any rules are violated, an
@@ -784,17 +738,31 @@ func (m *RelationReference) Validate() error {
 		return nil
 	}
 
-	if len(m.GetName()) > 64 {
+	if len(m.GetType()) > 64 {
 		return RelationReferenceValidationError{
-			field:  "Name",
+			field:  "Type",
 			reason: "value length must be at most 64 bytes",
 		}
 	}
 
-	if !_RelationReference_Name_Pattern.MatchString(m.GetName()) {
+	if !_RelationReference_Type_Pattern.MatchString(m.GetType()) {
 		return RelationReferenceValidationError{
-			field:  "Name",
+			field:  "Type",
 			reason: "value does not match regex pattern \"^([a-z][a-z0-9_]{1,62}[a-z0-9])$\"",
+		}
+	}
+
+	if len(m.GetRelation()) > 64 {
+		return RelationReferenceValidationError{
+			field:  "Relation",
+			reason: "value length must be at most 64 bytes",
+		}
+	}
+
+	if !_RelationReference_Relation_Pattern.MatchString(m.GetRelation()) {
+		return RelationReferenceValidationError{
+			field:  "Relation",
+			reason: "value does not match regex pattern \"^[a-z][a-z0-9_]{1,62}[a-z0-9]$\"",
 		}
 	}
 
@@ -857,7 +825,9 @@ var _ interface {
 	ErrorName() string
 } = RelationReferenceValidationError{}
 
-var _RelationReference_Name_Pattern = regexp.MustCompile("^([a-z][a-z0-9_]{1,62}[a-z0-9])$")
+var _RelationReference_Type_Pattern = regexp.MustCompile("^([a-z][a-z0-9_]{1,62}[a-z0-9])$")
+
+var _RelationReference_Relation_Pattern = regexp.MustCompile("^[a-z][a-z0-9_]{1,62}[a-z0-9]$")
 
 // Validate checks the field values on ComputedUserSet with the rules defined
 // in the proto definition for this message. If any rules are violated, an

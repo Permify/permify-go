@@ -51,7 +51,7 @@ func (m *PermissionCheckRequest) Validate() error {
 	if !_PermissionCheckRequest_TenantId_Pattern.MatchString(m.GetTenantId()) {
 		return PermissionCheckRequestValidationError{
 			field:  "TenantId",
-			reason: "value does not match regex pattern \"^[a-zA-Z0-9]+$\"",
+			reason: "value does not match regex pattern \"[a-zA-Z0-9-,]+\"",
 		}
 	}
 
@@ -99,7 +99,7 @@ func (m *PermissionCheckRequest) Validate() error {
 	if !_PermissionCheckRequest_Permission_Pattern.MatchString(m.GetPermission()) {
 		return PermissionCheckRequestValidationError{
 			field:  "Permission",
-			reason: "value does not match regex pattern \"^([a-z][a-z0-9_]{1,62}[a-z0-9])$\"",
+			reason: "value does not match regex pattern \"^([a-zA-Z][a-zA-Z0-9_]{1,62}[a-zA-Z0-9])$\"",
 		}
 	}
 
@@ -179,9 +179,9 @@ var _ interface {
 	ErrorName() string
 } = PermissionCheckRequestValidationError{}
 
-var _PermissionCheckRequest_TenantId_Pattern = regexp.MustCompile("^[a-zA-Z0-9]+$")
+var _PermissionCheckRequest_TenantId_Pattern = regexp.MustCompile("[a-zA-Z0-9-,]+")
 
-var _PermissionCheckRequest_Permission_Pattern = regexp.MustCompile("^([a-z][a-z0-9_]{1,62}[a-z0-9])$")
+var _PermissionCheckRequest_Permission_Pattern = regexp.MustCompile("^([a-zA-Z][a-zA-Z0-9_]{1,62}[a-zA-Z0-9])$")
 
 // Validate checks the field values on PermissionCheckRequestMetadata with the
 // rules defined in the proto definition for this message. If any rules are
@@ -431,7 +431,7 @@ func (m *PermissionExpandRequest) Validate() error {
 	if !_PermissionExpandRequest_TenantId_Pattern.MatchString(m.GetTenantId()) {
 		return PermissionExpandRequestValidationError{
 			field:  "TenantId",
-			reason: "value does not match regex pattern \"^[a-zA-Z0-9]+$\"",
+			reason: "value does not match regex pattern \"[a-zA-Z0-9-,]+\"",
 		}
 	}
 
@@ -481,7 +481,7 @@ func (m *PermissionExpandRequest) Validate() error {
 		if !_PermissionExpandRequest_Permission_Pattern.MatchString(m.GetPermission()) {
 			return PermissionExpandRequestValidationError{
 				field:  "Permission",
-				reason: "value does not match regex pattern \"^([a-z][a-z0-9_]{1,62}[a-z0-9])$\"",
+				reason: "value does not match regex pattern \"^([a-zA-Z][a-zA-Z0-9_]{1,62}[a-zA-Z0-9])$\"",
 			}
 		}
 
@@ -546,9 +546,9 @@ var _ interface {
 	ErrorName() string
 } = PermissionExpandRequestValidationError{}
 
-var _PermissionExpandRequest_TenantId_Pattern = regexp.MustCompile("^[a-zA-Z0-9]+$")
+var _PermissionExpandRequest_TenantId_Pattern = regexp.MustCompile("[a-zA-Z0-9-,]+")
 
-var _PermissionExpandRequest_Permission_Pattern = regexp.MustCompile("^([a-z][a-z0-9_]{1,62}[a-z0-9])$")
+var _PermissionExpandRequest_Permission_Pattern = regexp.MustCompile("^([a-zA-Z][a-zA-Z0-9_]{1,62}[a-zA-Z0-9])$")
 
 // Validate checks the field values on PermissionExpandRequestMetadata with the
 // rules defined in the proto definition for this message. If any rules are
@@ -717,7 +717,7 @@ func (m *PermissionLookupSchemaRequest) Validate() error {
 	if !_PermissionLookupSchemaRequest_TenantId_Pattern.MatchString(m.GetTenantId()) {
 		return PermissionLookupSchemaRequestValidationError{
 			field:  "TenantId",
-			reason: "value does not match regex pattern \"^[a-zA-Z0-9]+$\"",
+			reason: "value does not match regex pattern \"[a-zA-Z0-9-,]+\"",
 		}
 	}
 
@@ -812,7 +812,7 @@ var _ interface {
 	ErrorName() string
 } = PermissionLookupSchemaRequestValidationError{}
 
-var _PermissionLookupSchemaRequest_TenantId_Pattern = regexp.MustCompile("^[a-zA-Z0-9]+$")
+var _PermissionLookupSchemaRequest_TenantId_Pattern = regexp.MustCompile("[a-zA-Z0-9-,]+")
 
 var _PermissionLookupSchemaRequest_EntityType_Pattern = regexp.MustCompile("^([a-z][a-z0-9_]{1,62}[a-z0-9])$")
 
@@ -972,7 +972,7 @@ func (m *PermissionLookupEntityRequest) Validate() error {
 	if !_PermissionLookupEntityRequest_TenantId_Pattern.MatchString(m.GetTenantId()) {
 		return PermissionLookupEntityRequestValidationError{
 			field:  "TenantId",
-			reason: "value does not match regex pattern \"^[a-zA-Z0-9]+$\"",
+			reason: "value does not match regex pattern \"[a-zA-Z0-9-,]+\"",
 		}
 	}
 
@@ -1003,7 +1003,7 @@ func (m *PermissionLookupEntityRequest) Validate() error {
 	if !_PermissionLookupEntityRequest_EntityType_Pattern.MatchString(m.GetEntityType()) {
 		return PermissionLookupEntityRequestValidationError{
 			field:  "EntityType",
-			reason: "value does not match regex pattern \"^([a-z][a-z0-9_]{1,62}[a-z0-9])$\"",
+			reason: "value does not match regex pattern \"^([a-zA-Z][a-zA-Z0-9_]{1,62}[a-zA-Z0-9])$\"",
 		}
 	}
 
@@ -1017,7 +1017,7 @@ func (m *PermissionLookupEntityRequest) Validate() error {
 	if !_PermissionLookupEntityRequest_Permission_Pattern.MatchString(m.GetPermission()) {
 		return PermissionLookupEntityRequestValidationError{
 			field:  "Permission",
-			reason: "value does not match regex pattern \"^([a-z][a-z0-9_]{1,62}[a-z0-9])$\"",
+			reason: "value does not match regex pattern \"^([a-zA-Z][a-zA-Z0-9_]{1,62}[a-zA-Z0-9])$\"",
 		}
 	}
 
@@ -1098,11 +1098,11 @@ var _ interface {
 	ErrorName() string
 } = PermissionLookupEntityRequestValidationError{}
 
-var _PermissionLookupEntityRequest_TenantId_Pattern = regexp.MustCompile("^[a-zA-Z0-9]+$")
+var _PermissionLookupEntityRequest_TenantId_Pattern = regexp.MustCompile("[a-zA-Z0-9-,]+")
 
-var _PermissionLookupEntityRequest_EntityType_Pattern = regexp.MustCompile("^([a-z][a-z0-9_]{1,62}[a-z0-9])$")
+var _PermissionLookupEntityRequest_EntityType_Pattern = regexp.MustCompile("^([a-zA-Z][a-zA-Z0-9_]{1,62}[a-zA-Z0-9])$")
 
-var _PermissionLookupEntityRequest_Permission_Pattern = regexp.MustCompile("^([a-z][a-z0-9_]{1,62}[a-z0-9])$")
+var _PermissionLookupEntityRequest_Permission_Pattern = regexp.MustCompile("^([a-zA-Z][a-zA-Z0-9_]{1,62}[a-zA-Z0-9])$")
 
 // Validate checks the field values on PermissionLookupEntityRequestMetadata
 // with the rules defined in the proto definition for this message. If any
@@ -1321,6 +1321,206 @@ var _ interface {
 	ErrorName() string
 } = PermissionLookupEntityStreamResponseValidationError{}
 
+// Validate checks the field values on PermissionLinkedEntityRequest with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *PermissionLinkedEntityRequest) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if len(m.GetTenantId()) > 64 {
+		return PermissionLinkedEntityRequestValidationError{
+			field:  "TenantId",
+			reason: "value length must be at most 64 bytes",
+		}
+	}
+
+	if !_PermissionLinkedEntityRequest_TenantId_Pattern.MatchString(m.GetTenantId()) {
+		return PermissionLinkedEntityRequestValidationError{
+			field:  "TenantId",
+			reason: "value does not match regex pattern \"[a-zA-Z0-9-,]+\"",
+		}
+	}
+
+	if m.GetMetadata() == nil {
+		return PermissionLinkedEntityRequestValidationError{
+			field:  "Metadata",
+			reason: "value is required",
+		}
+	}
+
+	if v, ok := interface{}(m.GetMetadata()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return PermissionLinkedEntityRequestValidationError{
+				field:  "Metadata",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if v, ok := interface{}(m.GetEntityReference()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return PermissionLinkedEntityRequestValidationError{
+				field:  "EntityReference",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if v, ok := interface{}(m.GetSubject()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return PermissionLinkedEntityRequestValidationError{
+				field:  "Subject",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	return nil
+}
+
+// PermissionLinkedEntityRequestValidationError is the validation error
+// returned by PermissionLinkedEntityRequest.Validate if the designated
+// constraints aren't met.
+type PermissionLinkedEntityRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e PermissionLinkedEntityRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e PermissionLinkedEntityRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e PermissionLinkedEntityRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e PermissionLinkedEntityRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e PermissionLinkedEntityRequestValidationError) ErrorName() string {
+	return "PermissionLinkedEntityRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e PermissionLinkedEntityRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sPermissionLinkedEntityRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = PermissionLinkedEntityRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = PermissionLinkedEntityRequestValidationError{}
+
+var _PermissionLinkedEntityRequest_TenantId_Pattern = regexp.MustCompile("[a-zA-Z0-9-,]+")
+
+// Validate checks the field values on PermissionLinkedEntityRequestMetadata
+// with the rules defined in the proto definition for this message. If any
+// rules are violated, an error is returned.
+func (m *PermissionLinkedEntityRequestMetadata) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for SchemaVersion
+
+	// no validation rules for SnapToken
+
+	if m.GetDepth() < 3 {
+		return PermissionLinkedEntityRequestMetadataValidationError{
+			field:  "Depth",
+			reason: "value must be greater than or equal to 3",
+		}
+	}
+
+	return nil
+}
+
+// PermissionLinkedEntityRequestMetadataValidationError is the validation error
+// returned by PermissionLinkedEntityRequestMetadata.Validate if the
+// designated constraints aren't met.
+type PermissionLinkedEntityRequestMetadataValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e PermissionLinkedEntityRequestMetadataValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e PermissionLinkedEntityRequestMetadataValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e PermissionLinkedEntityRequestMetadataValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e PermissionLinkedEntityRequestMetadataValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e PermissionLinkedEntityRequestMetadataValidationError) ErrorName() string {
+	return "PermissionLinkedEntityRequestMetadataValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e PermissionLinkedEntityRequestMetadataValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sPermissionLinkedEntityRequestMetadata.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = PermissionLinkedEntityRequestMetadataValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = PermissionLinkedEntityRequestMetadataValidationError{}
+
 // Validate checks the field values on SchemaWriteRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, an error is returned.
@@ -1339,7 +1539,7 @@ func (m *SchemaWriteRequest) Validate() error {
 	if !_SchemaWriteRequest_TenantId_Pattern.MatchString(m.GetTenantId()) {
 		return SchemaWriteRequestValidationError{
 			field:  "TenantId",
-			reason: "value does not match regex pattern \"^[a-zA-Z0-9]+$\"",
+			reason: "value does not match regex pattern \"[a-zA-Z0-9-,]+\"",
 		}
 	}
 
@@ -1404,7 +1604,7 @@ var _ interface {
 	ErrorName() string
 } = SchemaWriteRequestValidationError{}
 
-var _SchemaWriteRequest_TenantId_Pattern = regexp.MustCompile("^[a-zA-Z0-9]+$")
+var _SchemaWriteRequest_TenantId_Pattern = regexp.MustCompile("[a-zA-Z0-9-,]+")
 
 // Validate checks the field values on SchemaWriteResponse with the rules
 // defined in the proto definition for this message. If any rules are
@@ -1493,7 +1693,7 @@ func (m *SchemaReadRequest) Validate() error {
 	if !_SchemaReadRequest_TenantId_Pattern.MatchString(m.GetTenantId()) {
 		return SchemaReadRequestValidationError{
 			field:  "TenantId",
-			reason: "value does not match regex pattern \"^[a-zA-Z0-9]+$\"",
+			reason: "value does not match regex pattern \"[a-zA-Z0-9-,]+\"",
 		}
 	}
 
@@ -1573,7 +1773,7 @@ var _ interface {
 	ErrorName() string
 } = SchemaReadRequestValidationError{}
 
-var _SchemaReadRequest_TenantId_Pattern = regexp.MustCompile("^[a-zA-Z0-9]+$")
+var _SchemaReadRequest_TenantId_Pattern = regexp.MustCompile("[a-zA-Z0-9-,]+")
 
 // Validate checks the field values on SchemaReadRequestMetadata with the rules
 // defined in the proto definition for this message. If any rules are
@@ -1739,7 +1939,7 @@ func (m *RelationshipWriteRequest) Validate() error {
 	if !_RelationshipWriteRequest_TenantId_Pattern.MatchString(m.GetTenantId()) {
 		return RelationshipWriteRequestValidationError{
 			field:  "TenantId",
-			reason: "value does not match regex pattern \"^[a-zA-Z0-9]+$\"",
+			reason: "value does not match regex pattern \"[a-zA-Z0-9-,]+\"",
 		}
 	}
 
@@ -1848,7 +2048,7 @@ var _ interface {
 	ErrorName() string
 } = RelationshipWriteRequestValidationError{}
 
-var _RelationshipWriteRequest_TenantId_Pattern = regexp.MustCompile("^[a-zA-Z0-9]+$")
+var _RelationshipWriteRequest_TenantId_Pattern = regexp.MustCompile("[a-zA-Z0-9-,]+")
 
 // Validate checks the field values on RelationshipWriteRequestMetadata with
 // the rules defined in the proto definition for this message. If any rules
@@ -2007,7 +2207,7 @@ func (m *RelationshipReadRequest) Validate() error {
 	if !_RelationshipReadRequest_TenantId_Pattern.MatchString(m.GetTenantId()) {
 		return RelationshipReadRequestValidationError{
 			field:  "TenantId",
-			reason: "value does not match regex pattern \"^[a-zA-Z0-9]+$\"",
+			reason: "value does not match regex pattern \"[a-zA-Z0-9-,]+\"",
 		}
 	}
 
@@ -2112,7 +2312,7 @@ var _ interface {
 	ErrorName() string
 } = RelationshipReadRequestValidationError{}
 
-var _RelationshipReadRequest_TenantId_Pattern = regexp.MustCompile("^[a-zA-Z0-9]+$")
+var _RelationshipReadRequest_TenantId_Pattern = regexp.MustCompile("[a-zA-Z0-9-,]+")
 
 // Validate checks the field values on RelationshipReadRequestMetadata with the
 // rules defined in the proto definition for this message. If any rules are
@@ -2286,7 +2486,7 @@ func (m *RelationshipDeleteRequest) Validate() error {
 	if !_RelationshipDeleteRequest_TenantId_Pattern.MatchString(m.GetTenantId()) {
 		return RelationshipDeleteRequestValidationError{
 			field:  "TenantId",
-			reason: "value does not match regex pattern \"^[a-zA-Z0-9]+$\"",
+			reason: "value does not match regex pattern \"[a-zA-Z0-9-,]+\"",
 		}
 	}
 
@@ -2359,7 +2559,7 @@ var _ interface {
 	ErrorName() string
 } = RelationshipDeleteRequestValidationError{}
 
-var _RelationshipDeleteRequest_TenantId_Pattern = regexp.MustCompile("^[a-zA-Z0-9]+$")
+var _RelationshipDeleteRequest_TenantId_Pattern = regexp.MustCompile("[a-zA-Z0-9-,]+")
 
 // Validate checks the field values on RelationshipDeleteResponse with the
 // rules defined in the proto definition for this message. If any rules are
@@ -2445,6 +2645,13 @@ func (m *TenantCreateRequest) Validate() error {
 		}
 	}
 
+	if !_TenantCreateRequest_Id_Pattern.MatchString(m.GetId()) {
+		return TenantCreateRequestValidationError{
+			field:  "Id",
+			reason: "value does not match regex pattern \"[a-zA-Z0-9-,]+\"",
+		}
+	}
+
 	if len(m.GetName()) > 64 {
 		return TenantCreateRequestValidationError{
 			field:  "Name",
@@ -2510,6 +2717,8 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = TenantCreateRequestValidationError{}
+
+var _TenantCreateRequest_Id_Pattern = regexp.MustCompile("[a-zA-Z0-9-,]+")
 
 // Validate checks the field values on TenantCreateResponse with the rules
 // defined in the proto definition for this message. If any rules are
@@ -2897,236 +3106,3 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = TenantListResponseValidationError{}
-
-// Validate checks the field values on WelcomeResponse with the rules defined
-// in the proto definition for this message. If any rules are violated, an
-// error is returned.
-func (m *WelcomeResponse) Validate() error {
-	if m == nil {
-		return nil
-	}
-
-	// no validation rules for Permify
-
-	if v, ok := interface{}(m.GetSources()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return WelcomeResponseValidationError{
-				field:  "Sources",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
-
-	if v, ok := interface{}(m.GetSocials()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return WelcomeResponseValidationError{
-				field:  "Socials",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
-
-	return nil
-}
-
-// WelcomeResponseValidationError is the validation error returned by
-// WelcomeResponse.Validate if the designated constraints aren't met.
-type WelcomeResponseValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e WelcomeResponseValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e WelcomeResponseValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e WelcomeResponseValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e WelcomeResponseValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e WelcomeResponseValidationError) ErrorName() string { return "WelcomeResponseValidationError" }
-
-// Error satisfies the builtin error interface
-func (e WelcomeResponseValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sWelcomeResponse.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = WelcomeResponseValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = WelcomeResponseValidationError{}
-
-// Validate checks the field values on WelcomeResponse_Sources with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, an error is returned.
-func (m *WelcomeResponse_Sources) Validate() error {
-	if m == nil {
-		return nil
-	}
-
-	// no validation rules for Docs
-
-	// no validation rules for GitHub
-
-	// no validation rules for Blog
-
-	return nil
-}
-
-// WelcomeResponse_SourcesValidationError is the validation error returned by
-// WelcomeResponse_Sources.Validate if the designated constraints aren't met.
-type WelcomeResponse_SourcesValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e WelcomeResponse_SourcesValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e WelcomeResponse_SourcesValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e WelcomeResponse_SourcesValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e WelcomeResponse_SourcesValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e WelcomeResponse_SourcesValidationError) ErrorName() string {
-	return "WelcomeResponse_SourcesValidationError"
-}
-
-// Error satisfies the builtin error interface
-func (e WelcomeResponse_SourcesValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sWelcomeResponse_Sources.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = WelcomeResponse_SourcesValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = WelcomeResponse_SourcesValidationError{}
-
-// Validate checks the field values on WelcomeResponse_Socials with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, an error is returned.
-func (m *WelcomeResponse_Socials) Validate() error {
-	if m == nil {
-		return nil
-	}
-
-	// no validation rules for Discord
-
-	// no validation rules for Twitter
-
-	// no validation rules for Linkedin
-
-	return nil
-}
-
-// WelcomeResponse_SocialsValidationError is the validation error returned by
-// WelcomeResponse_Socials.Validate if the designated constraints aren't met.
-type WelcomeResponse_SocialsValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e WelcomeResponse_SocialsValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e WelcomeResponse_SocialsValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e WelcomeResponse_SocialsValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e WelcomeResponse_SocialsValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e WelcomeResponse_SocialsValidationError) ErrorName() string {
-	return "WelcomeResponse_SocialsValidationError"
-}
-
-// Error satisfies the builtin error interface
-func (e WelcomeResponse_SocialsValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sWelcomeResponse_Socials.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = WelcomeResponse_SocialsValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = WelcomeResponse_SocialsValidationError{}
