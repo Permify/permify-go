@@ -3,14 +3,14 @@
   "info": {
     "title": "Permify API",
     "description": "Permify is an open-source authorization service for creating and maintaining fine-grained authorizations across your individual applications and services. Permify converts authorization data as relational tuples into a database you point at. We called that database a Write Database (WriteDB) and it behaves as a centralized data source for your authorization system. You can model of your authorization with Permify's DSL - Permify Schema - and perform access checks with a single API call anywhere on your stack. Access decisions made according to stored relational tuples.",
-    "version": "v0.3.9",
+    "version": "v0.4.3",
     "contact": {
       "name": "API Support",
       "url": "https://github.com/Permify/permify/issues",
       "email": "hello@permify.co"
     },
     "license": {
-      "name": "GNU Affero General Public License v3.0",
+      "name": "Apache-2.0 license",
       "url": "https://github.com/Permify/permify/blob/master/LICENSE"
     }
   },
@@ -356,14 +356,14 @@
         ]
       }
     },
-    "/v1/tenants/{tenant_id}/permissions/lookup-schema": {
+    "/v1/tenants/{tenant_id}/permissions/lookup-subject": {
       "post": {
-        "operationId": "permissions.lookupSchema",
+        "operationId": "permissions.lookupSubject",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1PermissionLookupSchemaResponse"
+              "$ref": "#/definitions/v1PermissionLookupSubjectResponse"
             }
           },
           "default": {
@@ -388,19 +388,20 @@
               "type": "object",
               "properties": {
                 "metadata": {
-                  "$ref": "#/definitions/v1PermissionLookupSchemaRequestMetadata"
+                  "$ref": "#/definitions/v1PermissionLookupSubjectRequestMetadata"
                 },
-                "entity_type": {
-                  "type": "string"
+                "entity": {
+                  "$ref": "#/definitions/v1Entity"
                 },
-                "relation_names": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
+                "permission": {
+                  "type": "string",
+                  "title": "its can be permission or relation"
+                },
+                "subject_reference": {
+                  "$ref": "#/definitions/v1RelationReference"
                 }
               },
-              "title": "PermissionLookupSchemaRequest"
+              "title": "PermissionLookupSubjectRequest"
             }
           }
         ],
@@ -662,22 +663,14 @@
       "default": "RELATIONAL_REFERENCE_UNSPECIFIED",
       "title": "RelationalReference"
     },
-    "basev1Result": {
-      "type": "object",
-      "properties": {
-        "target": {
-          "$ref": "#/definitions/v1EntityAndRelation"
-        },
-        "exclusion": {
-          "type": "boolean"
-        },
-        "subjects": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1Subject"
-          }
-        }
-      },
+    "PermissionCheckResponseResult": {
+      "type": "string",
+      "enum": [
+        "RESULT_UNKNOWN",
+        "RESULT_ALLOWED",
+        "RESULT_DENIED"
+      ],
+      "default": "RESULT_UNKNOWN",
       "title": "Result"
     },
     "protobufAny": {
@@ -799,11 +792,14 @@
     "v1Expand": {
       "type": "object",
       "properties": {
+        "target": {
+          "$ref": "#/definitions/v1EntityAndRelation"
+        },
         "expand": {
           "$ref": "#/definitions/v1ExpandTreeNode"
         },
         "leaf": {
-          "$ref": "#/definitions/basev1Result"
+          "$ref": "#/definitions/v1Subjects"
         }
       },
       "title": "Expand"
@@ -828,7 +824,8 @@
       "enum": [
         "OPERATION_UNSPECIFIED",
         "OPERATION_UNION",
-        "OPERATION_INTERSECTION"
+        "OPERATION_INTERSECTION",
+        "OPERATION_EXCLUSION"
       ],
       "default": "OPERATION_UNSPECIFIED",
       "title": "Operation"
@@ -836,9 +833,6 @@
     "v1Leaf": {
       "type": "object",
       "properties": {
-        "exclusion": {
-          "type": "boolean"
-        },
         "computedUserSet": {
           "$ref": "#/definitions/v1ComputedUserSet"
         },
@@ -857,9 +851,6 @@
         "snap_token": {
           "type": "string"
         },
-        "exclusion": {
-          "type": "boolean"
-        },
         "depth": {
           "type": "integer",
           "format": "int32"
@@ -871,7 +862,7 @@
       "type": "object",
       "properties": {
         "can": {
-          "$ref": "#/definitions/v1PermissionCheckResponseResult"
+          "$ref": "#/definitions/PermissionCheckResponseResult"
         },
         "metadata": {
           "$ref": "#/definitions/v1PermissionCheckResponseMetadata"
@@ -888,16 +879,6 @@
         }
       },
       "title": "CheckResponseMetadata"
-    },
-    "v1PermissionCheckResponseResult": {
-      "type": "string",
-      "enum": [
-        "RESULT_UNKNOWN",
-        "RESULT_ALLOWED",
-        "RESULT_DENIED"
-      ],
-      "default": "RESULT_UNKNOWN",
-      "title": "Result"
     },
     "v1PermissionDefinition": {
       "type": "object",
@@ -969,26 +950,29 @@
       },
       "title": "PermissionLookupEntityStreamResponse"
     },
-    "v1PermissionLookupSchemaRequestMetadata": {
+    "v1PermissionLookupSubjectRequestMetadata": {
       "type": "object",
       "properties": {
         "schema_version": {
           "type": "string"
+        },
+        "snap_token": {
+          "type": "string"
         }
       },
-      "title": "PermissionLookupSchemaRequestMetadata"
+      "title": "PermissionLookupSubjectRequestMetadata"
     },
-    "v1PermissionLookupSchemaResponse": {
+    "v1PermissionLookupSubjectResponse": {
       "type": "object",
       "properties": {
-        "permission_names": {
+        "subject_ids": {
           "type": "array",
           "items": {
             "type": "string"
           }
         }
       },
-      "title": "PermissionLookupSchemaResponse"
+      "title": "PermissionLookupSubjectResponse"
     },
     "v1RelationDefinition": {
       "type": "object",
@@ -1088,7 +1072,8 @@
       "enum": [
         "OPERATION_UNSPECIFIED",
         "OPERATION_UNION",
-        "OPERATION_INTERSECTION"
+        "OPERATION_INTERSECTION",
+        "OPERATION_EXCLUSION"
       ],
       "default": "OPERATION_UNSPECIFIED",
       "title": "Operation"
@@ -1164,6 +1149,18 @@
         }
       },
       "title": "SubjectFilter is used to filter subjects"
+    },
+    "v1Subjects": {
+      "type": "object",
+      "properties": {
+        "subjects": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Subject"
+          }
+        }
+      },
+      "title": "Result"
     },
     "v1Tenant": {
       "type": "object",

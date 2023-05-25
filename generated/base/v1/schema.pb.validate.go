@@ -152,8 +152,6 @@ func (m *Leaf) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Exclusion
-
 	switch m.Type.(type) {
 
 	case *Leaf_ComputedUserSet:
@@ -752,18 +750,22 @@ func (m *RelationReference) Validate() error {
 		}
 	}
 
-	if len(m.GetRelation()) > 64 {
-		return RelationReferenceValidationError{
-			field:  "Relation",
-			reason: "value length must be at most 64 bytes",
-		}
-	}
+	if m.GetRelation() != "" {
 
-	if !_RelationReference_Relation_Pattern.MatchString(m.GetRelation()) {
-		return RelationReferenceValidationError{
-			field:  "Relation",
-			reason: "value does not match regex pattern \"^[a-z][a-z0-9_]{1,62}[a-z0-9]$\"",
+		if len(m.GetRelation()) > 64 {
+			return RelationReferenceValidationError{
+				field:  "Relation",
+				reason: "value length must be at most 64 bytes",
+			}
 		}
+
+		if !_RelationReference_Relation_Pattern.MatchString(m.GetRelation()) {
+			return RelationReferenceValidationError{
+				field:  "Relation",
+				reason: "value does not match regex pattern \"^[a-z][a-z0-9_]{1,62}[a-z0-9]$\"",
+			}
+		}
+
 	}
 
 	return nil

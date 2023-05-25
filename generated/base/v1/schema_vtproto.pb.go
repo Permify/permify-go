@@ -142,16 +142,6 @@ func (m *Leaf) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 			}
 		}
 	}
-	if m.Exclusion {
-		i--
-		if m.Exclusion {
-			dAtA[i] = 1
-		} else {
-			dAtA[i] = 0
-		}
-		i--
-		dAtA[i] = 0x8
-	}
 	return len(dAtA) - i, nil
 }
 
@@ -170,7 +160,7 @@ func (m *Leaf_ComputedUserSet) MarshalToSizedBufferVT(dAtA []byte) (int, error) 
 		i -= size
 		i = encodeVarint(dAtA, i, uint64(size))
 		i--
-		dAtA[i] = 0x12
+		dAtA[i] = 0xa
 	}
 	return len(dAtA) - i, nil
 }
@@ -189,7 +179,7 @@ func (m *Leaf_TupleToUserSet) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 		i -= size
 		i = encodeVarint(dAtA, i, uint64(size))
 		i--
-		dAtA[i] = 0x1a
+		dAtA[i] = 0x12
 	}
 	return len(dAtA) - i, nil
 }
@@ -726,9 +716,6 @@ func (m *Leaf) SizeVT() (n int) {
 	}
 	var l int
 	_ = l
-	if m.Exclusion {
-		n += 2
-	}
 	if vtmsg, ok := m.Type.(interface{ SizeVT() int }); ok {
 		n += vtmsg.SizeVT()
 	}
@@ -1135,26 +1122,6 @@ func (m *Leaf) UnmarshalVT(dAtA []byte) error {
 		}
 		switch fieldNum {
 		case 1:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Exclusion", wireType)
-			}
-			var v int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				v |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			m.Exclusion = bool(v != 0)
-		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ComputedUserSet", wireType)
 			}
@@ -1195,7 +1162,7 @@ func (m *Leaf) UnmarshalVT(dAtA []byte) error {
 				m.Type = &Leaf_ComputedUserSet{v}
 			}
 			iNdEx = postIndex
-		case 3:
+		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field TupleToUserSet", wireType)
 			}

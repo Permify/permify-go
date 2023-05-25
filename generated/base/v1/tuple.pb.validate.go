@@ -997,6 +997,16 @@ func (m *Expand) Validate() error {
 		return nil
 	}
 
+	if v, ok := interface{}(m.GetTarget()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return ExpandValidationError{
+				field:  "Target",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
 	switch m.Node.(type) {
 
 	case *Expand_Expand:
@@ -1082,31 +1092,19 @@ var _ interface {
 	ErrorName() string
 } = ExpandValidationError{}
 
-// Validate checks the field values on Result with the rules defined in the
+// Validate checks the field values on Subjects with the rules defined in the
 // proto definition for this message. If any rules are violated, an error is returned.
-func (m *Result) Validate() error {
+func (m *Subjects) Validate() error {
 	if m == nil {
 		return nil
 	}
-
-	if v, ok := interface{}(m.GetTarget()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return ResultValidationError{
-				field:  "Target",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
-
-	// no validation rules for Exclusion
 
 	for idx, item := range m.GetSubjects() {
 		_, _ = idx, item
 
 		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
 			if err := v.Validate(); err != nil {
-				return ResultValidationError{
+				return SubjectsValidationError{
 					field:  fmt.Sprintf("Subjects[%v]", idx),
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -1119,9 +1117,9 @@ func (m *Result) Validate() error {
 	return nil
 }
 
-// ResultValidationError is the validation error returned by Result.Validate if
-// the designated constraints aren't met.
-type ResultValidationError struct {
+// SubjectsValidationError is the validation error returned by
+// Subjects.Validate if the designated constraints aren't met.
+type SubjectsValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -1129,22 +1127,22 @@ type ResultValidationError struct {
 }
 
 // Field function returns field value.
-func (e ResultValidationError) Field() string { return e.field }
+func (e SubjectsValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e ResultValidationError) Reason() string { return e.reason }
+func (e SubjectsValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e ResultValidationError) Cause() error { return e.cause }
+func (e SubjectsValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e ResultValidationError) Key() bool { return e.key }
+func (e SubjectsValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e ResultValidationError) ErrorName() string { return "ResultValidationError" }
+func (e SubjectsValidationError) ErrorName() string { return "SubjectsValidationError" }
 
 // Error satisfies the builtin error interface
-func (e ResultValidationError) Error() string {
+func (e SubjectsValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -1156,14 +1154,14 @@ func (e ResultValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sResult.%s: %s%s",
+		"invalid %sSubjects.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = ResultValidationError{}
+var _ error = SubjectsValidationError{}
 
 var _ interface {
 	Field() string
@@ -1171,7 +1169,7 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = ResultValidationError{}
+} = SubjectsValidationError{}
 
 // Validate checks the field values on Tenant with the rules defined in the
 // proto definition for this message. If any rules are violated, an error is returned.

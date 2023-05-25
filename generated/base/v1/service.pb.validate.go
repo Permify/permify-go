@@ -195,8 +195,6 @@ func (m *PermissionCheckRequestMetadata) Validate() error {
 
 	// no validation rules for SnapToken
 
-	// no validation rules for Exclusion
-
 	if m.GetDepth() < 3 {
 		return PermissionCheckRequestMetadataValidationError{
 			field:  "Depth",
@@ -699,261 +697,6 @@ var _ interface {
 	ErrorName() string
 } = PermissionExpandResponseValidationError{}
 
-// Validate checks the field values on PermissionLookupSchemaRequest with the
-// rules defined in the proto definition for this message. If any rules are
-// violated, an error is returned.
-func (m *PermissionLookupSchemaRequest) Validate() error {
-	if m == nil {
-		return nil
-	}
-
-	if len(m.GetTenantId()) > 64 {
-		return PermissionLookupSchemaRequestValidationError{
-			field:  "TenantId",
-			reason: "value length must be at most 64 bytes",
-		}
-	}
-
-	if !_PermissionLookupSchemaRequest_TenantId_Pattern.MatchString(m.GetTenantId()) {
-		return PermissionLookupSchemaRequestValidationError{
-			field:  "TenantId",
-			reason: "value does not match regex pattern \"[a-zA-Z0-9-,]+\"",
-		}
-	}
-
-	if m.GetMetadata() == nil {
-		return PermissionLookupSchemaRequestValidationError{
-			field:  "Metadata",
-			reason: "value is required",
-		}
-	}
-
-	if v, ok := interface{}(m.GetMetadata()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return PermissionLookupSchemaRequestValidationError{
-				field:  "Metadata",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
-
-	if len(m.GetEntityType()) > 64 {
-		return PermissionLookupSchemaRequestValidationError{
-			field:  "EntityType",
-			reason: "value length must be at most 64 bytes",
-		}
-	}
-
-	if !_PermissionLookupSchemaRequest_EntityType_Pattern.MatchString(m.GetEntityType()) {
-		return PermissionLookupSchemaRequestValidationError{
-			field:  "EntityType",
-			reason: "value does not match regex pattern \"^([a-z][a-z0-9_]{1,62}[a-z0-9])$\"",
-		}
-	}
-
-	return nil
-}
-
-// PermissionLookupSchemaRequestValidationError is the validation error
-// returned by PermissionLookupSchemaRequest.Validate if the designated
-// constraints aren't met.
-type PermissionLookupSchemaRequestValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e PermissionLookupSchemaRequestValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e PermissionLookupSchemaRequestValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e PermissionLookupSchemaRequestValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e PermissionLookupSchemaRequestValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e PermissionLookupSchemaRequestValidationError) ErrorName() string {
-	return "PermissionLookupSchemaRequestValidationError"
-}
-
-// Error satisfies the builtin error interface
-func (e PermissionLookupSchemaRequestValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sPermissionLookupSchemaRequest.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = PermissionLookupSchemaRequestValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = PermissionLookupSchemaRequestValidationError{}
-
-var _PermissionLookupSchemaRequest_TenantId_Pattern = regexp.MustCompile("[a-zA-Z0-9-,]+")
-
-var _PermissionLookupSchemaRequest_EntityType_Pattern = regexp.MustCompile("^([a-z][a-z0-9_]{1,62}[a-z0-9])$")
-
-// Validate checks the field values on PermissionLookupSchemaRequestMetadata
-// with the rules defined in the proto definition for this message. If any
-// rules are violated, an error is returned.
-func (m *PermissionLookupSchemaRequestMetadata) Validate() error {
-	if m == nil {
-		return nil
-	}
-
-	// no validation rules for SchemaVersion
-
-	return nil
-}
-
-// PermissionLookupSchemaRequestMetadataValidationError is the validation error
-// returned by PermissionLookupSchemaRequestMetadata.Validate if the
-// designated constraints aren't met.
-type PermissionLookupSchemaRequestMetadataValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e PermissionLookupSchemaRequestMetadataValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e PermissionLookupSchemaRequestMetadataValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e PermissionLookupSchemaRequestMetadataValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e PermissionLookupSchemaRequestMetadataValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e PermissionLookupSchemaRequestMetadataValidationError) ErrorName() string {
-	return "PermissionLookupSchemaRequestMetadataValidationError"
-}
-
-// Error satisfies the builtin error interface
-func (e PermissionLookupSchemaRequestMetadataValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sPermissionLookupSchemaRequestMetadata.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = PermissionLookupSchemaRequestMetadataValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = PermissionLookupSchemaRequestMetadataValidationError{}
-
-// Validate checks the field values on PermissionLookupSchemaResponse with the
-// rules defined in the proto definition for this message. If any rules are
-// violated, an error is returned.
-func (m *PermissionLookupSchemaResponse) Validate() error {
-	if m == nil {
-		return nil
-	}
-
-	return nil
-}
-
-// PermissionLookupSchemaResponseValidationError is the validation error
-// returned by PermissionLookupSchemaResponse.Validate if the designated
-// constraints aren't met.
-type PermissionLookupSchemaResponseValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e PermissionLookupSchemaResponseValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e PermissionLookupSchemaResponseValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e PermissionLookupSchemaResponseValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e PermissionLookupSchemaResponseValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e PermissionLookupSchemaResponseValidationError) ErrorName() string {
-	return "PermissionLookupSchemaResponseValidationError"
-}
-
-// Error satisfies the builtin error interface
-func (e PermissionLookupSchemaResponseValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sPermissionLookupSchemaResponse.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = PermissionLookupSchemaResponseValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = PermissionLookupSchemaResponseValidationError{}
-
 // Validate checks the field values on PermissionLookupEntityRequest with the
 // rules defined in the proto definition for this message. If any rules are
 // violated, an error is returned.
@@ -1321,30 +1064,30 @@ var _ interface {
 	ErrorName() string
 } = PermissionLookupEntityStreamResponseValidationError{}
 
-// Validate checks the field values on PermissionLinkedEntityRequest with the
+// Validate checks the field values on PermissionEntityFilterRequest with the
 // rules defined in the proto definition for this message. If any rules are
 // violated, an error is returned.
-func (m *PermissionLinkedEntityRequest) Validate() error {
+func (m *PermissionEntityFilterRequest) Validate() error {
 	if m == nil {
 		return nil
 	}
 
 	if len(m.GetTenantId()) > 64 {
-		return PermissionLinkedEntityRequestValidationError{
+		return PermissionEntityFilterRequestValidationError{
 			field:  "TenantId",
 			reason: "value length must be at most 64 bytes",
 		}
 	}
 
-	if !_PermissionLinkedEntityRequest_TenantId_Pattern.MatchString(m.GetTenantId()) {
-		return PermissionLinkedEntityRequestValidationError{
+	if !_PermissionEntityFilterRequest_TenantId_Pattern.MatchString(m.GetTenantId()) {
+		return PermissionEntityFilterRequestValidationError{
 			field:  "TenantId",
 			reason: "value does not match regex pattern \"[a-zA-Z0-9-,]+\"",
 		}
 	}
 
 	if m.GetMetadata() == nil {
-		return PermissionLinkedEntityRequestValidationError{
+		return PermissionEntityFilterRequestValidationError{
 			field:  "Metadata",
 			reason: "value is required",
 		}
@@ -1352,7 +1095,7 @@ func (m *PermissionLinkedEntityRequest) Validate() error {
 
 	if v, ok := interface{}(m.GetMetadata()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return PermissionLinkedEntityRequestValidationError{
+			return PermissionEntityFilterRequestValidationError{
 				field:  "Metadata",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -1362,7 +1105,7 @@ func (m *PermissionLinkedEntityRequest) Validate() error {
 
 	if v, ok := interface{}(m.GetEntityReference()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return PermissionLinkedEntityRequestValidationError{
+			return PermissionEntityFilterRequestValidationError{
 				field:  "EntityReference",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -1372,7 +1115,7 @@ func (m *PermissionLinkedEntityRequest) Validate() error {
 
 	if v, ok := interface{}(m.GetSubject()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return PermissionLinkedEntityRequestValidationError{
+			return PermissionEntityFilterRequestValidationError{
 				field:  "Subject",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -1383,10 +1126,10 @@ func (m *PermissionLinkedEntityRequest) Validate() error {
 	return nil
 }
 
-// PermissionLinkedEntityRequestValidationError is the validation error
-// returned by PermissionLinkedEntityRequest.Validate if the designated
+// PermissionEntityFilterRequestValidationError is the validation error
+// returned by PermissionEntityFilterRequest.Validate if the designated
 // constraints aren't met.
-type PermissionLinkedEntityRequestValidationError struct {
+type PermissionEntityFilterRequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -1394,24 +1137,24 @@ type PermissionLinkedEntityRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e PermissionLinkedEntityRequestValidationError) Field() string { return e.field }
+func (e PermissionEntityFilterRequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e PermissionLinkedEntityRequestValidationError) Reason() string { return e.reason }
+func (e PermissionEntityFilterRequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e PermissionLinkedEntityRequestValidationError) Cause() error { return e.cause }
+func (e PermissionEntityFilterRequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e PermissionLinkedEntityRequestValidationError) Key() bool { return e.key }
+func (e PermissionEntityFilterRequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e PermissionLinkedEntityRequestValidationError) ErrorName() string {
-	return "PermissionLinkedEntityRequestValidationError"
+func (e PermissionEntityFilterRequestValidationError) ErrorName() string {
+	return "PermissionEntityFilterRequestValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e PermissionLinkedEntityRequestValidationError) Error() string {
+func (e PermissionEntityFilterRequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -1423,14 +1166,14 @@ func (e PermissionLinkedEntityRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sPermissionLinkedEntityRequest.%s: %s%s",
+		"invalid %sPermissionEntityFilterRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = PermissionLinkedEntityRequestValidationError{}
+var _ error = PermissionEntityFilterRequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -1438,14 +1181,14 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = PermissionLinkedEntityRequestValidationError{}
+} = PermissionEntityFilterRequestValidationError{}
 
-var _PermissionLinkedEntityRequest_TenantId_Pattern = regexp.MustCompile("[a-zA-Z0-9-,]+")
+var _PermissionEntityFilterRequest_TenantId_Pattern = regexp.MustCompile("[a-zA-Z0-9-,]+")
 
-// Validate checks the field values on PermissionLinkedEntityRequestMetadata
+// Validate checks the field values on PermissionEntityFilterRequestMetadata
 // with the rules defined in the proto definition for this message. If any
 // rules are violated, an error is returned.
-func (m *PermissionLinkedEntityRequestMetadata) Validate() error {
+func (m *PermissionEntityFilterRequestMetadata) Validate() error {
 	if m == nil {
 		return nil
 	}
@@ -1455,7 +1198,7 @@ func (m *PermissionLinkedEntityRequestMetadata) Validate() error {
 	// no validation rules for SnapToken
 
 	if m.GetDepth() < 3 {
-		return PermissionLinkedEntityRequestMetadataValidationError{
+		return PermissionEntityFilterRequestMetadataValidationError{
 			field:  "Depth",
 			reason: "value must be greater than or equal to 3",
 		}
@@ -1464,10 +1207,10 @@ func (m *PermissionLinkedEntityRequestMetadata) Validate() error {
 	return nil
 }
 
-// PermissionLinkedEntityRequestMetadataValidationError is the validation error
-// returned by PermissionLinkedEntityRequestMetadata.Validate if the
+// PermissionEntityFilterRequestMetadataValidationError is the validation error
+// returned by PermissionEntityFilterRequestMetadata.Validate if the
 // designated constraints aren't met.
-type PermissionLinkedEntityRequestMetadataValidationError struct {
+type PermissionEntityFilterRequestMetadataValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -1475,24 +1218,24 @@ type PermissionLinkedEntityRequestMetadataValidationError struct {
 }
 
 // Field function returns field value.
-func (e PermissionLinkedEntityRequestMetadataValidationError) Field() string { return e.field }
+func (e PermissionEntityFilterRequestMetadataValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e PermissionLinkedEntityRequestMetadataValidationError) Reason() string { return e.reason }
+func (e PermissionEntityFilterRequestMetadataValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e PermissionLinkedEntityRequestMetadataValidationError) Cause() error { return e.cause }
+func (e PermissionEntityFilterRequestMetadataValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e PermissionLinkedEntityRequestMetadataValidationError) Key() bool { return e.key }
+func (e PermissionEntityFilterRequestMetadataValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e PermissionLinkedEntityRequestMetadataValidationError) ErrorName() string {
-	return "PermissionLinkedEntityRequestMetadataValidationError"
+func (e PermissionEntityFilterRequestMetadataValidationError) ErrorName() string {
+	return "PermissionEntityFilterRequestMetadataValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e PermissionLinkedEntityRequestMetadataValidationError) Error() string {
+func (e PermissionEntityFilterRequestMetadataValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -1504,14 +1247,14 @@ func (e PermissionLinkedEntityRequestMetadataValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sPermissionLinkedEntityRequestMetadata.%s: %s%s",
+		"invalid %sPermissionEntityFilterRequestMetadata.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = PermissionLinkedEntityRequestMetadataValidationError{}
+var _ error = PermissionEntityFilterRequestMetadataValidationError{}
 
 var _ interface {
 	Field() string
@@ -1519,7 +1262,291 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = PermissionLinkedEntityRequestMetadataValidationError{}
+} = PermissionEntityFilterRequestMetadataValidationError{}
+
+// Validate checks the field values on PermissionLookupSubjectRequest with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *PermissionLookupSubjectRequest) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if len(m.GetTenantId()) > 64 {
+		return PermissionLookupSubjectRequestValidationError{
+			field:  "TenantId",
+			reason: "value length must be at most 64 bytes",
+		}
+	}
+
+	if !_PermissionLookupSubjectRequest_TenantId_Pattern.MatchString(m.GetTenantId()) {
+		return PermissionLookupSubjectRequestValidationError{
+			field:  "TenantId",
+			reason: "value does not match regex pattern \"[a-zA-Z0-9-,]+\"",
+		}
+	}
+
+	if m.GetMetadata() == nil {
+		return PermissionLookupSubjectRequestValidationError{
+			field:  "Metadata",
+			reason: "value is required",
+		}
+	}
+
+	if v, ok := interface{}(m.GetMetadata()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return PermissionLookupSubjectRequestValidationError{
+				field:  "Metadata",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if m.GetEntity() == nil {
+		return PermissionLookupSubjectRequestValidationError{
+			field:  "Entity",
+			reason: "value is required",
+		}
+	}
+
+	if v, ok := interface{}(m.GetEntity()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return PermissionLookupSubjectRequestValidationError{
+				field:  "Entity",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if len(m.GetPermission()) > 64 {
+		return PermissionLookupSubjectRequestValidationError{
+			field:  "Permission",
+			reason: "value length must be at most 64 bytes",
+		}
+	}
+
+	if !_PermissionLookupSubjectRequest_Permission_Pattern.MatchString(m.GetPermission()) {
+		return PermissionLookupSubjectRequestValidationError{
+			field:  "Permission",
+			reason: "value does not match regex pattern \"^([a-zA-Z][a-zA-Z0-9_]{1,62}[a-zA-Z0-9])$\"",
+		}
+	}
+
+	if v, ok := interface{}(m.GetSubjectReference()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return PermissionLookupSubjectRequestValidationError{
+				field:  "SubjectReference",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	return nil
+}
+
+// PermissionLookupSubjectRequestValidationError is the validation error
+// returned by PermissionLookupSubjectRequest.Validate if the designated
+// constraints aren't met.
+type PermissionLookupSubjectRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e PermissionLookupSubjectRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e PermissionLookupSubjectRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e PermissionLookupSubjectRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e PermissionLookupSubjectRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e PermissionLookupSubjectRequestValidationError) ErrorName() string {
+	return "PermissionLookupSubjectRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e PermissionLookupSubjectRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sPermissionLookupSubjectRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = PermissionLookupSubjectRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = PermissionLookupSubjectRequestValidationError{}
+
+var _PermissionLookupSubjectRequest_TenantId_Pattern = regexp.MustCompile("[a-zA-Z0-9-,]+")
+
+var _PermissionLookupSubjectRequest_Permission_Pattern = regexp.MustCompile("^([a-zA-Z][a-zA-Z0-9_]{1,62}[a-zA-Z0-9])$")
+
+// Validate checks the field values on PermissionLookupSubjectRequestMetadata
+// with the rules defined in the proto definition for this message. If any
+// rules are violated, an error is returned.
+func (m *PermissionLookupSubjectRequestMetadata) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for SchemaVersion
+
+	// no validation rules for SnapToken
+
+	return nil
+}
+
+// PermissionLookupSubjectRequestMetadataValidationError is the validation
+// error returned by PermissionLookupSubjectRequestMetadata.Validate if the
+// designated constraints aren't met.
+type PermissionLookupSubjectRequestMetadataValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e PermissionLookupSubjectRequestMetadataValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e PermissionLookupSubjectRequestMetadataValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e PermissionLookupSubjectRequestMetadataValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e PermissionLookupSubjectRequestMetadataValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e PermissionLookupSubjectRequestMetadataValidationError) ErrorName() string {
+	return "PermissionLookupSubjectRequestMetadataValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e PermissionLookupSubjectRequestMetadataValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sPermissionLookupSubjectRequestMetadata.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = PermissionLookupSubjectRequestMetadataValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = PermissionLookupSubjectRequestMetadataValidationError{}
+
+// Validate checks the field values on PermissionLookupSubjectResponse with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *PermissionLookupSubjectResponse) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	return nil
+}
+
+// PermissionLookupSubjectResponseValidationError is the validation error
+// returned by PermissionLookupSubjectResponse.Validate if the designated
+// constraints aren't met.
+type PermissionLookupSubjectResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e PermissionLookupSubjectResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e PermissionLookupSubjectResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e PermissionLookupSubjectResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e PermissionLookupSubjectResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e PermissionLookupSubjectResponseValidationError) ErrorName() string {
+	return "PermissionLookupSubjectResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e PermissionLookupSubjectResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sPermissionLookupSubjectResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = PermissionLookupSubjectResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = PermissionLookupSubjectResponseValidationError{}
 
 // Validate checks the field values on SchemaWriteRequest with the rules
 // defined in the proto definition for this message. If any rules are
