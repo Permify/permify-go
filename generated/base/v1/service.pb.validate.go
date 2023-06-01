@@ -1548,6 +1548,164 @@ var _ interface {
 	ErrorName() string
 } = PermissionLookupSubjectResponseValidationError{}
 
+// Validate checks the field values on WatchRequest with the rules defined in
+// the proto definition for this message. If any rules are violated, an error
+// is returned.
+func (m *WatchRequest) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if len(m.GetTenantId()) > 64 {
+		return WatchRequestValidationError{
+			field:  "TenantId",
+			reason: "value length must be at most 64 bytes",
+		}
+	}
+
+	if !_WatchRequest_TenantId_Pattern.MatchString(m.GetTenantId()) {
+		return WatchRequestValidationError{
+			field:  "TenantId",
+			reason: "value does not match regex pattern \"[a-zA-Z0-9-,]+\"",
+		}
+	}
+
+	// no validation rules for SnapToken
+
+	return nil
+}
+
+// WatchRequestValidationError is the validation error returned by
+// WatchRequest.Validate if the designated constraints aren't met.
+type WatchRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e WatchRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e WatchRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e WatchRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e WatchRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e WatchRequestValidationError) ErrorName() string { return "WatchRequestValidationError" }
+
+// Error satisfies the builtin error interface
+func (e WatchRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sWatchRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = WatchRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = WatchRequestValidationError{}
+
+var _WatchRequest_TenantId_Pattern = regexp.MustCompile("[a-zA-Z0-9-,]+")
+
+// Validate checks the field values on WatchResponse with the rules defined in
+// the proto definition for this message. If any rules are violated, an error
+// is returned.
+func (m *WatchResponse) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if v, ok := interface{}(m.GetChanges()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return WatchResponseValidationError{
+				field:  "Changes",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	return nil
+}
+
+// WatchResponseValidationError is the validation error returned by
+// WatchResponse.Validate if the designated constraints aren't met.
+type WatchResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e WatchResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e WatchResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e WatchResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e WatchResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e WatchResponseValidationError) ErrorName() string { return "WatchResponseValidationError" }
+
+// Error satisfies the builtin error interface
+func (e WatchResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sWatchResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = WatchResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = WatchResponseValidationError{}
+
 // Validate checks the field values on SchemaWriteRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, an error is returned.
