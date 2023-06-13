@@ -47,6 +47,18 @@ func (m *PermissionCheckRequest) MarshalToSizedBufferVT(dAtA []byte) (int, error
 		i -= len(m.unknownFields)
 		copy(dAtA[i:], m.unknownFields)
 	}
+	if len(m.ContextualTuples) > 0 {
+		for iNdEx := len(m.ContextualTuples) - 1; iNdEx >= 0; iNdEx-- {
+			size, err := m.ContextualTuples[iNdEx].MarshalToSizedBufferVT(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarint(dAtA, i, uint64(size))
+			i--
+			dAtA[i] = 0x32
+		}
+	}
 	if m.Subject != nil {
 		size, err := m.Subject.MarshalToSizedBufferVT(dAtA[:i])
 		if err != nil {
@@ -262,6 +274,18 @@ func (m *PermissionExpandRequest) MarshalToSizedBufferVT(dAtA []byte) (int, erro
 		i -= len(m.unknownFields)
 		copy(dAtA[i:], m.unknownFields)
 	}
+	if len(m.ContextualTuples) > 0 {
+		for iNdEx := len(m.ContextualTuples) - 1; iNdEx >= 0; iNdEx-- {
+			size, err := m.ContextualTuples[iNdEx].MarshalToSizedBufferVT(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarint(dAtA, i, uint64(size))
+			i--
+			dAtA[i] = 0x2a
+		}
+	}
 	if len(m.Permission) > 0 {
 		i -= len(m.Permission)
 		copy(dAtA[i:], m.Permission)
@@ -418,6 +442,18 @@ func (m *PermissionLookupEntityRequest) MarshalToSizedBufferVT(dAtA []byte) (int
 	if m.unknownFields != nil {
 		i -= len(m.unknownFields)
 		copy(dAtA[i:], m.unknownFields)
+	}
+	if len(m.ContextualTuples) > 0 {
+		for iNdEx := len(m.ContextualTuples) - 1; iNdEx >= 0; iNdEx-- {
+			size, err := m.ContextualTuples[iNdEx].MarshalToSizedBufferVT(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarint(dAtA, i, uint64(size))
+			i--
+			dAtA[i] = 0x32
+		}
 	}
 	if m.Subject != nil {
 		size, err := m.Subject.MarshalToSizedBufferVT(dAtA[:i])
@@ -627,6 +663,18 @@ func (m *PermissionEntityFilterRequest) MarshalToSizedBufferVT(dAtA []byte) (int
 		i -= len(m.unknownFields)
 		copy(dAtA[i:], m.unknownFields)
 	}
+	if len(m.ContextualTuples) > 0 {
+		for iNdEx := len(m.ContextualTuples) - 1; iNdEx >= 0; iNdEx-- {
+			size, err := m.ContextualTuples[iNdEx].MarshalToSizedBufferVT(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarint(dAtA, i, uint64(size))
+			i--
+			dAtA[i] = 0x2a
+		}
+	}
 	if m.Subject != nil {
 		size, err := m.Subject.MarshalToSizedBufferVT(dAtA[:i])
 		if err != nil {
@@ -748,6 +796,18 @@ func (m *PermissionLookupSubjectRequest) MarshalToSizedBufferVT(dAtA []byte) (in
 	if m.unknownFields != nil {
 		i -= len(m.unknownFields)
 		copy(dAtA[i:], m.unknownFields)
+	}
+	if len(m.ContextualTuples) > 0 {
+		for iNdEx := len(m.ContextualTuples) - 1; iNdEx >= 0; iNdEx-- {
+			size, err := m.ContextualTuples[iNdEx].MarshalToSizedBufferVT(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarint(dAtA, i, uint64(size))
+			i--
+			dAtA[i] = 0x32
+		}
 	}
 	if m.SubjectReference != nil {
 		size, err := m.SubjectReference.MarshalToSizedBufferVT(dAtA[:i])
@@ -1887,6 +1947,12 @@ func (m *PermissionCheckRequest) SizeVT() (n int) {
 		l = m.Subject.SizeVT()
 		n += 1 + l + sov(uint64(l))
 	}
+	if len(m.ContextualTuples) > 0 {
+		for _, e := range m.ContextualTuples {
+			l = e.SizeVT()
+			n += 1 + l + sov(uint64(l))
+		}
+	}
 	if m.unknownFields != nil {
 		n += len(m.unknownFields)
 	}
@@ -1972,6 +2038,12 @@ func (m *PermissionExpandRequest) SizeVT() (n int) {
 	if l > 0 {
 		n += 1 + l + sov(uint64(l))
 	}
+	if len(m.ContextualTuples) > 0 {
+		for _, e := range m.ContextualTuples {
+			l = e.SizeVT()
+			n += 1 + l + sov(uint64(l))
+		}
+	}
 	if m.unknownFields != nil {
 		n += len(m.unknownFields)
 	}
@@ -2039,6 +2111,12 @@ func (m *PermissionLookupEntityRequest) SizeVT() (n int) {
 	if m.Subject != nil {
 		l = m.Subject.SizeVT()
 		n += 1 + l + sov(uint64(l))
+	}
+	if len(m.ContextualTuples) > 0 {
+		for _, e := range m.ContextualTuples {
+			l = e.SizeVT()
+			n += 1 + l + sov(uint64(l))
+		}
 	}
 	if m.unknownFields != nil {
 		n += len(m.unknownFields)
@@ -2125,6 +2203,12 @@ func (m *PermissionEntityFilterRequest) SizeVT() (n int) {
 		l = m.Subject.SizeVT()
 		n += 1 + l + sov(uint64(l))
 	}
+	if len(m.ContextualTuples) > 0 {
+		for _, e := range m.ContextualTuples {
+			l = e.SizeVT()
+			n += 1 + l + sov(uint64(l))
+		}
+	}
 	if m.unknownFields != nil {
 		n += len(m.unknownFields)
 	}
@@ -2179,6 +2263,12 @@ func (m *PermissionLookupSubjectRequest) SizeVT() (n int) {
 	if m.SubjectReference != nil {
 		l = m.SubjectReference.SizeVT()
 		n += 1 + l + sov(uint64(l))
+	}
+	if len(m.ContextualTuples) > 0 {
+		for _, e := range m.ContextualTuples {
+			l = e.SizeVT()
+			n += 1 + l + sov(uint64(l))
+		}
 	}
 	if m.unknownFields != nil {
 		n += len(m.unknownFields)
@@ -2821,6 +2911,40 @@ func (m *PermissionCheckRequest) UnmarshalVT(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
+		case 6:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ContextualTuples", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLength
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLength
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ContextualTuples = append(m.ContextualTuples, &Tuple{})
+			if err := m.ContextualTuples[len(m.ContextualTuples)-1].UnmarshalVT(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skip(dAtA[iNdEx:])
@@ -3318,6 +3442,40 @@ func (m *PermissionExpandRequest) UnmarshalVT(dAtA []byte) error {
 			}
 			m.Permission = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ContextualTuples", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLength
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLength
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ContextualTuples = append(m.ContextualTuples, &Tuple{})
+			if err := m.ContextualTuples[len(m.ContextualTuples)-1].UnmarshalVT(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skip(dAtA[iNdEx:])
@@ -3736,6 +3894,40 @@ func (m *PermissionLookupEntityRequest) UnmarshalVT(dAtA []byte) error {
 				m.Subject = &Subject{}
 			}
 			if err := m.Subject.UnmarshalVT(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 6:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ContextualTuples", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLength
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLength
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ContextualTuples = append(m.ContextualTuples, &Tuple{})
+			if err := m.ContextualTuples[len(m.ContextualTuples)-1].UnmarshalVT(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -4230,6 +4422,40 @@ func (m *PermissionEntityFilterRequest) UnmarshalVT(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ContextualTuples", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLength
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLength
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ContextualTuples = append(m.ContextualTuples, &Tuple{})
+			if err := m.ContextualTuples[len(m.ContextualTuples)-1].UnmarshalVT(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skip(dAtA[iNdEx:])
@@ -4584,6 +4810,40 @@ func (m *PermissionLookupSubjectRequest) UnmarshalVT(dAtA []byte) error {
 				m.SubjectReference = &RelationReference{}
 			}
 			if err := m.SubjectReference.UnmarshalVT(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 6:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ContextualTuples", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLength
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLength
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ContextualTuples = append(m.ContextualTuples, &Tuple{})
+			if err := m.ContextualTuples[len(m.ContextualTuples)-1].UnmarshalVT(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex

@@ -120,6 +120,21 @@ func (m *PermissionCheckRequest) Validate() error {
 		}
 	}
 
+	for idx, item := range m.GetContextualTuples() {
+		_, _ = idx, item
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return PermissionCheckRequestValidationError{
+					field:  fmt.Sprintf("ContextualTuples[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
 	return nil
 }
 
@@ -485,6 +500,21 @@ func (m *PermissionExpandRequest) Validate() error {
 
 	}
 
+	for idx, item := range m.GetContextualTuples() {
+		_, _ = idx, item
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return PermissionExpandRequestValidationError{
+					field:  fmt.Sprintf("ContextualTuples[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
 	return nil
 }
 
@@ -779,6 +809,21 @@ func (m *PermissionLookupEntityRequest) Validate() error {
 				cause:  err,
 			}
 		}
+	}
+
+	for idx, item := range m.GetContextualTuples() {
+		_, _ = idx, item
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return PermissionLookupEntityRequestValidationError{
+					field:  fmt.Sprintf("ContextualTuples[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
 	}
 
 	return nil
@@ -1123,6 +1168,21 @@ func (m *PermissionEntityFilterRequest) Validate() error {
 		}
 	}
 
+	for idx, item := range m.GetContextualTuples() {
+		_, _ = idx, item
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return PermissionEntityFilterRequestValidationError{
+					field:  fmt.Sprintf("ContextualTuples[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
 	return nil
 }
 
@@ -1342,6 +1402,21 @@ func (m *PermissionLookupSubjectRequest) Validate() error {
 				cause:  err,
 			}
 		}
+	}
+
+	for idx, item := range m.GetContextualTuples() {
+		_, _ = idx, item
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return PermissionLookupSubjectRequestValidationError{
+					field:  fmt.Sprintf("ContextualTuples[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
 	}
 
 	return nil
@@ -2413,6 +2488,13 @@ func (m *RelationshipReadRequest) Validate() error {
 		}
 	}
 
+	if m.GetFilter() == nil {
+		return RelationshipReadRequestValidationError{
+			field:  "Filter",
+			reason: "value is required",
+		}
+	}
+
 	if v, ok := interface{}(m.GetFilter()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
 			return RelationshipReadRequestValidationError{
@@ -2672,6 +2754,13 @@ func (m *RelationshipDeleteRequest) Validate() error {
 		return RelationshipDeleteRequestValidationError{
 			field:  "TenantId",
 			reason: "value does not match regex pattern \"[a-zA-Z0-9-,]+\"",
+		}
+	}
+
+	if m.GetFilter() == nil {
+		return RelationshipDeleteRequestValidationError{
+			field:  "Filter",
+			reason: "value is required",
 		}
 	}
 
