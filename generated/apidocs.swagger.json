@@ -3,7 +3,7 @@
   "info": {
     "title": "Permify API",
     "description": "Permify is an open-source authorization service for creating and maintaining fine-grained authorizations across your individual applications and services. Permify converts authorization data as relational tuples into a database you point at. We called that database a Write Database (WriteDB) and it behaves as a centralized data source for your authorization system. You can model of your authorization with Permify's DSL - Permify Schema - and perform access checks with a single API call anywhere on your stack. Access decisions made according to stored relational tuples.",
-    "version": "v0.4.6",
+    "version": "v0.4.7",
     "contact": {
       "name": "API Support",
       "url": "https://github.com/Permify/permify/issues",
@@ -443,6 +443,61 @@
         ]
       }
     },
+    "/v1/tenants/{tenant_id}/permissions/subject-permission": {
+      "post": {
+        "operationId": "permissions.subjectPermission",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1PermissionSubjectPermissionResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant_id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "metadata": {
+                  "$ref": "#/definitions/v1PermissionSubjectPermissionRequestMetadata"
+                },
+                "entity": {
+                  "$ref": "#/definitions/v1Entity"
+                },
+                "subject": {
+                  "$ref": "#/definitions/v1Subject"
+                },
+                "contextual_tuples": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/v1Tuple"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "tags": [
+          "Permission"
+        ]
+      }
+    },
     "/v1/tenants/{tenant_id}/relationships/delete": {
       "post": {
         "summary": "delete relation tuple",
@@ -749,16 +804,6 @@
       "default": "RELATIONAL_REFERENCE_UNSPECIFIED",
       "title": "RelationalReference"
     },
-    "PermissionCheckResponseResult": {
-      "type": "string",
-      "enum": [
-        "RESULT_UNKNOWN",
-        "RESULT_ALLOWED",
-        "RESULT_DENIED"
-      ],
-      "default": "RESULT_UNKNOWN",
-      "title": "Result"
-    },
     "protobufAny": {
       "type": "object",
       "properties": {
@@ -785,6 +830,16 @@
           }
         }
       }
+    },
+    "v1CheckResult": {
+      "type": "string",
+      "enum": [
+        "RESULT_UNKNOWN",
+        "RESULT_ALLOWED",
+        "RESULT_DENIED"
+      ],
+      "default": "RESULT_UNKNOWN",
+      "title": "CheckResult"
     },
     "v1Child": {
       "type": "object",
@@ -948,7 +1003,7 @@
       "type": "object",
       "properties": {
         "can": {
-          "$ref": "#/definitions/PermissionCheckResponseResult"
+          "$ref": "#/definitions/v1CheckResult"
         },
         "metadata": {
           "$ref": "#/definitions/v1PermissionCheckResponseMetadata"
@@ -1059,6 +1114,37 @@
         }
       },
       "title": "PermissionLookupSubjectResponse"
+    },
+    "v1PermissionSubjectPermissionRequestMetadata": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "type": "string"
+        },
+        "snap_token": {
+          "type": "string"
+        },
+        "only_permission": {
+          "type": "boolean"
+        },
+        "depth": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "PermissionCheckRequestMetadata"
+    },
+    "v1PermissionSubjectPermissionResponse": {
+      "type": "object",
+      "properties": {
+        "results": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/v1CheckResult"
+          }
+        }
+      },
+      "title": "SubjectPermissionResponse"
     },
     "v1RelationDefinition": {
       "type": "object",

@@ -1623,6 +1623,307 @@ var _ interface {
 	ErrorName() string
 } = PermissionLookupSubjectResponseValidationError{}
 
+// Validate checks the field values on PermissionSubjectPermissionRequest with
+// the rules defined in the proto definition for this message. If any rules
+// are violated, an error is returned.
+func (m *PermissionSubjectPermissionRequest) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if len(m.GetTenantId()) > 64 {
+		return PermissionSubjectPermissionRequestValidationError{
+			field:  "TenantId",
+			reason: "value length must be at most 64 bytes",
+		}
+	}
+
+	if !_PermissionSubjectPermissionRequest_TenantId_Pattern.MatchString(m.GetTenantId()) {
+		return PermissionSubjectPermissionRequestValidationError{
+			field:  "TenantId",
+			reason: "value does not match regex pattern \"[a-zA-Z0-9-,]+\"",
+		}
+	}
+
+	if m.GetMetadata() == nil {
+		return PermissionSubjectPermissionRequestValidationError{
+			field:  "Metadata",
+			reason: "value is required",
+		}
+	}
+
+	if v, ok := interface{}(m.GetMetadata()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return PermissionSubjectPermissionRequestValidationError{
+				field:  "Metadata",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if m.GetEntity() == nil {
+		return PermissionSubjectPermissionRequestValidationError{
+			field:  "Entity",
+			reason: "value is required",
+		}
+	}
+
+	if v, ok := interface{}(m.GetEntity()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return PermissionSubjectPermissionRequestValidationError{
+				field:  "Entity",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if m.GetSubject() == nil {
+		return PermissionSubjectPermissionRequestValidationError{
+			field:  "Subject",
+			reason: "value is required",
+		}
+	}
+
+	if v, ok := interface{}(m.GetSubject()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return PermissionSubjectPermissionRequestValidationError{
+				field:  "Subject",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	for idx, item := range m.GetContextualTuples() {
+		_, _ = idx, item
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return PermissionSubjectPermissionRequestValidationError{
+					field:  fmt.Sprintf("ContextualTuples[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// PermissionSubjectPermissionRequestValidationError is the validation error
+// returned by PermissionSubjectPermissionRequest.Validate if the designated
+// constraints aren't met.
+type PermissionSubjectPermissionRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e PermissionSubjectPermissionRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e PermissionSubjectPermissionRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e PermissionSubjectPermissionRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e PermissionSubjectPermissionRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e PermissionSubjectPermissionRequestValidationError) ErrorName() string {
+	return "PermissionSubjectPermissionRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e PermissionSubjectPermissionRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sPermissionSubjectPermissionRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = PermissionSubjectPermissionRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = PermissionSubjectPermissionRequestValidationError{}
+
+var _PermissionSubjectPermissionRequest_TenantId_Pattern = regexp.MustCompile("[a-zA-Z0-9-,]+")
+
+// Validate checks the field values on
+// PermissionSubjectPermissionRequestMetadata with the rules defined in the
+// proto definition for this message. If any rules are violated, an error is returned.
+func (m *PermissionSubjectPermissionRequestMetadata) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for SchemaVersion
+
+	// no validation rules for SnapToken
+
+	// no validation rules for OnlyPermission
+
+	if m.GetDepth() < 3 {
+		return PermissionSubjectPermissionRequestMetadataValidationError{
+			field:  "Depth",
+			reason: "value must be greater than or equal to 3",
+		}
+	}
+
+	return nil
+}
+
+// PermissionSubjectPermissionRequestMetadataValidationError is the validation
+// error returned by PermissionSubjectPermissionRequestMetadata.Validate if
+// the designated constraints aren't met.
+type PermissionSubjectPermissionRequestMetadataValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e PermissionSubjectPermissionRequestMetadataValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e PermissionSubjectPermissionRequestMetadataValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e PermissionSubjectPermissionRequestMetadataValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e PermissionSubjectPermissionRequestMetadataValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e PermissionSubjectPermissionRequestMetadataValidationError) ErrorName() string {
+	return "PermissionSubjectPermissionRequestMetadataValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e PermissionSubjectPermissionRequestMetadataValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sPermissionSubjectPermissionRequestMetadata.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = PermissionSubjectPermissionRequestMetadataValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = PermissionSubjectPermissionRequestMetadataValidationError{}
+
+// Validate checks the field values on PermissionSubjectPermissionResponse with
+// the rules defined in the proto definition for this message. If any rules
+// are violated, an error is returned.
+func (m *PermissionSubjectPermissionResponse) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Results
+
+	return nil
+}
+
+// PermissionSubjectPermissionResponseValidationError is the validation error
+// returned by PermissionSubjectPermissionResponse.Validate if the designated
+// constraints aren't met.
+type PermissionSubjectPermissionResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e PermissionSubjectPermissionResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e PermissionSubjectPermissionResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e PermissionSubjectPermissionResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e PermissionSubjectPermissionResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e PermissionSubjectPermissionResponseValidationError) ErrorName() string {
+	return "PermissionSubjectPermissionResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e PermissionSubjectPermissionResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sPermissionSubjectPermissionResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = PermissionSubjectPermissionResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = PermissionSubjectPermissionResponseValidationError{}
+
 // Validate checks the field values on WatchRequest with the rules defined in
 // the proto definition for this message. If any rules are violated, an error
 // is returned.

@@ -68,7 +68,7 @@ var _ = Describe("Client Test", func() {
 			})
 
 			Expect(err).ShouldNot(HaveOccurred())
-			Expect(cr.Can).Should(Equal(v1.PermissionCheckResponse_RESULT_DENIED))
+			Expect(cr.Can).Should(Equal(v1.CheckResult_RESULT_DENIED))
 		})
 
 		It("Lookup entity request", func() {
