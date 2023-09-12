@@ -8,11 +8,11 @@ import (
 
 // Client - Permify client
 type Client struct {
-	Permission   v1.PermissionClient
-	Schema       v1.SchemaClient
-	Relationship v1.RelationshipClient
-	Tenancy      v1.TenancyClient
-	Watch        v1.WatchClient
+	Permission v1.PermissionClient
+	Schema     v1.SchemaClient
+	Data       v1.DataClient
+	Tenancy    v1.TenancyClient
+	Watch      v1.WatchClient
 }
 
 // Config - Permify client configuration
@@ -32,10 +32,10 @@ func NewClient(c Config, opts ...grpc.DialOption) (*Client, error) {
 	}
 
 	return &Client{
-		Permission:   v1.NewPermissionClient(conn),
-		Schema:       v1.NewSchemaClient(conn),
-		Relationship: v1.NewRelationshipClient(conn),
-		Tenancy:      v1.NewTenancyClient(conn),
-		Watch:        v1.NewWatchClient(conn),
+		Permission: v1.NewPermissionClient(conn),
+		Schema:     v1.NewSchemaClient(conn),
+		Data:       v1.NewDataClient(conn),
+		Tenancy:    v1.NewTenancyClient(conn),
+		Watch:      v1.NewWatchClient(conn),
 	}, nil
 }

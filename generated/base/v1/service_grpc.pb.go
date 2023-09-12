@@ -22,11 +22,24 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PermissionClient interface {
+	// Check method receives a PermissionCheckRequest and returns a PermissionCheckResponse.
+	// It is used to determine whether a specific user has permission to perform an action on a resource.
+	// For example, "Can the user 1 push to repository 1?"
 	Check(ctx context.Context, in *PermissionCheckRequest, opts ...grpc.CallOption) (*PermissionCheckResponse, error)
+	// Expand method receives a PermissionExpandRequest and returns a PermissionExpandResponse.
+	// It expands relationships according to the schema provided.
 	Expand(ctx context.Context, in *PermissionExpandRequest, opts ...grpc.CallOption) (*PermissionExpandResponse, error)
+	// LookupEntity method receives a PermissionLookupEntityRequest and returns a PermissionLookupEntityResponse.
+	// It is used to retrieve an entity by its identifier.
 	LookupEntity(ctx context.Context, in *PermissionLookupEntityRequest, opts ...grpc.CallOption) (*PermissionLookupEntityResponse, error)
+	// LookupEntityStream method receives a PermissionLookupEntityRequest and streams a series of PermissionLookupEntityStreamResponse messages.
+	// It is used to retrieve entities by their identifiers in a streaming fashion.
 	LookupEntityStream(ctx context.Context, in *PermissionLookupEntityRequest, opts ...grpc.CallOption) (Permission_LookupEntityStreamClient, error)
+	// LookupSubject method receives a PermissionLookupSubjectRequest and returns a PermissionLookupSubjectResponse.
+	// It is used to retrieve a subject by its identifier.
 	LookupSubject(ctx context.Context, in *PermissionLookupSubjectRequest, opts ...grpc.CallOption) (*PermissionLookupSubjectResponse, error)
+	// SubjectPermission method receives a PermissionSubjectPermissionRequest and returns a PermissionSubjectPermissionResponse.
+	// It is used to retrieve permissions related to a specific subject.
 	SubjectPermission(ctx context.Context, in *PermissionSubjectPermissionRequest, opts ...grpc.CallOption) (*PermissionSubjectPermissionResponse, error)
 }
 
@@ -119,11 +132,24 @@ func (c *permissionClient) SubjectPermission(ctx context.Context, in *Permission
 // All implementations must embed UnimplementedPermissionServer
 // for forward compatibility
 type PermissionServer interface {
+	// Check method receives a PermissionCheckRequest and returns a PermissionCheckResponse.
+	// It is used to determine whether a specific user has permission to perform an action on a resource.
+	// For example, "Can the user 1 push to repository 1?"
 	Check(context.Context, *PermissionCheckRequest) (*PermissionCheckResponse, error)
+	// Expand method receives a PermissionExpandRequest and returns a PermissionExpandResponse.
+	// It expands relationships according to the schema provided.
 	Expand(context.Context, *PermissionExpandRequest) (*PermissionExpandResponse, error)
+	// LookupEntity method receives a PermissionLookupEntityRequest and returns a PermissionLookupEntityResponse.
+	// It is used to retrieve an entity by its identifier.
 	LookupEntity(context.Context, *PermissionLookupEntityRequest) (*PermissionLookupEntityResponse, error)
+	// LookupEntityStream method receives a PermissionLookupEntityRequest and streams a series of PermissionLookupEntityStreamResponse messages.
+	// It is used to retrieve entities by their identifiers in a streaming fashion.
 	LookupEntityStream(*PermissionLookupEntityRequest, Permission_LookupEntityStreamServer) error
+	// LookupSubject method receives a PermissionLookupSubjectRequest and returns a PermissionLookupSubjectResponse.
+	// It is used to retrieve a subject by its identifier.
 	LookupSubject(context.Context, *PermissionLookupSubjectRequest) (*PermissionLookupSubjectResponse, error)
+	// SubjectPermission method receives a PermissionSubjectPermissionRequest and returns a PermissionSubjectPermissionResponse.
+	// It is used to retrieve permissions related to a specific subject.
 	SubjectPermission(context.Context, *PermissionSubjectPermissionRequest) (*PermissionSubjectPermissionResponse, error)
 	mustEmbedUnimplementedPermissionServer()
 }
@@ -429,7 +455,9 @@ var Watch_ServiceDesc = grpc.ServiceDesc{
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type SchemaClient interface {
+	// Write is an RPC that allows you to write your authorization model.
 	Write(ctx context.Context, in *SchemaWriteRequest, opts ...grpc.CallOption) (*SchemaWriteResponse, error)
+	// Read is an RPC that allows you to read your authorization model.
 	Read(ctx context.Context, in *SchemaReadRequest, opts ...grpc.CallOption) (*SchemaReadResponse, error)
 }
 
@@ -463,7 +491,9 @@ func (c *schemaClient) Read(ctx context.Context, in *SchemaReadRequest, opts ...
 // All implementations must embed UnimplementedSchemaServer
 // for forward compatibility
 type SchemaServer interface {
+	// Write is an RPC that allows you to write your authorization model.
 	Write(context.Context, *SchemaWriteRequest) (*SchemaWriteResponse, error)
+	// Read is an RPC that allows you to read your authorization model.
 	Read(context.Context, *SchemaReadRequest) (*SchemaReadResponse, error)
 	mustEmbedUnimplementedSchemaServer()
 }
@@ -547,158 +577,278 @@ var Schema_ServiceDesc = grpc.ServiceDesc{
 	Metadata: "base/v1/service.proto",
 }
 
-// RelationshipClient is the client API for Relationship service.
+// DataClient is the client API for Data service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type RelationshipClient interface {
-	Write(ctx context.Context, in *RelationshipWriteRequest, opts ...grpc.CallOption) (*RelationshipWriteResponse, error)
-	Read(ctx context.Context, in *RelationshipReadRequest, opts ...grpc.CallOption) (*RelationshipReadResponse, error)
-	Delete(ctx context.Context, in *RelationshipDeleteRequest, opts ...grpc.CallOption) (*RelationshipDeleteResponse, error)
+type DataClient interface {
+	// The Write RPC method creates a new relation tuple.
+	Write(ctx context.Context, in *DataWriteRequest, opts ...grpc.CallOption) (*DataWriteResponse, error)
+	// RPC method to write relationships for a tenant. This can be accessed via a POST request to the given HTTP path. It's tagged under "Data" in OpenAPI documentation.
+	WriteRelationships(ctx context.Context, in *RelationshipWriteRequest, opts ...grpc.CallOption) (*RelationshipWriteResponse, error)
+	// The ReadRelationships RPC method reads relation tuple(s).
+	ReadRelationships(ctx context.Context, in *RelationshipReadRequest, opts ...grpc.CallOption) (*RelationshipReadResponse, error)
+	// The ReadAttributes RPC method reads attribute(s) of a relation.
+	ReadAttributes(ctx context.Context, in *AttributeReadRequest, opts ...grpc.CallOption) (*AttributeReadResponse, error)
+	// The Delete RPC method deletes a relation tuple.
+	Delete(ctx context.Context, in *DataDeleteRequest, opts ...grpc.CallOption) (*DataDeleteResponse, error)
+	// RPC method to delete relationships for a tenant, accessed via a POST request to the specified path, tagged as "Data" in OpenAPI documentation.
+	DeleteRelationships(ctx context.Context, in *RelationshipDeleteRequest, opts ...grpc.CallOption) (*RelationshipDeleteResponse, error)
 }
 
-type relationshipClient struct {
+type dataClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewRelationshipClient(cc grpc.ClientConnInterface) RelationshipClient {
-	return &relationshipClient{cc}
+func NewDataClient(cc grpc.ClientConnInterface) DataClient {
+	return &dataClient{cc}
 }
 
-func (c *relationshipClient) Write(ctx context.Context, in *RelationshipWriteRequest, opts ...grpc.CallOption) (*RelationshipWriteResponse, error) {
+func (c *dataClient) Write(ctx context.Context, in *DataWriteRequest, opts ...grpc.CallOption) (*DataWriteResponse, error) {
+	out := new(DataWriteResponse)
+	err := c.cc.Invoke(ctx, "/base.v1.Data/Write", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *dataClient) WriteRelationships(ctx context.Context, in *RelationshipWriteRequest, opts ...grpc.CallOption) (*RelationshipWriteResponse, error) {
 	out := new(RelationshipWriteResponse)
-	err := c.cc.Invoke(ctx, "/base.v1.Relationship/Write", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/base.v1.Data/WriteRelationships", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *relationshipClient) Read(ctx context.Context, in *RelationshipReadRequest, opts ...grpc.CallOption) (*RelationshipReadResponse, error) {
+func (c *dataClient) ReadRelationships(ctx context.Context, in *RelationshipReadRequest, opts ...grpc.CallOption) (*RelationshipReadResponse, error) {
 	out := new(RelationshipReadResponse)
-	err := c.cc.Invoke(ctx, "/base.v1.Relationship/Read", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/base.v1.Data/ReadRelationships", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *relationshipClient) Delete(ctx context.Context, in *RelationshipDeleteRequest, opts ...grpc.CallOption) (*RelationshipDeleteResponse, error) {
+func (c *dataClient) ReadAttributes(ctx context.Context, in *AttributeReadRequest, opts ...grpc.CallOption) (*AttributeReadResponse, error) {
+	out := new(AttributeReadResponse)
+	err := c.cc.Invoke(ctx, "/base.v1.Data/ReadAttributes", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *dataClient) Delete(ctx context.Context, in *DataDeleteRequest, opts ...grpc.CallOption) (*DataDeleteResponse, error) {
+	out := new(DataDeleteResponse)
+	err := c.cc.Invoke(ctx, "/base.v1.Data/Delete", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *dataClient) DeleteRelationships(ctx context.Context, in *RelationshipDeleteRequest, opts ...grpc.CallOption) (*RelationshipDeleteResponse, error) {
 	out := new(RelationshipDeleteResponse)
-	err := c.cc.Invoke(ctx, "/base.v1.Relationship/Delete", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/base.v1.Data/DeleteRelationships", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// RelationshipServer is the server API for Relationship service.
-// All implementations must embed UnimplementedRelationshipServer
+// DataServer is the server API for Data service.
+// All implementations must embed UnimplementedDataServer
 // for forward compatibility
-type RelationshipServer interface {
-	Write(context.Context, *RelationshipWriteRequest) (*RelationshipWriteResponse, error)
-	Read(context.Context, *RelationshipReadRequest) (*RelationshipReadResponse, error)
-	Delete(context.Context, *RelationshipDeleteRequest) (*RelationshipDeleteResponse, error)
-	mustEmbedUnimplementedRelationshipServer()
+type DataServer interface {
+	// The Write RPC method creates a new relation tuple.
+	Write(context.Context, *DataWriteRequest) (*DataWriteResponse, error)
+	// RPC method to write relationships for a tenant. This can be accessed via a POST request to the given HTTP path. It's tagged under "Data" in OpenAPI documentation.
+	WriteRelationships(context.Context, *RelationshipWriteRequest) (*RelationshipWriteResponse, error)
+	// The ReadRelationships RPC method reads relation tuple(s).
+	ReadRelationships(context.Context, *RelationshipReadRequest) (*RelationshipReadResponse, error)
+	// The ReadAttributes RPC method reads attribute(s) of a relation.
+	ReadAttributes(context.Context, *AttributeReadRequest) (*AttributeReadResponse, error)
+	// The Delete RPC method deletes a relation tuple.
+	Delete(context.Context, *DataDeleteRequest) (*DataDeleteResponse, error)
+	// RPC method to delete relationships for a tenant, accessed via a POST request to the specified path, tagged as "Data" in OpenAPI documentation.
+	DeleteRelationships(context.Context, *RelationshipDeleteRequest) (*RelationshipDeleteResponse, error)
+	mustEmbedUnimplementedDataServer()
 }
 
-// UnimplementedRelationshipServer must be embedded to have forward compatible implementations.
-type UnimplementedRelationshipServer struct {
+// UnimplementedDataServer must be embedded to have forward compatible implementations.
+type UnimplementedDataServer struct {
 }
 
-func (UnimplementedRelationshipServer) Write(context.Context, *RelationshipWriteRequest) (*RelationshipWriteResponse, error) {
+func (UnimplementedDataServer) Write(context.Context, *DataWriteRequest) (*DataWriteResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Write not implemented")
 }
-func (UnimplementedRelationshipServer) Read(context.Context, *RelationshipReadRequest) (*RelationshipReadResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Read not implemented")
+func (UnimplementedDataServer) WriteRelationships(context.Context, *RelationshipWriteRequest) (*RelationshipWriteResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method WriteRelationships not implemented")
 }
-func (UnimplementedRelationshipServer) Delete(context.Context, *RelationshipDeleteRequest) (*RelationshipDeleteResponse, error) {
+func (UnimplementedDataServer) ReadRelationships(context.Context, *RelationshipReadRequest) (*RelationshipReadResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ReadRelationships not implemented")
+}
+func (UnimplementedDataServer) ReadAttributes(context.Context, *AttributeReadRequest) (*AttributeReadResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ReadAttributes not implemented")
+}
+func (UnimplementedDataServer) Delete(context.Context, *DataDeleteRequest) (*DataDeleteResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
 }
-func (UnimplementedRelationshipServer) mustEmbedUnimplementedRelationshipServer() {}
+func (UnimplementedDataServer) DeleteRelationships(context.Context, *RelationshipDeleteRequest) (*RelationshipDeleteResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteRelationships not implemented")
+}
+func (UnimplementedDataServer) mustEmbedUnimplementedDataServer() {}
 
-// UnsafeRelationshipServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to RelationshipServer will
+// UnsafeDataServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to DataServer will
 // result in compilation errors.
-type UnsafeRelationshipServer interface {
-	mustEmbedUnimplementedRelationshipServer()
+type UnsafeDataServer interface {
+	mustEmbedUnimplementedDataServer()
 }
 
-func RegisterRelationshipServer(s grpc.ServiceRegistrar, srv RelationshipServer) {
-	s.RegisterService(&Relationship_ServiceDesc, srv)
+func RegisterDataServer(s grpc.ServiceRegistrar, srv DataServer) {
+	s.RegisterService(&Data_ServiceDesc, srv)
 }
 
-func _Relationship_Write_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Data_Write_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DataWriteRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DataServer).Write(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/base.v1.Data/Write",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DataServer).Write(ctx, req.(*DataWriteRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Data_WriteRelationships_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(RelationshipWriteRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RelationshipServer).Write(ctx, in)
+		return srv.(DataServer).WriteRelationships(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/base.v1.Relationship/Write",
+		FullMethod: "/base.v1.Data/WriteRelationships",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RelationshipServer).Write(ctx, req.(*RelationshipWriteRequest))
+		return srv.(DataServer).WriteRelationships(ctx, req.(*RelationshipWriteRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Relationship_Read_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Data_ReadRelationships_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(RelationshipReadRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RelationshipServer).Read(ctx, in)
+		return srv.(DataServer).ReadRelationships(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/base.v1.Relationship/Read",
+		FullMethod: "/base.v1.Data/ReadRelationships",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RelationshipServer).Read(ctx, req.(*RelationshipReadRequest))
+		return srv.(DataServer).ReadRelationships(ctx, req.(*RelationshipReadRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Relationship_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Data_ReadAttributes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AttributeReadRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DataServer).ReadAttributes(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/base.v1.Data/ReadAttributes",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DataServer).ReadAttributes(ctx, req.(*AttributeReadRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Data_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DataDeleteRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DataServer).Delete(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/base.v1.Data/Delete",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DataServer).Delete(ctx, req.(*DataDeleteRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Data_DeleteRelationships_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(RelationshipDeleteRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RelationshipServer).Delete(ctx, in)
+		return srv.(DataServer).DeleteRelationships(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/base.v1.Relationship/Delete",
+		FullMethod: "/base.v1.Data/DeleteRelationships",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RelationshipServer).Delete(ctx, req.(*RelationshipDeleteRequest))
+		return srv.(DataServer).DeleteRelationships(ctx, req.(*RelationshipDeleteRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// Relationship_ServiceDesc is the grpc.ServiceDesc for Relationship service.
+// Data_ServiceDesc is the grpc.ServiceDesc for Data service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var Relationship_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "base.v1.Relationship",
-	HandlerType: (*RelationshipServer)(nil),
+var Data_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "base.v1.Data",
+	HandlerType: (*DataServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "Write",
-			Handler:    _Relationship_Write_Handler,
+			Handler:    _Data_Write_Handler,
 		},
 		{
-			MethodName: "Read",
-			Handler:    _Relationship_Read_Handler,
+			MethodName: "WriteRelationships",
+			Handler:    _Data_WriteRelationships_Handler,
+		},
+		{
+			MethodName: "ReadRelationships",
+			Handler:    _Data_ReadRelationships_Handler,
+		},
+		{
+			MethodName: "ReadAttributes",
+			Handler:    _Data_ReadAttributes_Handler,
 		},
 		{
 			MethodName: "Delete",
-			Handler:    _Relationship_Delete_Handler,
+			Handler:    _Data_Delete_Handler,
+		},
+		{
+			MethodName: "DeleteRelationships",
+			Handler:    _Data_DeleteRelationships_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -709,8 +859,14 @@ var Relationship_ServiceDesc = grpc.ServiceDesc{
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type TenancyClient interface {
+	// Create is a unary RPC to create a new tenant.
+	// It requires a TenantCreateRequest and returns a TenantCreateResponse.
 	Create(ctx context.Context, in *TenantCreateRequest, opts ...grpc.CallOption) (*TenantCreateResponse, error)
+	// Delete is a unary RPC to delete an existing tenant.
+	// It requires a TenantDeleteRequest and returns a TenantDeleteResponse.
 	Delete(ctx context.Context, in *TenantDeleteRequest, opts ...grpc.CallOption) (*TenantDeleteResponse, error)
+	// List is a unary RPC to get a list of all tenants.
+	// It requires a TenantListRequest and returns a TenantListResponse.
 	List(ctx context.Context, in *TenantListRequest, opts ...grpc.CallOption) (*TenantListResponse, error)
 }
 
@@ -753,8 +909,14 @@ func (c *tenancyClient) List(ctx context.Context, in *TenantListRequest, opts ..
 // All implementations must embed UnimplementedTenancyServer
 // for forward compatibility
 type TenancyServer interface {
+	// Create is a unary RPC to create a new tenant.
+	// It requires a TenantCreateRequest and returns a TenantCreateResponse.
 	Create(context.Context, *TenantCreateRequest) (*TenantCreateResponse, error)
+	// Delete is a unary RPC to delete an existing tenant.
+	// It requires a TenantDeleteRequest and returns a TenantDeleteResponse.
 	Delete(context.Context, *TenantDeleteRequest) (*TenantDeleteResponse, error)
+	// List is a unary RPC to get a list of all tenants.
+	// It requires a TenantListRequest and returns a TenantListResponse.
 	List(context.Context, *TenantListRequest) (*TenantListResponse, error)
 	mustEmbedUnimplementedTenancyServer()
 }

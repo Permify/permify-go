@@ -33,6 +33,110 @@ var (
 	_ = anypb.Any{}
 )
 
+// Validate checks the field values on Context with the rules defined in the
+// proto definition for this message. If any rules are violated, an error is returned.
+func (m *Context) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	for idx, item := range m.GetTuples() {
+		_, _ = idx, item
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ContextValidationError{
+					field:  fmt.Sprintf("Tuples[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	for idx, item := range m.GetAttributes() {
+		_, _ = idx, item
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ContextValidationError{
+					field:  fmt.Sprintf("Attributes[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if v, ok := interface{}(m.GetData()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return ContextValidationError{
+				field:  "Data",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	return nil
+}
+
+// ContextValidationError is the validation error returned by Context.Validate
+// if the designated constraints aren't met.
+type ContextValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ContextValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ContextValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ContextValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ContextValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ContextValidationError) ErrorName() string { return "ContextValidationError" }
+
+// Error satisfies the builtin error interface
+func (e ContextValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sContext.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ContextValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ContextValidationError{}
+
 // Validate checks the field values on Child with the rules defined in the
 // proto definition for this message. If any rules are violated, an error is returned.
 func (m *Child) Validate() error {
@@ -186,6 +290,44 @@ func (m *Leaf) Validate() error {
 			if err := v.Validate(); err != nil {
 				return LeafValidationError{
 					field:  "TupleToUserSet",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	case *Leaf_ComputedAttribute:
+
+		if m.GetComputedAttribute() == nil {
+			return LeafValidationError{
+				field:  "ComputedAttribute",
+				reason: "value is required",
+			}
+		}
+
+		if v, ok := interface{}(m.GetComputedAttribute()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return LeafValidationError{
+					field:  "ComputedAttribute",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	case *Leaf_Call:
+
+		if m.GetCall() == nil {
+			return LeafValidationError{
+				field:  "Call",
+				reason: "value is required",
+			}
+		}
+
+		if v, ok := interface{}(m.GetCall()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return LeafValidationError{
+					field:  "Call",
 					reason: "embedded message failed validation",
 					cause:  err,
 				}
@@ -363,6 +505,25 @@ func (m *SchemaDefinition) Validate() error {
 
 	}
 
+	for key, val := range m.GetRuleDefinitions() {
+		_ = val
+
+		// no validation rules for RuleDefinitions[key]
+
+		if v, ok := interface{}(val).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return SchemaDefinitionValidationError{
+					field:  fmt.Sprintf("RuleDefinitions[%v]", key),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	// no validation rules for References
+
 	return nil
 }
 
@@ -476,6 +637,23 @@ func (m *EntityDefinition) Validate() error {
 
 	}
 
+	for key, val := range m.GetAttributes() {
+		_ = val
+
+		// no validation rules for Attributes[key]
+
+		if v, ok := interface{}(val).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return EntityDefinitionValidationError{
+					field:  fmt.Sprintf("Attributes[%v]", key),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
 	// no validation rules for References
 
 	return nil
@@ -536,6 +714,184 @@ var _ interface {
 } = EntityDefinitionValidationError{}
 
 var _EntityDefinition_Name_Pattern = regexp.MustCompile("^([a-z][a-z0-9_]{1,62}[a-z0-9])$")
+
+// Validate checks the field values on RuleDefinition with the rules defined in
+// the proto definition for this message. If any rules are violated, an error
+// is returned.
+func (m *RuleDefinition) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if len(m.GetName()) > 64 {
+		return RuleDefinitionValidationError{
+			field:  "Name",
+			reason: "value length must be at most 64 bytes",
+		}
+	}
+
+	if !_RuleDefinition_Name_Pattern.MatchString(m.GetName()) {
+		return RuleDefinitionValidationError{
+			field:  "Name",
+			reason: "value does not match regex pattern \"^([a-z][a-z0-9_]{1,62}[a-z0-9])$\"",
+		}
+	}
+
+	// no validation rules for Arguments
+
+	if v, ok := interface{}(m.GetExpression()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return RuleDefinitionValidationError{
+				field:  "Expression",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	return nil
+}
+
+// RuleDefinitionValidationError is the validation error returned by
+// RuleDefinition.Validate if the designated constraints aren't met.
+type RuleDefinitionValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e RuleDefinitionValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e RuleDefinitionValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e RuleDefinitionValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e RuleDefinitionValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e RuleDefinitionValidationError) ErrorName() string { return "RuleDefinitionValidationError" }
+
+// Error satisfies the builtin error interface
+func (e RuleDefinitionValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sRuleDefinition.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = RuleDefinitionValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = RuleDefinitionValidationError{}
+
+var _RuleDefinition_Name_Pattern = regexp.MustCompile("^([a-z][a-z0-9_]{1,62}[a-z0-9])$")
+
+// Validate checks the field values on AttributeDefinition with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *AttributeDefinition) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if len(m.GetName()) > 64 {
+		return AttributeDefinitionValidationError{
+			field:  "Name",
+			reason: "value length must be at most 64 bytes",
+		}
+	}
+
+	if !_AttributeDefinition_Name_Pattern.MatchString(m.GetName()) {
+		return AttributeDefinitionValidationError{
+			field:  "Name",
+			reason: "value does not match regex pattern \"^([a-z][a-z0-9_]{1,62}[a-z0-9])$\"",
+		}
+	}
+
+	// no validation rules for Type
+
+	return nil
+}
+
+// AttributeDefinitionValidationError is the validation error returned by
+// AttributeDefinition.Validate if the designated constraints aren't met.
+type AttributeDefinitionValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e AttributeDefinitionValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e AttributeDefinitionValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e AttributeDefinitionValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e AttributeDefinitionValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e AttributeDefinitionValidationError) ErrorName() string {
+	return "AttributeDefinitionValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e AttributeDefinitionValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sAttributeDefinition.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = AttributeDefinitionValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = AttributeDefinitionValidationError{}
+
+var _AttributeDefinition_Name_Pattern = regexp.MustCompile("^([a-z][a-z0-9_]{1,62}[a-z0-9])$")
 
 // Validate checks the field values on RelationDefinition with the rules
 // defined in the proto definition for this message. If any rules are
@@ -831,6 +1187,343 @@ var _RelationReference_Type_Pattern = regexp.MustCompile("^([a-z][a-z0-9_]{1,62}
 
 var _RelationReference_Relation_Pattern = regexp.MustCompile("^[a-z][a-z0-9_]{1,62}[a-z0-9]$")
 
+// Validate checks the field values on Argument with the rules defined in the
+// proto definition for this message. If any rules are violated, an error is returned.
+func (m *Argument) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	switch m.Type.(type) {
+
+	case *Argument_ComputedAttribute:
+
+		if v, ok := interface{}(m.GetComputedAttribute()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ArgumentValidationError{
+					field:  "ComputedAttribute",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	case *Argument_ContextAttribute:
+
+		if v, ok := interface{}(m.GetContextAttribute()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ArgumentValidationError{
+					field:  "ContextAttribute",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ArgumentValidationError is the validation error returned by
+// Argument.Validate if the designated constraints aren't met.
+type ArgumentValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ArgumentValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ArgumentValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ArgumentValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ArgumentValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ArgumentValidationError) ErrorName() string { return "ArgumentValidationError" }
+
+// Error satisfies the builtin error interface
+func (e ArgumentValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sArgument.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ArgumentValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ArgumentValidationError{}
+
+// Validate checks the field values on Call with the rules defined in the proto
+// definition for this message. If any rules are violated, an error is returned.
+func (m *Call) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for RuleName
+
+	for idx, item := range m.GetArguments() {
+		_, _ = idx, item
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return CallValidationError{
+					field:  fmt.Sprintf("Arguments[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// CallValidationError is the validation error returned by Call.Validate if the
+// designated constraints aren't met.
+type CallValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e CallValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e CallValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e CallValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e CallValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e CallValidationError) ErrorName() string { return "CallValidationError" }
+
+// Error satisfies the builtin error interface
+func (e CallValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sCall.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = CallValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = CallValidationError{}
+
+// Validate checks the field values on ComputedAttribute with the rules defined
+// in the proto definition for this message. If any rules are violated, an
+// error is returned.
+func (m *ComputedAttribute) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if len(m.GetName()) > 64 {
+		return ComputedAttributeValidationError{
+			field:  "Name",
+			reason: "value length must be at most 64 bytes",
+		}
+	}
+
+	if !_ComputedAttribute_Name_Pattern.MatchString(m.GetName()) {
+		return ComputedAttributeValidationError{
+			field:  "Name",
+			reason: "value does not match regex pattern \"^[a-z][a-z0-9_]{1,62}[a-z0-9]$\"",
+		}
+	}
+
+	return nil
+}
+
+// ComputedAttributeValidationError is the validation error returned by
+// ComputedAttribute.Validate if the designated constraints aren't met.
+type ComputedAttributeValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ComputedAttributeValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ComputedAttributeValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ComputedAttributeValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ComputedAttributeValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ComputedAttributeValidationError) ErrorName() string {
+	return "ComputedAttributeValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ComputedAttributeValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sComputedAttribute.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ComputedAttributeValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ComputedAttributeValidationError{}
+
+var _ComputedAttribute_Name_Pattern = regexp.MustCompile("^[a-z][a-z0-9_]{1,62}[a-z0-9]$")
+
+// Validate checks the field values on ContextAttribute with the rules defined
+// in the proto definition for this message. If any rules are violated, an
+// error is returned.
+func (m *ContextAttribute) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if len(m.GetName()) > 64 {
+		return ContextAttributeValidationError{
+			field:  "Name",
+			reason: "value length must be at most 64 bytes",
+		}
+	}
+
+	if !_ContextAttribute_Name_Pattern.MatchString(m.GetName()) {
+		return ContextAttributeValidationError{
+			field:  "Name",
+			reason: "value does not match regex pattern \"^[a-z][a-z0-9_]{1,62}[a-z0-9]$\"",
+		}
+	}
+
+	return nil
+}
+
+// ContextAttributeValidationError is the validation error returned by
+// ContextAttribute.Validate if the designated constraints aren't met.
+type ContextAttributeValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ContextAttributeValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ContextAttributeValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ContextAttributeValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ContextAttributeValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ContextAttributeValidationError) ErrorName() string { return "ContextAttributeValidationError" }
+
+// Error satisfies the builtin error interface
+func (e ContextAttributeValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sContextAttribute.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ContextAttributeValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ContextAttributeValidationError{}
+
+var _ContextAttribute_Name_Pattern = regexp.MustCompile("^[a-z][a-z0-9_]{1,62}[a-z0-9]$")
+
 // Validate checks the field values on ComputedUserSet with the rules defined
 // in the proto definition for this message. If any rules are violated, an
 // error is returned.
@@ -911,86 +1604,6 @@ var _ interface {
 } = ComputedUserSetValidationError{}
 
 var _ComputedUserSet_Relation_Pattern = regexp.MustCompile("^[a-z][a-z0-9_]{1,62}[a-z0-9]$")
-
-// Validate checks the field values on TupleSet with the rules defined in the
-// proto definition for this message. If any rules are violated, an error is returned.
-func (m *TupleSet) Validate() error {
-	if m == nil {
-		return nil
-	}
-
-	if len(m.GetRelation()) > 64 {
-		return TupleSetValidationError{
-			field:  "Relation",
-			reason: "value length must be at most 64 bytes",
-		}
-	}
-
-	if !_TupleSet_Relation_Pattern.MatchString(m.GetRelation()) {
-		return TupleSetValidationError{
-			field:  "Relation",
-			reason: "value does not match regex pattern \"^[a-z][a-z0-9_]{1,62}[a-z0-9]$\"",
-		}
-	}
-
-	return nil
-}
-
-// TupleSetValidationError is the validation error returned by
-// TupleSet.Validate if the designated constraints aren't met.
-type TupleSetValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e TupleSetValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e TupleSetValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e TupleSetValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e TupleSetValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e TupleSetValidationError) ErrorName() string { return "TupleSetValidationError" }
-
-// Error satisfies the builtin error interface
-func (e TupleSetValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sTupleSet.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = TupleSetValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = TupleSetValidationError{}
-
-var _TupleSet_Relation_Pattern = regexp.MustCompile("^[a-z][a-z0-9_]{1,62}[a-z0-9]$")
 
 // Validate checks the field values on TupleToUserSet with the rules defined in
 // the proto definition for this message. If any rules are violated, an error
@@ -1076,6 +1689,86 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = TupleToUserSetValidationError{}
+
+// Validate checks the field values on TupleSet with the rules defined in the
+// proto definition for this message. If any rules are violated, an error is returned.
+func (m *TupleSet) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if len(m.GetRelation()) > 64 {
+		return TupleSetValidationError{
+			field:  "Relation",
+			reason: "value length must be at most 64 bytes",
+		}
+	}
+
+	if !_TupleSet_Relation_Pattern.MatchString(m.GetRelation()) {
+		return TupleSetValidationError{
+			field:  "Relation",
+			reason: "value does not match regex pattern \"^[a-z][a-z0-9_]{1,62}[a-z0-9]$\"",
+		}
+	}
+
+	return nil
+}
+
+// TupleSetValidationError is the validation error returned by
+// TupleSet.Validate if the designated constraints aren't met.
+type TupleSetValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e TupleSetValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e TupleSetValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e TupleSetValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e TupleSetValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e TupleSetValidationError) ErrorName() string { return "TupleSetValidationError" }
+
+// Error satisfies the builtin error interface
+func (e TupleSetValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sTupleSet.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = TupleSetValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = TupleSetValidationError{}
+
+var _TupleSet_Relation_Pattern = regexp.MustCompile("^[a-z][a-z0-9_]{1,62}[a-z0-9]$")
 
 // Validate checks the field values on Tuple with the rules defined in the
 // proto definition for this message. If any rules are violated, an error is returned.
@@ -1191,6 +1884,99 @@ var _ interface {
 
 var _Tuple_Relation_Pattern = regexp.MustCompile("^([a-z][a-z0-9_]{1,62}[a-z0-9])$")
 
+// Validate checks the field values on Attribute with the rules defined in the
+// proto definition for this message. If any rules are violated, an error is returned.
+func (m *Attribute) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if m.GetEntity() == nil {
+		return AttributeValidationError{
+			field:  "Entity",
+			reason: "value is required",
+		}
+	}
+
+	if v, ok := interface{}(m.GetEntity()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return AttributeValidationError{
+				field:  "Entity",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	// no validation rules for Attribute
+
+	if v, ok := interface{}(m.GetValue()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return AttributeValidationError{
+				field:  "Value",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	return nil
+}
+
+// AttributeValidationError is the validation error returned by
+// Attribute.Validate if the designated constraints aren't met.
+type AttributeValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e AttributeValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e AttributeValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e AttributeValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e AttributeValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e AttributeValidationError) ErrorName() string { return "AttributeValidationError" }
+
+// Error satisfies the builtin error interface
+func (e AttributeValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sAttribute.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = AttributeValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = AttributeValidationError{}
+
 // Validate checks the field values on Tuples with the rules defined in the
 // proto definition for this message. If any rules are violated, an error is returned.
 func (m *Tuples) Validate() error {
@@ -1269,6 +2055,85 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = TuplesValidationError{}
+
+// Validate checks the field values on Attributes with the rules defined in the
+// proto definition for this message. If any rules are violated, an error is returned.
+func (m *Attributes) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	for idx, item := range m.GetAttributes() {
+		_, _ = idx, item
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return AttributesValidationError{
+					field:  fmt.Sprintf("Attributes[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// AttributesValidationError is the validation error returned by
+// Attributes.Validate if the designated constraints aren't met.
+type AttributesValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e AttributesValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e AttributesValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e AttributesValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e AttributesValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e AttributesValidationError) ErrorName() string { return "AttributesValidationError" }
+
+// Error satisfies the builtin error interface
+func (e AttributesValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sAttributes.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = AttributesValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = AttributesValidationError{}
 
 // Validate checks the field values on Entity with the rules defined in the
 // proto definition for this message. If any rules are violated, an error is returned.
@@ -1581,6 +2446,88 @@ var _Subject_Type_Pattern = regexp.MustCompile("^([a-z][a-z0-9_]{1,62}[a-z0-9])$
 var _Subject_Id_Pattern = regexp.MustCompile("^(([a-zA-Z0-9_][a-zA-Z0-9_|-]{0,127})|\\*)$")
 
 var _Subject_Relation_Pattern = regexp.MustCompile("^([.&a-z][.&a-z0-9_]{1,62}[.&a-z0-9])$")
+
+// Validate checks the field values on AttributeFilter with the rules defined
+// in the proto definition for this message. If any rules are violated, an
+// error is returned.
+func (m *AttributeFilter) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if m.GetEntity() == nil {
+		return AttributeFilterValidationError{
+			field:  "Entity",
+			reason: "value is required",
+		}
+	}
+
+	if v, ok := interface{}(m.GetEntity()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return AttributeFilterValidationError{
+				field:  "Entity",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	return nil
+}
+
+// AttributeFilterValidationError is the validation error returned by
+// AttributeFilter.Validate if the designated constraints aren't met.
+type AttributeFilterValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e AttributeFilterValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e AttributeFilterValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e AttributeFilterValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e AttributeFilterValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e AttributeFilterValidationError) ErrorName() string { return "AttributeFilterValidationError" }
+
+// Error satisfies the builtin error interface
+func (e AttributeFilterValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sAttributeFilter.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = AttributeFilterValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = AttributeFilterValidationError{}
 
 // Validate checks the field values on TupleFilter with the rules defined in
 // the proto definition for this message. If any rules are violated, an error
@@ -1937,14 +2884,31 @@ func (m *Expand) Validate() error {
 		return nil
 	}
 
-	if v, ok := interface{}(m.GetTarget()).(interface{ Validate() error }); ok {
+	if v, ok := interface{}(m.GetEntity()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
 			return ExpandValidationError{
-				field:  "Target",
+				field:  "Entity",
 				reason: "embedded message failed validation",
 				cause:  err,
 			}
 		}
+	}
+
+	// no validation rules for Permission
+
+	for idx, item := range m.GetArguments() {
+		_, _ = idx, item
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ExpandValidationError{
+					field:  fmt.Sprintf("Arguments[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
 	}
 
 	switch m.Node.(type) {
@@ -2031,6 +2995,197 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = ExpandValidationError{}
+
+// Validate checks the field values on ExpandLeaf with the rules defined in the
+// proto definition for this message. If any rules are violated, an error is returned.
+func (m *ExpandLeaf) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	switch m.Type.(type) {
+
+	case *ExpandLeaf_Subjects:
+
+		if v, ok := interface{}(m.GetSubjects()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ExpandLeafValidationError{
+					field:  "Subjects",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	case *ExpandLeaf_Values:
+
+		if v, ok := interface{}(m.GetValues()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ExpandLeafValidationError{
+					field:  "Values",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	case *ExpandLeaf_Value:
+
+		if v, ok := interface{}(m.GetValue()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ExpandLeafValidationError{
+					field:  "Value",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	default:
+		return ExpandLeafValidationError{
+			field:  "Type",
+			reason: "value is required",
+		}
+
+	}
+
+	return nil
+}
+
+// ExpandLeafValidationError is the validation error returned by
+// ExpandLeaf.Validate if the designated constraints aren't met.
+type ExpandLeafValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ExpandLeafValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ExpandLeafValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ExpandLeafValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ExpandLeafValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ExpandLeafValidationError) ErrorName() string { return "ExpandLeafValidationError" }
+
+// Error satisfies the builtin error interface
+func (e ExpandLeafValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sExpandLeaf.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ExpandLeafValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ExpandLeafValidationError{}
+
+// Validate checks the field values on Values with the rules defined in the
+// proto definition for this message. If any rules are violated, an error is returned.
+func (m *Values) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	for key, val := range m.GetValues() {
+		_ = val
+
+		// no validation rules for Values[key]
+
+		if v, ok := interface{}(val).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ValuesValidationError{
+					field:  fmt.Sprintf("Values[%v]", key),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ValuesValidationError is the validation error returned by Values.Validate if
+// the designated constraints aren't met.
+type ValuesValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ValuesValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ValuesValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ValuesValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ValuesValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ValuesValidationError) ErrorName() string { return "ValuesValidationError" }
+
+// Error satisfies the builtin error interface
+func (e ValuesValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sValues.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ValuesValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ValuesValidationError{}
 
 // Validate checks the field values on Subjects with the rules defined in the
 // proto definition for this message. If any rules are violated, an error is returned.
@@ -2189,23 +3344,23 @@ var _ interface {
 	ErrorName() string
 } = TenantValidationError{}
 
-// Validate checks the field values on TupleChanges with the rules defined in
+// Validate checks the field values on DataChanges with the rules defined in
 // the proto definition for this message. If any rules are violated, an error
 // is returned.
-func (m *TupleChanges) Validate() error {
+func (m *DataChanges) Validate() error {
 	if m == nil {
 		return nil
 	}
 
 	// no validation rules for SnapToken
 
-	for idx, item := range m.GetTupleChanges() {
+	for idx, item := range m.GetDataChanges() {
 		_, _ = idx, item
 
 		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
 			if err := v.Validate(); err != nil {
-				return TupleChangesValidationError{
-					field:  fmt.Sprintf("TupleChanges[%v]", idx),
+				return DataChangesValidationError{
+					field:  fmt.Sprintf("DataChanges[%v]", idx),
 					reason: "embedded message failed validation",
 					cause:  err,
 				}
@@ -2217,9 +3372,9 @@ func (m *TupleChanges) Validate() error {
 	return nil
 }
 
-// TupleChangesValidationError is the validation error returned by
-// TupleChanges.Validate if the designated constraints aren't met.
-type TupleChangesValidationError struct {
+// DataChangesValidationError is the validation error returned by
+// DataChanges.Validate if the designated constraints aren't met.
+type DataChangesValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -2227,22 +3382,22 @@ type TupleChangesValidationError struct {
 }
 
 // Field function returns field value.
-func (e TupleChangesValidationError) Field() string { return e.field }
+func (e DataChangesValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e TupleChangesValidationError) Reason() string { return e.reason }
+func (e DataChangesValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e TupleChangesValidationError) Cause() error { return e.cause }
+func (e DataChangesValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e TupleChangesValidationError) Key() bool { return e.key }
+func (e DataChangesValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e TupleChangesValidationError) ErrorName() string { return "TupleChangesValidationError" }
+func (e DataChangesValidationError) ErrorName() string { return "DataChangesValidationError" }
 
 // Error satisfies the builtin error interface
-func (e TupleChangesValidationError) Error() string {
+func (e DataChangesValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -2254,14 +3409,14 @@ func (e TupleChangesValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sTupleChanges.%s: %s%s",
+		"invalid %sDataChanges.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = TupleChangesValidationError{}
+var _ error = DataChangesValidationError{}
 
 var _ interface {
 	Field() string
@@ -2269,34 +3424,57 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = TupleChangesValidationError{}
+} = DataChangesValidationError{}
 
-// Validate checks the field values on TupleChange with the rules defined in
-// the proto definition for this message. If any rules are violated, an error
-// is returned.
-func (m *TupleChange) Validate() error {
+// Validate checks the field values on DataChange with the rules defined in the
+// proto definition for this message. If any rules are violated, an error is returned.
+func (m *DataChange) Validate() error {
 	if m == nil {
 		return nil
 	}
 
 	// no validation rules for Operation
 
-	if v, ok := interface{}(m.GetTuple()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return TupleChangeValidationError{
-				field:  "Tuple",
-				reason: "embedded message failed validation",
-				cause:  err,
+	switch m.Type.(type) {
+
+	case *DataChange_Tuple:
+
+		if v, ok := interface{}(m.GetTuple()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return DataChangeValidationError{
+					field:  "Tuple",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
+
+	case *DataChange_Attribute:
+
+		if v, ok := interface{}(m.GetAttribute()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return DataChangeValidationError{
+					field:  "Attribute",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	default:
+		return DataChangeValidationError{
+			field:  "Type",
+			reason: "value is required",
+		}
+
 	}
 
 	return nil
 }
 
-// TupleChangeValidationError is the validation error returned by
-// TupleChange.Validate if the designated constraints aren't met.
-type TupleChangeValidationError struct {
+// DataChangeValidationError is the validation error returned by
+// DataChange.Validate if the designated constraints aren't met.
+type DataChangeValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -2304,22 +3482,22 @@ type TupleChangeValidationError struct {
 }
 
 // Field function returns field value.
-func (e TupleChangeValidationError) Field() string { return e.field }
+func (e DataChangeValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e TupleChangeValidationError) Reason() string { return e.reason }
+func (e DataChangeValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e TupleChangeValidationError) Cause() error { return e.cause }
+func (e DataChangeValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e TupleChangeValidationError) Key() bool { return e.key }
+func (e DataChangeValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e TupleChangeValidationError) ErrorName() string { return "TupleChangeValidationError" }
+func (e DataChangeValidationError) ErrorName() string { return "DataChangeValidationError" }
 
 // Error satisfies the builtin error interface
-func (e TupleChangeValidationError) Error() string {
+func (e DataChangeValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -2331,14 +3509,14 @@ func (e TupleChangeValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sTupleChange.%s: %s%s",
+		"invalid %sDataChange.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = TupleChangeValidationError{}
+var _ error = DataChangeValidationError{}
 
 var _ interface {
 	Field() string
@@ -2346,4 +3524,528 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = TupleChangeValidationError{}
+} = DataChangeValidationError{}
+
+// Validate checks the field values on String with the rules defined in the
+// proto definition for this message. If any rules are violated, an error is returned.
+func (m *String) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Value
+
+	return nil
+}
+
+// StringValidationError is the validation error returned by String.Validate if
+// the designated constraints aren't met.
+type StringValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e StringValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e StringValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e StringValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e StringValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e StringValidationError) ErrorName() string { return "StringValidationError" }
+
+// Error satisfies the builtin error interface
+func (e StringValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sString.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = StringValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = StringValidationError{}
+
+// Validate checks the field values on Integer with the rules defined in the
+// proto definition for this message. If any rules are violated, an error is returned.
+func (m *Integer) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Value
+
+	return nil
+}
+
+// IntegerValidationError is the validation error returned by Integer.Validate
+// if the designated constraints aren't met.
+type IntegerValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e IntegerValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e IntegerValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e IntegerValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e IntegerValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e IntegerValidationError) ErrorName() string { return "IntegerValidationError" }
+
+// Error satisfies the builtin error interface
+func (e IntegerValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sInteger.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = IntegerValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = IntegerValidationError{}
+
+// Validate checks the field values on Double with the rules defined in the
+// proto definition for this message. If any rules are violated, an error is returned.
+func (m *Double) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Value
+
+	return nil
+}
+
+// DoubleValidationError is the validation error returned by Double.Validate if
+// the designated constraints aren't met.
+type DoubleValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DoubleValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DoubleValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DoubleValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DoubleValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DoubleValidationError) ErrorName() string { return "DoubleValidationError" }
+
+// Error satisfies the builtin error interface
+func (e DoubleValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDouble.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DoubleValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DoubleValidationError{}
+
+// Validate checks the field values on Boolean with the rules defined in the
+// proto definition for this message. If any rules are violated, an error is returned.
+func (m *Boolean) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Value
+
+	return nil
+}
+
+// BooleanValidationError is the validation error returned by Boolean.Validate
+// if the designated constraints aren't met.
+type BooleanValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e BooleanValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e BooleanValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e BooleanValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e BooleanValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e BooleanValidationError) ErrorName() string { return "BooleanValidationError" }
+
+// Error satisfies the builtin error interface
+func (e BooleanValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sBoolean.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = BooleanValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = BooleanValidationError{}
+
+// Validate checks the field values on StringArray with the rules defined in
+// the proto definition for this message. If any rules are violated, an error
+// is returned.
+func (m *StringArray) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	return nil
+}
+
+// StringArrayValidationError is the validation error returned by
+// StringArray.Validate if the designated constraints aren't met.
+type StringArrayValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e StringArrayValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e StringArrayValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e StringArrayValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e StringArrayValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e StringArrayValidationError) ErrorName() string { return "StringArrayValidationError" }
+
+// Error satisfies the builtin error interface
+func (e StringArrayValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sStringArray.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = StringArrayValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = StringArrayValidationError{}
+
+// Validate checks the field values on IntegerArray with the rules defined in
+// the proto definition for this message. If any rules are violated, an error
+// is returned.
+func (m *IntegerArray) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	return nil
+}
+
+// IntegerArrayValidationError is the validation error returned by
+// IntegerArray.Validate if the designated constraints aren't met.
+type IntegerArrayValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e IntegerArrayValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e IntegerArrayValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e IntegerArrayValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e IntegerArrayValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e IntegerArrayValidationError) ErrorName() string { return "IntegerArrayValidationError" }
+
+// Error satisfies the builtin error interface
+func (e IntegerArrayValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sIntegerArray.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = IntegerArrayValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = IntegerArrayValidationError{}
+
+// Validate checks the field values on DoubleArray with the rules defined in
+// the proto definition for this message. If any rules are violated, an error
+// is returned.
+func (m *DoubleArray) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	return nil
+}
+
+// DoubleArrayValidationError is the validation error returned by
+// DoubleArray.Validate if the designated constraints aren't met.
+type DoubleArrayValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DoubleArrayValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DoubleArrayValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DoubleArrayValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DoubleArrayValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DoubleArrayValidationError) ErrorName() string { return "DoubleArrayValidationError" }
+
+// Error satisfies the builtin error interface
+func (e DoubleArrayValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDoubleArray.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DoubleArrayValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DoubleArrayValidationError{}
+
+// Validate checks the field values on BooleanArray with the rules defined in
+// the proto definition for this message. If any rules are violated, an error
+// is returned.
+func (m *BooleanArray) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	return nil
+}
+
+// BooleanArrayValidationError is the validation error returned by
+// BooleanArray.Validate if the designated constraints aren't met.
+type BooleanArrayValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e BooleanArrayValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e BooleanArrayValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e BooleanArrayValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e BooleanArrayValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e BooleanArrayValidationError) ErrorName() string { return "BooleanArrayValidationError" }
+
+// Error satisfies the builtin error interface
+func (e BooleanArrayValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sBooleanArray.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = BooleanArrayValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = BooleanArrayValidationError{}

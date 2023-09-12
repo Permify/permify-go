@@ -120,13 +120,23 @@ func (m *PermissionCheckRequest) Validate() error {
 		}
 	}
 
-	for idx, item := range m.GetContextualTuples() {
+	if v, ok := interface{}(m.GetContext()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return PermissionCheckRequestValidationError{
+				field:  "Context",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	for idx, item := range m.GetArguments() {
 		_, _ = idx, item
 
 		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
 			if err := v.Validate(); err != nil {
 				return PermissionCheckRequestValidationError{
-					field:  fmt.Sprintf("ContextualTuples[%v]", idx),
+					field:  fmt.Sprintf("Arguments[%v]", idx),
 					reason: "embedded message failed validation",
 					cause:  err,
 				}
@@ -500,13 +510,23 @@ func (m *PermissionExpandRequest) Validate() error {
 
 	}
 
-	for idx, item := range m.GetContextualTuples() {
+	if v, ok := interface{}(m.GetContext()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return PermissionExpandRequestValidationError{
+				field:  "Context",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	for idx, item := range m.GetArguments() {
 		_, _ = idx, item
 
 		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
 			if err := v.Validate(); err != nil {
 				return PermissionExpandRequestValidationError{
-					field:  fmt.Sprintf("ContextualTuples[%v]", idx),
+					field:  fmt.Sprintf("Arguments[%v]", idx),
 					reason: "embedded message failed validation",
 					cause:  err,
 				}
@@ -811,19 +831,14 @@ func (m *PermissionLookupEntityRequest) Validate() error {
 		}
 	}
 
-	for idx, item := range m.GetContextualTuples() {
-		_, _ = idx, item
-
-		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return PermissionLookupEntityRequestValidationError{
-					field:  fmt.Sprintf("ContextualTuples[%v]", idx),
-					reason: "embedded message failed validation",
-					cause:  err,
-				}
+	if v, ok := interface{}(m.GetContext()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return PermissionLookupEntityRequestValidationError{
+				field:  "Context",
+				reason: "embedded message failed validation",
+				cause:  err,
 			}
 		}
-
 	}
 
 	return nil
@@ -1168,19 +1183,14 @@ func (m *PermissionEntityFilterRequest) Validate() error {
 		}
 	}
 
-	for idx, item := range m.GetContextualTuples() {
-		_, _ = idx, item
-
-		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return PermissionEntityFilterRequestValidationError{
-					field:  fmt.Sprintf("ContextualTuples[%v]", idx),
-					reason: "embedded message failed validation",
-					cause:  err,
-				}
+	if v, ok := interface{}(m.GetContext()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return PermissionEntityFilterRequestValidationError{
+				field:  "Context",
+				reason: "embedded message failed validation",
+				cause:  err,
 			}
 		}
-
 	}
 
 	return nil
@@ -1404,19 +1414,14 @@ func (m *PermissionLookupSubjectRequest) Validate() error {
 		}
 	}
 
-	for idx, item := range m.GetContextualTuples() {
-		_, _ = idx, item
-
-		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return PermissionLookupSubjectRequestValidationError{
-					field:  fmt.Sprintf("ContextualTuples[%v]", idx),
-					reason: "embedded message failed validation",
-					cause:  err,
-				}
+	if v, ok := interface{}(m.GetContext()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return PermissionLookupSubjectRequestValidationError{
+				field:  "Context",
+				reason: "embedded message failed validation",
+				cause:  err,
 			}
 		}
-
 	}
 
 	return nil
@@ -1494,6 +1499,13 @@ func (m *PermissionLookupSubjectRequestMetadata) Validate() error {
 	// no validation rules for SchemaVersion
 
 	// no validation rules for SnapToken
+
+	if m.GetDepth() < 3 {
+		return PermissionLookupSubjectRequestMetadataValidationError{
+			field:  "Depth",
+			reason: "value must be greater than or equal to 3",
+		}
+	}
 
 	return nil
 }
@@ -1696,19 +1708,14 @@ func (m *PermissionSubjectPermissionRequest) Validate() error {
 		}
 	}
 
-	for idx, item := range m.GetContextualTuples() {
-		_, _ = idx, item
-
-		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return PermissionSubjectPermissionRequestValidationError{
-					field:  fmt.Sprintf("ContextualTuples[%v]", idx),
-					reason: "embedded message failed validation",
-					cause:  err,
-				}
+	if v, ok := interface{}(m.GetContext()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return PermissionSubjectPermissionRequestValidationError{
+				field:  "Context",
+				reason: "embedded message failed validation",
+				cause:  err,
 			}
 		}
-
 	}
 
 	return nil
@@ -2482,6 +2489,300 @@ var _ interface {
 	ErrorName() string
 } = SchemaReadResponseValidationError{}
 
+// Validate checks the field values on DataWriteRequest with the rules defined
+// in the proto definition for this message. If any rules are violated, an
+// error is returned.
+func (m *DataWriteRequest) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if len(m.GetTenantId()) > 64 {
+		return DataWriteRequestValidationError{
+			field:  "TenantId",
+			reason: "value length must be at most 64 bytes",
+		}
+	}
+
+	if !_DataWriteRequest_TenantId_Pattern.MatchString(m.GetTenantId()) {
+		return DataWriteRequestValidationError{
+			field:  "TenantId",
+			reason: "value does not match regex pattern \"[a-zA-Z0-9-,]+\"",
+		}
+	}
+
+	if m.GetMetadata() == nil {
+		return DataWriteRequestValidationError{
+			field:  "Metadata",
+			reason: "value is required",
+		}
+	}
+
+	if v, ok := interface{}(m.GetMetadata()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return DataWriteRequestValidationError{
+				field:  "Metadata",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if len(m.GetTuples()) > 100 {
+		return DataWriteRequestValidationError{
+			field:  "Tuples",
+			reason: "value must contain no more than 100 item(s)",
+		}
+	}
+
+	for idx, item := range m.GetTuples() {
+		_, _ = idx, item
+
+		if item == nil {
+			return DataWriteRequestValidationError{
+				field:  fmt.Sprintf("Tuples[%v]", idx),
+				reason: "value is required",
+			}
+		}
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return DataWriteRequestValidationError{
+					field:  fmt.Sprintf("Tuples[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if len(m.GetAttributes()) > 100 {
+		return DataWriteRequestValidationError{
+			field:  "Attributes",
+			reason: "value must contain no more than 100 item(s)",
+		}
+	}
+
+	for idx, item := range m.GetAttributes() {
+		_, _ = idx, item
+
+		if item == nil {
+			return DataWriteRequestValidationError{
+				field:  fmt.Sprintf("Attributes[%v]", idx),
+				reason: "value is required",
+			}
+		}
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return DataWriteRequestValidationError{
+					field:  fmt.Sprintf("Attributes[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// DataWriteRequestValidationError is the validation error returned by
+// DataWriteRequest.Validate if the designated constraints aren't met.
+type DataWriteRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DataWriteRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DataWriteRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DataWriteRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DataWriteRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DataWriteRequestValidationError) ErrorName() string { return "DataWriteRequestValidationError" }
+
+// Error satisfies the builtin error interface
+func (e DataWriteRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDataWriteRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DataWriteRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DataWriteRequestValidationError{}
+
+var _DataWriteRequest_TenantId_Pattern = regexp.MustCompile("[a-zA-Z0-9-,]+")
+
+// Validate checks the field values on DataWriteRequestMetadata with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *DataWriteRequestMetadata) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for SchemaVersion
+
+	return nil
+}
+
+// DataWriteRequestMetadataValidationError is the validation error returned by
+// DataWriteRequestMetadata.Validate if the designated constraints aren't met.
+type DataWriteRequestMetadataValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DataWriteRequestMetadataValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DataWriteRequestMetadataValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DataWriteRequestMetadataValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DataWriteRequestMetadataValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DataWriteRequestMetadataValidationError) ErrorName() string {
+	return "DataWriteRequestMetadataValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e DataWriteRequestMetadataValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDataWriteRequestMetadata.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DataWriteRequestMetadataValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DataWriteRequestMetadataValidationError{}
+
+// Validate checks the field values on DataWriteResponse with the rules defined
+// in the proto definition for this message. If any rules are violated, an
+// error is returned.
+func (m *DataWriteResponse) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for SnapToken
+
+	return nil
+}
+
+// DataWriteResponseValidationError is the validation error returned by
+// DataWriteResponse.Validate if the designated constraints aren't met.
+type DataWriteResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DataWriteResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DataWriteResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DataWriteResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DataWriteResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DataWriteResponseValidationError) ErrorName() string {
+	return "DataWriteResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e DataWriteResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDataWriteResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DataWriteResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DataWriteResponseValidationError{}
+
 // Validate checks the field values on RelationshipWriteRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, an error is returned.
@@ -3036,6 +3337,478 @@ var _ interface {
 	ErrorName() string
 } = RelationshipReadResponseValidationError{}
 
+// Validate checks the field values on AttributeReadRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *AttributeReadRequest) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if len(m.GetTenantId()) > 64 {
+		return AttributeReadRequestValidationError{
+			field:  "TenantId",
+			reason: "value length must be at most 64 bytes",
+		}
+	}
+
+	if !_AttributeReadRequest_TenantId_Pattern.MatchString(m.GetTenantId()) {
+		return AttributeReadRequestValidationError{
+			field:  "TenantId",
+			reason: "value does not match regex pattern \"[a-zA-Z0-9-,]+\"",
+		}
+	}
+
+	if m.GetMetadata() == nil {
+		return AttributeReadRequestValidationError{
+			field:  "Metadata",
+			reason: "value is required",
+		}
+	}
+
+	if v, ok := interface{}(m.GetMetadata()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return AttributeReadRequestValidationError{
+				field:  "Metadata",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if m.GetFilter() == nil {
+		return AttributeReadRequestValidationError{
+			field:  "Filter",
+			reason: "value is required",
+		}
+	}
+
+	if v, ok := interface{}(m.GetFilter()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return AttributeReadRequestValidationError{
+				field:  "Filter",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if m.GetPageSize() != 0 {
+
+		if val := m.GetPageSize(); val < 1 || val > 100 {
+			return AttributeReadRequestValidationError{
+				field:  "PageSize",
+				reason: "value must be inside range [1, 100]",
+			}
+		}
+
+	}
+
+	if m.GetContinuousToken() != "" {
+
+	}
+
+	return nil
+}
+
+// AttributeReadRequestValidationError is the validation error returned by
+// AttributeReadRequest.Validate if the designated constraints aren't met.
+type AttributeReadRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e AttributeReadRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e AttributeReadRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e AttributeReadRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e AttributeReadRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e AttributeReadRequestValidationError) ErrorName() string {
+	return "AttributeReadRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e AttributeReadRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sAttributeReadRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = AttributeReadRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = AttributeReadRequestValidationError{}
+
+var _AttributeReadRequest_TenantId_Pattern = regexp.MustCompile("[a-zA-Z0-9-,]+")
+
+// Validate checks the field values on AttributeReadRequestMetadata with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *AttributeReadRequestMetadata) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for SnapToken
+
+	return nil
+}
+
+// AttributeReadRequestMetadataValidationError is the validation error returned
+// by AttributeReadRequestMetadata.Validate if the designated constraints
+// aren't met.
+type AttributeReadRequestMetadataValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e AttributeReadRequestMetadataValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e AttributeReadRequestMetadataValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e AttributeReadRequestMetadataValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e AttributeReadRequestMetadataValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e AttributeReadRequestMetadataValidationError) ErrorName() string {
+	return "AttributeReadRequestMetadataValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e AttributeReadRequestMetadataValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sAttributeReadRequestMetadata.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = AttributeReadRequestMetadataValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = AttributeReadRequestMetadataValidationError{}
+
+// Validate checks the field values on AttributeReadResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *AttributeReadResponse) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	for idx, item := range m.GetAttributes() {
+		_, _ = idx, item
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return AttributeReadResponseValidationError{
+					field:  fmt.Sprintf("Attributes[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	// no validation rules for ContinuousToken
+
+	return nil
+}
+
+// AttributeReadResponseValidationError is the validation error returned by
+// AttributeReadResponse.Validate if the designated constraints aren't met.
+type AttributeReadResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e AttributeReadResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e AttributeReadResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e AttributeReadResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e AttributeReadResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e AttributeReadResponseValidationError) ErrorName() string {
+	return "AttributeReadResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e AttributeReadResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sAttributeReadResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = AttributeReadResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = AttributeReadResponseValidationError{}
+
+// Validate checks the field values on DataDeleteRequest with the rules defined
+// in the proto definition for this message. If any rules are violated, an
+// error is returned.
+func (m *DataDeleteRequest) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if len(m.GetTenantId()) > 64 {
+		return DataDeleteRequestValidationError{
+			field:  "TenantId",
+			reason: "value length must be at most 64 bytes",
+		}
+	}
+
+	if !_DataDeleteRequest_TenantId_Pattern.MatchString(m.GetTenantId()) {
+		return DataDeleteRequestValidationError{
+			field:  "TenantId",
+			reason: "value does not match regex pattern \"[a-zA-Z0-9-,]+\"",
+		}
+	}
+
+	if m.GetTupleFilter() == nil {
+		return DataDeleteRequestValidationError{
+			field:  "TupleFilter",
+			reason: "value is required",
+		}
+	}
+
+	if v, ok := interface{}(m.GetTupleFilter()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return DataDeleteRequestValidationError{
+				field:  "TupleFilter",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if m.GetAttributeFilter() == nil {
+		return DataDeleteRequestValidationError{
+			field:  "AttributeFilter",
+			reason: "value is required",
+		}
+	}
+
+	if v, ok := interface{}(m.GetAttributeFilter()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return DataDeleteRequestValidationError{
+				field:  "AttributeFilter",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	return nil
+}
+
+// DataDeleteRequestValidationError is the validation error returned by
+// DataDeleteRequest.Validate if the designated constraints aren't met.
+type DataDeleteRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DataDeleteRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DataDeleteRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DataDeleteRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DataDeleteRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DataDeleteRequestValidationError) ErrorName() string {
+	return "DataDeleteRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e DataDeleteRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDataDeleteRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DataDeleteRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DataDeleteRequestValidationError{}
+
+var _DataDeleteRequest_TenantId_Pattern = regexp.MustCompile("[a-zA-Z0-9-,]+")
+
+// Validate checks the field values on DataDeleteResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *DataDeleteResponse) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for SnapToken
+
+	return nil
+}
+
+// DataDeleteResponseValidationError is the validation error returned by
+// DataDeleteResponse.Validate if the designated constraints aren't met.
+type DataDeleteResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DataDeleteResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DataDeleteResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DataDeleteResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DataDeleteResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DataDeleteResponseValidationError) ErrorName() string {
+	return "DataDeleteResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e DataDeleteResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDataDeleteResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DataDeleteResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DataDeleteResponseValidationError{}
+
 // Validate checks the field values on RelationshipDeleteRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, an error is returned.
@@ -3054,14 +3827,7 @@ func (m *RelationshipDeleteRequest) Validate() error {
 	if !_RelationshipDeleteRequest_TenantId_Pattern.MatchString(m.GetTenantId()) {
 		return RelationshipDeleteRequestValidationError{
 			field:  "TenantId",
-			reason: "value does not match regex pattern \"[a-zA-Z0-9-,]+\"",
-		}
-	}
-
-	if m.GetFilter() == nil {
-		return RelationshipDeleteRequestValidationError{
-			field:  "Filter",
-			reason: "value is required",
+			reason: "value does not match regex pattern \"^[a-zA-Z0-9]+$\"",
 		}
 	}
 
@@ -3134,7 +3900,7 @@ var _ interface {
 	ErrorName() string
 } = RelationshipDeleteRequestValidationError{}
 
-var _RelationshipDeleteRequest_TenantId_Pattern = regexp.MustCompile("[a-zA-Z0-9-,]+")
+var _RelationshipDeleteRequest_TenantId_Pattern = regexp.MustCompile("^[a-zA-Z0-9]+$")
 
 // Validate checks the field values on RelationshipDeleteResponse with the
 // rules defined in the proto definition for this message. If any rules are

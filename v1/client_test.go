@@ -68,7 +68,7 @@ var _ = Describe("Client Test", func() {
 			})
 
 			Expect(err).ShouldNot(HaveOccurred())
-			Expect(cr.Can).Should(Equal(v1.CheckResult_RESULT_DENIED))
+			Expect(cr.Can).Should(Equal(v1.CheckResult_CHECK_RESULT_DENIED))
 		})
 
 		It("Lookup entity request", func() {
@@ -84,7 +84,7 @@ var _ = Describe("Client Test", func() {
 				}`,
 			})
 
-			rr, err := client.Relationship.Write(context.Background(), &v1.RelationshipWriteRequest{
+			rr, err := client.Data.WriteRelationships(context.Background(), &v1.RelationshipWriteRequest{
 				TenantId: "t1",
 				Metadata: &v1.RelationshipWriteRequestMetadata{
 					SchemaVersion: wr.SchemaVersion,
