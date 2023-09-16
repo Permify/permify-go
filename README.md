@@ -20,13 +20,13 @@ go get github.com/Permify/permify-go
 ### Import Permify.
 
 ```go
-import permify `github.com/Permify/permify-go`
+import permify "github.com/Permify/permify-go"
 ```
 
 ### Initialize the new Permify client.
 
 ```go
-import permify `github.com/Permify/permify-go`
+import permify "github.com/Permify/permify-go"
 
 // generate new client
 client, err = permify.NewClient(
