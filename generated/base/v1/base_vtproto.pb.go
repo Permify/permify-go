@@ -2383,7 +2383,7 @@ func (m *DataChange_Attribute) MarshalToSizedBufferVT(dAtA []byte) (int, error) 
 	}
 	return len(dAtA) - i, nil
 }
-func (m *String) MarshalVT() (dAtA []byte, err error) {
+func (m *StringValue) MarshalVT() (dAtA []byte, err error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -2396,12 +2396,12 @@ func (m *String) MarshalVT() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *String) MarshalToVT(dAtA []byte) (int, error) {
+func (m *StringValue) MarshalToVT(dAtA []byte) (int, error) {
 	size := m.SizeVT()
 	return m.MarshalToSizedBufferVT(dAtA[:size])
 }
 
-func (m *String) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
+func (m *StringValue) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	if m == nil {
 		return 0, nil
 	}
@@ -2413,17 +2413,17 @@ func (m *String) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 		i -= len(m.unknownFields)
 		copy(dAtA[i:], m.unknownFields)
 	}
-	if len(m.Value) > 0 {
-		i -= len(m.Value)
-		copy(dAtA[i:], m.Value)
-		i = encodeVarint(dAtA, i, uint64(len(m.Value)))
+	if len(m.Data) > 0 {
+		i -= len(m.Data)
+		copy(dAtA[i:], m.Data)
+		i = encodeVarint(dAtA, i, uint64(len(m.Data)))
 		i--
 		dAtA[i] = 0xa
 	}
 	return len(dAtA) - i, nil
 }
 
-func (m *Integer) MarshalVT() (dAtA []byte, err error) {
+func (m *IntegerValue) MarshalVT() (dAtA []byte, err error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -2436,12 +2436,12 @@ func (m *Integer) MarshalVT() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *Integer) MarshalToVT(dAtA []byte) (int, error) {
+func (m *IntegerValue) MarshalToVT(dAtA []byte) (int, error) {
 	size := m.SizeVT()
 	return m.MarshalToSizedBufferVT(dAtA[:size])
 }
 
-func (m *Integer) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
+func (m *IntegerValue) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	if m == nil {
 		return 0, nil
 	}
@@ -2453,15 +2453,15 @@ func (m *Integer) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 		i -= len(m.unknownFields)
 		copy(dAtA[i:], m.unknownFields)
 	}
-	if m.Value != 0 {
-		i = encodeVarint(dAtA, i, uint64(m.Value))
+	if m.Data != 0 {
+		i = encodeVarint(dAtA, i, uint64(m.Data))
 		i--
 		dAtA[i] = 0x8
 	}
 	return len(dAtA) - i, nil
 }
 
-func (m *Double) MarshalVT() (dAtA []byte, err error) {
+func (m *DoubleValue) MarshalVT() (dAtA []byte, err error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -2474,12 +2474,12 @@ func (m *Double) MarshalVT() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *Double) MarshalToVT(dAtA []byte) (int, error) {
+func (m *DoubleValue) MarshalToVT(dAtA []byte) (int, error) {
 	size := m.SizeVT()
 	return m.MarshalToSizedBufferVT(dAtA[:size])
 }
 
-func (m *Double) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
+func (m *DoubleValue) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	if m == nil {
 		return 0, nil
 	}
@@ -2491,16 +2491,16 @@ func (m *Double) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 		i -= len(m.unknownFields)
 		copy(dAtA[i:], m.unknownFields)
 	}
-	if m.Value != 0 {
+	if m.Data != 0 {
 		i -= 8
-		binary.LittleEndian.PutUint64(dAtA[i:], uint64(math.Float64bits(float64(m.Value))))
+		binary.LittleEndian.PutUint64(dAtA[i:], uint64(math.Float64bits(float64(m.Data))))
 		i--
 		dAtA[i] = 0x9
 	}
 	return len(dAtA) - i, nil
 }
 
-func (m *Boolean) MarshalVT() (dAtA []byte, err error) {
+func (m *BooleanValue) MarshalVT() (dAtA []byte, err error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -2513,12 +2513,12 @@ func (m *Boolean) MarshalVT() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *Boolean) MarshalToVT(dAtA []byte) (int, error) {
+func (m *BooleanValue) MarshalToVT(dAtA []byte) (int, error) {
 	size := m.SizeVT()
 	return m.MarshalToSizedBufferVT(dAtA[:size])
 }
 
-func (m *Boolean) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
+func (m *BooleanValue) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	if m == nil {
 		return 0, nil
 	}
@@ -2530,9 +2530,9 @@ func (m *Boolean) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 		i -= len(m.unknownFields)
 		copy(dAtA[i:], m.unknownFields)
 	}
-	if m.Value {
+	if m.Data {
 		i--
-		if m.Value {
+		if m.Data {
 			dAtA[i] = 1
 		} else {
 			dAtA[i] = 0
@@ -2543,7 +2543,7 @@ func (m *Boolean) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *StringArray) MarshalVT() (dAtA []byte, err error) {
+func (m *StringArrayValue) MarshalVT() (dAtA []byte, err error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -2556,12 +2556,12 @@ func (m *StringArray) MarshalVT() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *StringArray) MarshalToVT(dAtA []byte) (int, error) {
+func (m *StringArrayValue) MarshalToVT(dAtA []byte) (int, error) {
 	size := m.SizeVT()
 	return m.MarshalToSizedBufferVT(dAtA[:size])
 }
 
-func (m *StringArray) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
+func (m *StringArrayValue) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	if m == nil {
 		return 0, nil
 	}
@@ -2573,11 +2573,11 @@ func (m *StringArray) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 		i -= len(m.unknownFields)
 		copy(dAtA[i:], m.unknownFields)
 	}
-	if len(m.Values) > 0 {
-		for iNdEx := len(m.Values) - 1; iNdEx >= 0; iNdEx-- {
-			i -= len(m.Values[iNdEx])
-			copy(dAtA[i:], m.Values[iNdEx])
-			i = encodeVarint(dAtA, i, uint64(len(m.Values[iNdEx])))
+	if len(m.Data) > 0 {
+		for iNdEx := len(m.Data) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.Data[iNdEx])
+			copy(dAtA[i:], m.Data[iNdEx])
+			i = encodeVarint(dAtA, i, uint64(len(m.Data[iNdEx])))
 			i--
 			dAtA[i] = 0xa
 		}
@@ -2585,7 +2585,7 @@ func (m *StringArray) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *IntegerArray) MarshalVT() (dAtA []byte, err error) {
+func (m *IntegerArrayValue) MarshalVT() (dAtA []byte, err error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -2598,12 +2598,12 @@ func (m *IntegerArray) MarshalVT() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *IntegerArray) MarshalToVT(dAtA []byte) (int, error) {
+func (m *IntegerArrayValue) MarshalToVT(dAtA []byte) (int, error) {
 	size := m.SizeVT()
 	return m.MarshalToSizedBufferVT(dAtA[:size])
 }
 
-func (m *IntegerArray) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
+func (m *IntegerArrayValue) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	if m == nil {
 		return 0, nil
 	}
@@ -2615,14 +2615,14 @@ func (m *IntegerArray) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 		i -= len(m.unknownFields)
 		copy(dAtA[i:], m.unknownFields)
 	}
-	if len(m.Values) > 0 {
+	if len(m.Data) > 0 {
 		var pksize2 int
-		for _, num := range m.Values {
+		for _, num := range m.Data {
 			pksize2 += sov(uint64(num))
 		}
 		i -= pksize2
 		j1 := i
-		for _, num1 := range m.Values {
+		for _, num1 := range m.Data {
 			num := uint64(num1)
 			for num >= 1<<7 {
 				dAtA[j1] = uint8(uint64(num)&0x7f | 0x80)
@@ -2639,7 +2639,7 @@ func (m *IntegerArray) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *DoubleArray) MarshalVT() (dAtA []byte, err error) {
+func (m *DoubleArrayValue) MarshalVT() (dAtA []byte, err error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -2652,12 +2652,12 @@ func (m *DoubleArray) MarshalVT() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *DoubleArray) MarshalToVT(dAtA []byte) (int, error) {
+func (m *DoubleArrayValue) MarshalToVT(dAtA []byte) (int, error) {
 	size := m.SizeVT()
 	return m.MarshalToSizedBufferVT(dAtA[:size])
 }
 
-func (m *DoubleArray) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
+func (m *DoubleArrayValue) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	if m == nil {
 		return 0, nil
 	}
@@ -2669,20 +2669,20 @@ func (m *DoubleArray) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 		i -= len(m.unknownFields)
 		copy(dAtA[i:], m.unknownFields)
 	}
-	if len(m.Values) > 0 {
-		for iNdEx := len(m.Values) - 1; iNdEx >= 0; iNdEx-- {
-			f1 := math.Float64bits(float64(m.Values[iNdEx]))
+	if len(m.Data) > 0 {
+		for iNdEx := len(m.Data) - 1; iNdEx >= 0; iNdEx-- {
+			f1 := math.Float64bits(float64(m.Data[iNdEx]))
 			i -= 8
 			binary.LittleEndian.PutUint64(dAtA[i:], uint64(f1))
 		}
-		i = encodeVarint(dAtA, i, uint64(len(m.Values)*8))
+		i = encodeVarint(dAtA, i, uint64(len(m.Data)*8))
 		i--
 		dAtA[i] = 0xa
 	}
 	return len(dAtA) - i, nil
 }
 
-func (m *BooleanArray) MarshalVT() (dAtA []byte, err error) {
+func (m *BooleanArrayValue) MarshalVT() (dAtA []byte, err error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -2695,12 +2695,12 @@ func (m *BooleanArray) MarshalVT() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *BooleanArray) MarshalToVT(dAtA []byte) (int, error) {
+func (m *BooleanArrayValue) MarshalToVT(dAtA []byte) (int, error) {
 	size := m.SizeVT()
 	return m.MarshalToSizedBufferVT(dAtA[:size])
 }
 
-func (m *BooleanArray) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
+func (m *BooleanArrayValue) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	if m == nil {
 		return 0, nil
 	}
@@ -2712,16 +2712,16 @@ func (m *BooleanArray) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 		i -= len(m.unknownFields)
 		copy(dAtA[i:], m.unknownFields)
 	}
-	if len(m.Values) > 0 {
-		for iNdEx := len(m.Values) - 1; iNdEx >= 0; iNdEx-- {
+	if len(m.Data) > 0 {
+		for iNdEx := len(m.Data) - 1; iNdEx >= 0; iNdEx-- {
 			i--
-			if m.Values[iNdEx] {
+			if m.Data[iNdEx] {
 				dAtA[i] = 1
 			} else {
 				dAtA[i] = 0
 			}
 		}
-		i = encodeVarint(dAtA, i, uint64(len(m.Values)))
+		i = encodeVarint(dAtA, i, uint64(len(m.Data)))
 		i--
 		dAtA[i] = 0xa
 	}
@@ -3787,13 +3787,13 @@ func (m *DataChange_Attribute) SizeVT() (n int) {
 	}
 	return n
 }
-func (m *String) SizeVT() (n int) {
+func (m *StringValue) SizeVT() (n int) {
 	if m == nil {
 		return 0
 	}
 	var l int
 	_ = l
-	l = len(m.Value)
+	l = len(m.Data)
 	if l > 0 {
 		n += 1 + l + sov(uint64(l))
 	}
@@ -3803,14 +3803,14 @@ func (m *String) SizeVT() (n int) {
 	return n
 }
 
-func (m *Integer) SizeVT() (n int) {
+func (m *IntegerValue) SizeVT() (n int) {
 	if m == nil {
 		return 0
 	}
 	var l int
 	_ = l
-	if m.Value != 0 {
-		n += 1 + sov(uint64(m.Value))
+	if m.Data != 0 {
+		n += 1 + sov(uint64(m.Data))
 	}
 	if m.unknownFields != nil {
 		n += len(m.unknownFields)
@@ -3818,13 +3818,13 @@ func (m *Integer) SizeVT() (n int) {
 	return n
 }
 
-func (m *Double) SizeVT() (n int) {
+func (m *DoubleValue) SizeVT() (n int) {
 	if m == nil {
 		return 0
 	}
 	var l int
 	_ = l
-	if m.Value != 0 {
+	if m.Data != 0 {
 		n += 9
 	}
 	if m.unknownFields != nil {
@@ -3833,13 +3833,13 @@ func (m *Double) SizeVT() (n int) {
 	return n
 }
 
-func (m *Boolean) SizeVT() (n int) {
+func (m *BooleanValue) SizeVT() (n int) {
 	if m == nil {
 		return 0
 	}
 	var l int
 	_ = l
-	if m.Value {
+	if m.Data {
 		n += 2
 	}
 	if m.unknownFields != nil {
@@ -3848,14 +3848,14 @@ func (m *Boolean) SizeVT() (n int) {
 	return n
 }
 
-func (m *StringArray) SizeVT() (n int) {
+func (m *StringArrayValue) SizeVT() (n int) {
 	if m == nil {
 		return 0
 	}
 	var l int
 	_ = l
-	if len(m.Values) > 0 {
-		for _, s := range m.Values {
+	if len(m.Data) > 0 {
+		for _, s := range m.Data {
 			l = len(s)
 			n += 1 + l + sov(uint64(l))
 		}
@@ -3866,15 +3866,15 @@ func (m *StringArray) SizeVT() (n int) {
 	return n
 }
 
-func (m *IntegerArray) SizeVT() (n int) {
+func (m *IntegerArrayValue) SizeVT() (n int) {
 	if m == nil {
 		return 0
 	}
 	var l int
 	_ = l
-	if len(m.Values) > 0 {
+	if len(m.Data) > 0 {
 		l = 0
-		for _, e := range m.Values {
+		for _, e := range m.Data {
 			l += sov(uint64(e))
 		}
 		n += 1 + sov(uint64(l)) + l
@@ -3885,14 +3885,14 @@ func (m *IntegerArray) SizeVT() (n int) {
 	return n
 }
 
-func (m *DoubleArray) SizeVT() (n int) {
+func (m *DoubleArrayValue) SizeVT() (n int) {
 	if m == nil {
 		return 0
 	}
 	var l int
 	_ = l
-	if len(m.Values) > 0 {
-		n += 1 + sov(uint64(len(m.Values)*8)) + len(m.Values)*8
+	if len(m.Data) > 0 {
+		n += 1 + sov(uint64(len(m.Data)*8)) + len(m.Data)*8
 	}
 	if m.unknownFields != nil {
 		n += len(m.unknownFields)
@@ -3900,14 +3900,14 @@ func (m *DoubleArray) SizeVT() (n int) {
 	return n
 }
 
-func (m *BooleanArray) SizeVT() (n int) {
+func (m *BooleanArrayValue) SizeVT() (n int) {
 	if m == nil {
 		return 0
 	}
 	var l int
 	_ = l
-	if len(m.Values) > 0 {
-		n += 1 + sov(uint64(len(m.Values))) + len(m.Values)*1
+	if len(m.Data) > 0 {
+		n += 1 + sov(uint64(len(m.Data))) + len(m.Data)*1
 	}
 	if m.unknownFields != nil {
 		n += len(m.unknownFields)
@@ -9574,7 +9574,7 @@ func (m *DataChange) UnmarshalVT(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *String) UnmarshalVT(dAtA []byte) error {
+func (m *StringValue) UnmarshalVT(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -9597,15 +9597,15 @@ func (m *String) UnmarshalVT(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: String: wiretype end group for non-group")
+			return fmt.Errorf("proto: StringValue: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: String: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: StringValue: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Value", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Data", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -9633,7 +9633,7 @@ func (m *String) UnmarshalVT(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Value = string(dAtA[iNdEx:postIndex])
+			m.Data = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -9657,7 +9657,7 @@ func (m *String) UnmarshalVT(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *Integer) UnmarshalVT(dAtA []byte) error {
+func (m *IntegerValue) UnmarshalVT(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -9680,17 +9680,17 @@ func (m *Integer) UnmarshalVT(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: Integer: wiretype end group for non-group")
+			return fmt.Errorf("proto: IntegerValue: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: Integer: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: IntegerValue: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Value", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Data", wireType)
 			}
-			m.Value = 0
+			m.Data = 0
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflow
@@ -9700,7 +9700,7 @@ func (m *Integer) UnmarshalVT(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Value |= int32(b&0x7F) << shift
+				m.Data |= int32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -9727,7 +9727,7 @@ func (m *Integer) UnmarshalVT(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *Double) UnmarshalVT(dAtA []byte) error {
+func (m *DoubleValue) UnmarshalVT(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -9750,15 +9750,15 @@ func (m *Double) UnmarshalVT(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: Double: wiretype end group for non-group")
+			return fmt.Errorf("proto: DoubleValue: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: Double: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: DoubleValue: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 1 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Value", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Data", wireType)
 			}
 			var v uint64
 			if (iNdEx + 8) > l {
@@ -9766,7 +9766,7 @@ func (m *Double) UnmarshalVT(dAtA []byte) error {
 			}
 			v = uint64(binary.LittleEndian.Uint64(dAtA[iNdEx:]))
 			iNdEx += 8
-			m.Value = float64(math.Float64frombits(v))
+			m.Data = float64(math.Float64frombits(v))
 		default:
 			iNdEx = preIndex
 			skippy, err := skip(dAtA[iNdEx:])
@@ -9789,7 +9789,7 @@ func (m *Double) UnmarshalVT(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *Boolean) UnmarshalVT(dAtA []byte) error {
+func (m *BooleanValue) UnmarshalVT(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -9812,15 +9812,15 @@ func (m *Boolean) UnmarshalVT(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: Boolean: wiretype end group for non-group")
+			return fmt.Errorf("proto: BooleanValue: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: Boolean: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: BooleanValue: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Value", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Data", wireType)
 			}
 			var v int
 			for shift := uint(0); ; shift += 7 {
@@ -9837,7 +9837,7 @@ func (m *Boolean) UnmarshalVT(dAtA []byte) error {
 					break
 				}
 			}
-			m.Value = bool(v != 0)
+			m.Data = bool(v != 0)
 		default:
 			iNdEx = preIndex
 			skippy, err := skip(dAtA[iNdEx:])
@@ -9860,7 +9860,7 @@ func (m *Boolean) UnmarshalVT(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *StringArray) UnmarshalVT(dAtA []byte) error {
+func (m *StringArrayValue) UnmarshalVT(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -9883,15 +9883,15 @@ func (m *StringArray) UnmarshalVT(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: StringArray: wiretype end group for non-group")
+			return fmt.Errorf("proto: StringArrayValue: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: StringArray: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: StringArrayValue: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Values", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Data", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -9919,7 +9919,7 @@ func (m *StringArray) UnmarshalVT(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Values = append(m.Values, string(dAtA[iNdEx:postIndex]))
+			m.Data = append(m.Data, string(dAtA[iNdEx:postIndex]))
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -9943,7 +9943,7 @@ func (m *StringArray) UnmarshalVT(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *IntegerArray) UnmarshalVT(dAtA []byte) error {
+func (m *IntegerArrayValue) UnmarshalVT(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -9966,10 +9966,10 @@ func (m *IntegerArray) UnmarshalVT(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: IntegerArray: wiretype end group for non-group")
+			return fmt.Errorf("proto: IntegerArrayValue: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: IntegerArray: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: IntegerArrayValue: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -9989,7 +9989,7 @@ func (m *IntegerArray) UnmarshalVT(dAtA []byte) error {
 						break
 					}
 				}
-				m.Values = append(m.Values, v)
+				m.Data = append(m.Data, v)
 			} else if wireType == 2 {
 				var packedLen int
 				for shift := uint(0); ; shift += 7 {
@@ -10024,8 +10024,8 @@ func (m *IntegerArray) UnmarshalVT(dAtA []byte) error {
 					}
 				}
 				elementCount = count
-				if elementCount != 0 && len(m.Values) == 0 {
-					m.Values = make([]int32, 0, elementCount)
+				if elementCount != 0 && len(m.Data) == 0 {
+					m.Data = make([]int32, 0, elementCount)
 				}
 				for iNdEx < postIndex {
 					var v int32
@@ -10043,10 +10043,10 @@ func (m *IntegerArray) UnmarshalVT(dAtA []byte) error {
 							break
 						}
 					}
-					m.Values = append(m.Values, v)
+					m.Data = append(m.Data, v)
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field Values", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Data", wireType)
 			}
 		default:
 			iNdEx = preIndex
@@ -10070,7 +10070,7 @@ func (m *IntegerArray) UnmarshalVT(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *DoubleArray) UnmarshalVT(dAtA []byte) error {
+func (m *DoubleArrayValue) UnmarshalVT(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -10093,10 +10093,10 @@ func (m *DoubleArray) UnmarshalVT(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: DoubleArray: wiretype end group for non-group")
+			return fmt.Errorf("proto: DoubleArrayValue: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: DoubleArray: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: DoubleArrayValue: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -10108,7 +10108,7 @@ func (m *DoubleArray) UnmarshalVT(dAtA []byte) error {
 				v = uint64(binary.LittleEndian.Uint64(dAtA[iNdEx:]))
 				iNdEx += 8
 				v2 := float64(math.Float64frombits(v))
-				m.Values = append(m.Values, v2)
+				m.Data = append(m.Data, v2)
 			} else if wireType == 2 {
 				var packedLen int
 				for shift := uint(0); ; shift += 7 {
@@ -10137,8 +10137,8 @@ func (m *DoubleArray) UnmarshalVT(dAtA []byte) error {
 				}
 				var elementCount int
 				elementCount = packedLen / 8
-				if elementCount != 0 && len(m.Values) == 0 {
-					m.Values = make([]float64, 0, elementCount)
+				if elementCount != 0 && len(m.Data) == 0 {
+					m.Data = make([]float64, 0, elementCount)
 				}
 				for iNdEx < postIndex {
 					var v uint64
@@ -10148,10 +10148,10 @@ func (m *DoubleArray) UnmarshalVT(dAtA []byte) error {
 					v = uint64(binary.LittleEndian.Uint64(dAtA[iNdEx:]))
 					iNdEx += 8
 					v2 := float64(math.Float64frombits(v))
-					m.Values = append(m.Values, v2)
+					m.Data = append(m.Data, v2)
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field Values", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Data", wireType)
 			}
 		default:
 			iNdEx = preIndex
@@ -10175,7 +10175,7 @@ func (m *DoubleArray) UnmarshalVT(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *BooleanArray) UnmarshalVT(dAtA []byte) error {
+func (m *BooleanArrayValue) UnmarshalVT(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -10198,10 +10198,10 @@ func (m *BooleanArray) UnmarshalVT(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: BooleanArray: wiretype end group for non-group")
+			return fmt.Errorf("proto: BooleanArrayValue: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: BooleanArray: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: BooleanArrayValue: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -10221,7 +10221,7 @@ func (m *BooleanArray) UnmarshalVT(dAtA []byte) error {
 						break
 					}
 				}
-				m.Values = append(m.Values, bool(v != 0))
+				m.Data = append(m.Data, bool(v != 0))
 			} else if wireType == 2 {
 				var packedLen int
 				for shift := uint(0); ; shift += 7 {
@@ -10250,8 +10250,8 @@ func (m *BooleanArray) UnmarshalVT(dAtA []byte) error {
 				}
 				var elementCount int
 				elementCount = packedLen
-				if elementCount != 0 && len(m.Values) == 0 {
-					m.Values = make([]bool, 0, elementCount)
+				if elementCount != 0 && len(m.Data) == 0 {
+					m.Data = make([]bool, 0, elementCount)
 				}
 				for iNdEx < postIndex {
 					var v int
@@ -10269,10 +10269,10 @@ func (m *BooleanArray) UnmarshalVT(dAtA []byte) error {
 							break
 						}
 					}
-					m.Values = append(m.Values, bool(v != 0))
+					m.Data = append(m.Data, bool(v != 0))
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field Values", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Data", wireType)
 			}
 		default:
 			iNdEx = preIndex
