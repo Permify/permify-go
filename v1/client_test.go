@@ -5,6 +5,8 @@ import (
 	"io"
 	"testing"
 
+	"google.golang.org/protobuf/types/known/anypb"
+
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 
@@ -70,7 +72,60 @@ var _ = Describe("Client Test", func() {
 			Expect(err).ShouldNot(HaveOccurred())
 			Expect(cr.Can).Should(Equal(v1.CheckResult_CHECK_RESULT_DENIED))
 		})
+	})
 
+	Context("Write Data", func() {
+		It("abac schema", func() {
+			wr, err := client.Schema.Write(context.Background(), &v1.SchemaWriteRequest{
+				TenantId: "instagram",
+				Schema: `
+					entity user {}
+					
+					entity account {
+						relation owner @user
+						relation following @user
+						relation follower @user
+					
+						attribute public boolean
+					
+						action view = (owner or follower) or public
+						
+					}`,
+			})
+
+			Expect(err).ShouldNot(HaveOccurred())
+
+			// Convert the wrapped attribute value into Any proto message
+			value, err := anypb.New(&v1.BooleanValue{
+				Data: true,
+			})
+			if err != nil {
+				Expect(err).ShouldNot(HaveOccurred())
+			}
+
+			cr, err := client.Data.Write(context.Background(), &v1.DataWriteRequest{
+				TenantId: "instagram",
+				Metadata: &v1.DataWriteRequestMetadata{
+					SchemaVersion: wr.SchemaVersion,
+				},
+				Attributes: []*v1.Attribute{
+					{
+						Entity: &v1.Entity{
+							Type: "account",
+							Id:   "1",
+						},
+						Attribute: "public",
+						Value:     value,
+					},
+				},
+			})
+
+			Expect(err).ShouldNot(HaveOccurred())
+			Expect(cr.SnapToken).ShouldNot(BeNil())
+		})
+	})
+
+	Context("Lookup", func() {
 		It("Lookup entity request", func() {
 			wr, err := client.Schema.Write(context.Background(), &v1.SchemaWriteRequest{
 				TenantId: "t1",
