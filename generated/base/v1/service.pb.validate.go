@@ -41,17 +41,17 @@ func (m *PermissionCheckRequest) Validate() error {
 		return nil
 	}
 
-	if len(m.GetTenantId()) > 64 {
+	if len(m.GetTenantId()) > 128 {
 		return PermissionCheckRequestValidationError{
 			field:  "TenantId",
-			reason: "value length must be at most 64 bytes",
+			reason: "value length must be at most 128 bytes",
 		}
 	}
 
 	if !_PermissionCheckRequest_TenantId_Pattern.MatchString(m.GetTenantId()) {
 		return PermissionCheckRequestValidationError{
 			field:  "TenantId",
-			reason: "value does not match regex pattern \"[a-zA-Z0-9-,]+\"",
+			reason: "value does not match regex pattern \"^([a-zA-Z0-9_\\\\-@\\\\.:+]{1,128}|\\\\*)$\"",
 		}
 	}
 
@@ -99,7 +99,7 @@ func (m *PermissionCheckRequest) Validate() error {
 	if !_PermissionCheckRequest_Permission_Pattern.MatchString(m.GetPermission()) {
 		return PermissionCheckRequestValidationError{
 			field:  "Permission",
-			reason: "value does not match regex pattern \"^([a-zA-Z][a-zA-Z0-9_]{1,62}[a-zA-Z0-9])$\"",
+			reason: "value does not match regex pattern \"^[a-zA-Z_]{1,64}$\"",
 		}
 	}
 
@@ -204,9 +204,9 @@ var _ interface {
 	ErrorName() string
 } = PermissionCheckRequestValidationError{}
 
-var _PermissionCheckRequest_TenantId_Pattern = regexp.MustCompile("[a-zA-Z0-9-,]+")
+var _PermissionCheckRequest_TenantId_Pattern = regexp.MustCompile("^([a-zA-Z0-9_\\-@\\.:+]{1,128}|\\*)$")
 
-var _PermissionCheckRequest_Permission_Pattern = regexp.MustCompile("^([a-zA-Z][a-zA-Z0-9_]{1,62}[a-zA-Z0-9])$")
+var _PermissionCheckRequest_Permission_Pattern = regexp.MustCompile("^[a-zA-Z_]{1,64}$")
 
 // Validate checks the field values on PermissionCheckRequestMetadata with the
 // rules defined in the proto definition for this message. If any rules are
@@ -504,7 +504,7 @@ func (m *PermissionExpandRequest) Validate() error {
 		if !_PermissionExpandRequest_Permission_Pattern.MatchString(m.GetPermission()) {
 			return PermissionExpandRequestValidationError{
 				field:  "Permission",
-				reason: "value does not match regex pattern \"^([a-zA-Z][a-zA-Z0-9_]{1,62}[a-zA-Z0-9])$\"",
+				reason: "value does not match regex pattern \"^[a-zA-Z_]{1,64}$\"",
 			}
 		}
 
@@ -596,7 +596,7 @@ var _ interface {
 
 var _PermissionExpandRequest_TenantId_Pattern = regexp.MustCompile("[a-zA-Z0-9-,]+")
 
-var _PermissionExpandRequest_Permission_Pattern = regexp.MustCompile("^([a-zA-Z][a-zA-Z0-9_]{1,62}[a-zA-Z0-9])$")
+var _PermissionExpandRequest_Permission_Pattern = regexp.MustCompile("^[a-zA-Z_]{1,64}$")
 
 // Validate checks the field values on PermissionExpandRequestMetadata with the
 // rules defined in the proto definition for this message. If any rules are
@@ -755,17 +755,17 @@ func (m *PermissionLookupEntityRequest) Validate() error {
 		return nil
 	}
 
-	if len(m.GetTenantId()) > 64 {
+	if len(m.GetTenantId()) > 128 {
 		return PermissionLookupEntityRequestValidationError{
 			field:  "TenantId",
-			reason: "value length must be at most 64 bytes",
+			reason: "value length must be at most 128 bytes",
 		}
 	}
 
 	if !_PermissionLookupEntityRequest_TenantId_Pattern.MatchString(m.GetTenantId()) {
 		return PermissionLookupEntityRequestValidationError{
 			field:  "TenantId",
-			reason: "value does not match regex pattern \"[a-zA-Z0-9-,]+\"",
+			reason: "value does not match regex pattern \"^([a-zA-Z0-9_\\\\-@\\\\.:+]{1,128}|\\\\*)$\"",
 		}
 	}
 
@@ -796,7 +796,7 @@ func (m *PermissionLookupEntityRequest) Validate() error {
 	if !_PermissionLookupEntityRequest_EntityType_Pattern.MatchString(m.GetEntityType()) {
 		return PermissionLookupEntityRequestValidationError{
 			field:  "EntityType",
-			reason: "value does not match regex pattern \"^([a-zA-Z][a-zA-Z0-9_]{1,62}[a-zA-Z0-9])$\"",
+			reason: "value does not match regex pattern \"^[a-zA-Z_]{1,64}$\"",
 		}
 	}
 
@@ -810,7 +810,7 @@ func (m *PermissionLookupEntityRequest) Validate() error {
 	if !_PermissionLookupEntityRequest_Permission_Pattern.MatchString(m.GetPermission()) {
 		return PermissionLookupEntityRequestValidationError{
 			field:  "Permission",
-			reason: "value does not match regex pattern \"^([a-zA-Z][a-zA-Z0-9_]{1,62}[a-zA-Z0-9])$\"",
+			reason: "value does not match regex pattern \"^[a-zA-Z_]{1,64}$\"",
 		}
 	}
 
@@ -901,11 +901,11 @@ var _ interface {
 	ErrorName() string
 } = PermissionLookupEntityRequestValidationError{}
 
-var _PermissionLookupEntityRequest_TenantId_Pattern = regexp.MustCompile("[a-zA-Z0-9-,]+")
+var _PermissionLookupEntityRequest_TenantId_Pattern = regexp.MustCompile("^([a-zA-Z0-9_\\-@\\.:+]{1,128}|\\*)$")
 
-var _PermissionLookupEntityRequest_EntityType_Pattern = regexp.MustCompile("^([a-zA-Z][a-zA-Z0-9_]{1,62}[a-zA-Z0-9])$")
+var _PermissionLookupEntityRequest_EntityType_Pattern = regexp.MustCompile("^[a-zA-Z_]{1,64}$")
 
-var _PermissionLookupEntityRequest_Permission_Pattern = regexp.MustCompile("^([a-zA-Z][a-zA-Z0-9_]{1,62}[a-zA-Z0-9])$")
+var _PermissionLookupEntityRequest_Permission_Pattern = regexp.MustCompile("^[a-zA-Z_]{1,64}$")
 
 // Validate checks the field values on PermissionLookupEntityRequestMetadata
 // with the rules defined in the proto definition for this message. If any
@@ -1132,17 +1132,17 @@ func (m *PermissionEntityFilterRequest) Validate() error {
 		return nil
 	}
 
-	if len(m.GetTenantId()) > 64 {
+	if len(m.GetTenantId()) > 128 {
 		return PermissionEntityFilterRequestValidationError{
 			field:  "TenantId",
-			reason: "value length must be at most 64 bytes",
+			reason: "value length must be at most 128 bytes",
 		}
 	}
 
 	if !_PermissionEntityFilterRequest_TenantId_Pattern.MatchString(m.GetTenantId()) {
 		return PermissionEntityFilterRequestValidationError{
 			field:  "TenantId",
-			reason: "value does not match regex pattern \"[a-zA-Z0-9-,]+\"",
+			reason: "value does not match regex pattern \"^([a-zA-Z0-9_\\\\-@\\\\.:+]{1,128}|\\\\*)$\"",
 		}
 	}
 
@@ -1253,7 +1253,7 @@ var _ interface {
 	ErrorName() string
 } = PermissionEntityFilterRequestValidationError{}
 
-var _PermissionEntityFilterRequest_TenantId_Pattern = regexp.MustCompile("[a-zA-Z0-9-,]+")
+var _PermissionEntityFilterRequest_TenantId_Pattern = regexp.MustCompile("^([a-zA-Z0-9_\\-@\\.:+]{1,128}|\\*)$")
 
 // Validate checks the field values on PermissionEntityFilterRequestMetadata
 // with the rules defined in the proto definition for this message. If any
@@ -1342,17 +1342,17 @@ func (m *PermissionLookupSubjectRequest) Validate() error {
 		return nil
 	}
 
-	if len(m.GetTenantId()) > 64 {
+	if len(m.GetTenantId()) > 128 {
 		return PermissionLookupSubjectRequestValidationError{
 			field:  "TenantId",
-			reason: "value length must be at most 64 bytes",
+			reason: "value length must be at most 128 bytes",
 		}
 	}
 
 	if !_PermissionLookupSubjectRequest_TenantId_Pattern.MatchString(m.GetTenantId()) {
 		return PermissionLookupSubjectRequestValidationError{
 			field:  "TenantId",
-			reason: "value does not match regex pattern \"[a-zA-Z0-9-,]+\"",
+			reason: "value does not match regex pattern \"^([a-zA-Z0-9_\\\\-@\\\\.:+]{1,128}|\\\\*)$\"",
 		}
 	}
 
@@ -1400,7 +1400,7 @@ func (m *PermissionLookupSubjectRequest) Validate() error {
 	if !_PermissionLookupSubjectRequest_Permission_Pattern.MatchString(m.GetPermission()) {
 		return PermissionLookupSubjectRequestValidationError{
 			field:  "Permission",
-			reason: "value does not match regex pattern \"^([a-zA-Z][a-zA-Z0-9_]{1,62}[a-zA-Z0-9])$\"",
+			reason: "value does not match regex pattern \"^[a-zA-Z_]{1,64}$\"",
 		}
 	}
 
@@ -1484,9 +1484,9 @@ var _ interface {
 	ErrorName() string
 } = PermissionLookupSubjectRequestValidationError{}
 
-var _PermissionLookupSubjectRequest_TenantId_Pattern = regexp.MustCompile("[a-zA-Z0-9-,]+")
+var _PermissionLookupSubjectRequest_TenantId_Pattern = regexp.MustCompile("^([a-zA-Z0-9_\\-@\\.:+]{1,128}|\\*)$")
 
-var _PermissionLookupSubjectRequest_Permission_Pattern = regexp.MustCompile("^([a-zA-Z][a-zA-Z0-9_]{1,62}[a-zA-Z0-9])$")
+var _PermissionLookupSubjectRequest_Permission_Pattern = regexp.MustCompile("^[a-zA-Z_]{1,64}$")
 
 // Validate checks the field values on PermissionLookupSubjectRequestMetadata
 // with the rules defined in the proto definition for this message. If any
@@ -1643,17 +1643,17 @@ func (m *PermissionSubjectPermissionRequest) Validate() error {
 		return nil
 	}
 
-	if len(m.GetTenantId()) > 64 {
+	if len(m.GetTenantId()) > 128 {
 		return PermissionSubjectPermissionRequestValidationError{
 			field:  "TenantId",
-			reason: "value length must be at most 64 bytes",
+			reason: "value length must be at most 128 bytes",
 		}
 	}
 
 	if !_PermissionSubjectPermissionRequest_TenantId_Pattern.MatchString(m.GetTenantId()) {
 		return PermissionSubjectPermissionRequestValidationError{
 			field:  "TenantId",
-			reason: "value does not match regex pattern \"[a-zA-Z0-9-,]+\"",
+			reason: "value does not match regex pattern \"^([a-zA-Z0-9_\\\\-@\\\\.:+]{1,128}|\\\\*)$\"",
 		}
 	}
 
@@ -1778,7 +1778,7 @@ var _ interface {
 	ErrorName() string
 } = PermissionSubjectPermissionRequestValidationError{}
 
-var _PermissionSubjectPermissionRequest_TenantId_Pattern = regexp.MustCompile("[a-zA-Z0-9-,]+")
+var _PermissionSubjectPermissionRequest_TenantId_Pattern = regexp.MustCompile("^([a-zA-Z0-9_\\-@\\.:+]{1,128}|\\*)$")
 
 // Validate checks the field values on
 // PermissionSubjectPermissionRequestMetadata with the rules defined in the
@@ -2097,17 +2097,17 @@ func (m *SchemaWriteRequest) Validate() error {
 		return nil
 	}
 
-	if len(m.GetTenantId()) > 64 {
+	if len(m.GetTenantId()) > 128 {
 		return SchemaWriteRequestValidationError{
 			field:  "TenantId",
-			reason: "value length must be at most 64 bytes",
+			reason: "value length must be at most 128 bytes",
 		}
 	}
 
 	if !_SchemaWriteRequest_TenantId_Pattern.MatchString(m.GetTenantId()) {
 		return SchemaWriteRequestValidationError{
 			field:  "TenantId",
-			reason: "value does not match regex pattern \"[a-zA-Z0-9-,]+\"",
+			reason: "value does not match regex pattern \"^([a-zA-Z0-9_\\\\-@\\\\.:+]{1,128}|\\\\*)$\"",
 		}
 	}
 
@@ -2172,7 +2172,7 @@ var _ interface {
 	ErrorName() string
 } = SchemaWriteRequestValidationError{}
 
-var _SchemaWriteRequest_TenantId_Pattern = regexp.MustCompile("[a-zA-Z0-9-,]+")
+var _SchemaWriteRequest_TenantId_Pattern = regexp.MustCompile("^([a-zA-Z0-9_\\-@\\.:+]{1,128}|\\*)$")
 
 // Validate checks the field values on SchemaWriteResponse with the rules
 // defined in the proto definition for this message. If any rules are
@@ -2251,17 +2251,17 @@ func (m *SchemaReadRequest) Validate() error {
 		return nil
 	}
 
-	if len(m.GetTenantId()) > 64 {
+	if len(m.GetTenantId()) > 128 {
 		return SchemaReadRequestValidationError{
 			field:  "TenantId",
-			reason: "value length must be at most 64 bytes",
+			reason: "value length must be at most 128 bytes",
 		}
 	}
 
 	if !_SchemaReadRequest_TenantId_Pattern.MatchString(m.GetTenantId()) {
 		return SchemaReadRequestValidationError{
 			field:  "TenantId",
-			reason: "value does not match regex pattern \"[a-zA-Z0-9-,]+\"",
+			reason: "value does not match regex pattern \"^([a-zA-Z0-9_\\\\-@\\\\.:+]{1,128}|\\\\*)$\"",
 		}
 	}
 
@@ -2341,7 +2341,7 @@ var _ interface {
 	ErrorName() string
 } = SchemaReadRequestValidationError{}
 
-var _SchemaReadRequest_TenantId_Pattern = regexp.MustCompile("[a-zA-Z0-9-,]+")
+var _SchemaReadRequest_TenantId_Pattern = regexp.MustCompile("^([a-zA-Z0-9_\\-@\\.:+]{1,128}|\\*)$")
 
 // Validate checks the field values on SchemaReadRequestMetadata with the rules
 // defined in the proto definition for this message. If any rules are
@@ -2497,17 +2497,17 @@ func (m *DataWriteRequest) Validate() error {
 		return nil
 	}
 
-	if len(m.GetTenantId()) > 64 {
+	if len(m.GetTenantId()) > 128 {
 		return DataWriteRequestValidationError{
 			field:  "TenantId",
-			reason: "value length must be at most 64 bytes",
+			reason: "value length must be at most 128 bytes",
 		}
 	}
 
 	if !_DataWriteRequest_TenantId_Pattern.MatchString(m.GetTenantId()) {
 		return DataWriteRequestValidationError{
 			field:  "TenantId",
-			reason: "value does not match regex pattern \"[a-zA-Z0-9-,]+\"",
+			reason: "value does not match regex pattern \"^([a-zA-Z0-9_\\\\-@\\\\.:+]{1,128}|\\\\*)$\"",
 		}
 	}
 
@@ -2643,7 +2643,7 @@ var _ interface {
 	ErrorName() string
 } = DataWriteRequestValidationError{}
 
-var _DataWriteRequest_TenantId_Pattern = regexp.MustCompile("[a-zA-Z0-9-,]+")
+var _DataWriteRequest_TenantId_Pattern = regexp.MustCompile("^([a-zA-Z0-9_\\-@\\.:+]{1,128}|\\*)$")
 
 // Validate checks the field values on DataWriteRequestMetadata with the rules
 // defined in the proto definition for this message. If any rules are
@@ -2791,17 +2791,17 @@ func (m *RelationshipWriteRequest) Validate() error {
 		return nil
 	}
 
-	if len(m.GetTenantId()) > 64 {
+	if len(m.GetTenantId()) > 128 {
 		return RelationshipWriteRequestValidationError{
 			field:  "TenantId",
-			reason: "value length must be at most 64 bytes",
+			reason: "value length must be at most 128 bytes",
 		}
 	}
 
 	if !_RelationshipWriteRequest_TenantId_Pattern.MatchString(m.GetTenantId()) {
 		return RelationshipWriteRequestValidationError{
 			field:  "TenantId",
-			reason: "value does not match regex pattern \"[a-zA-Z0-9-,]+\"",
+			reason: "value does not match regex pattern \"^([a-zA-Z0-9_\\\\-@\\\\.:+]{1,128}|\\\\*)$\"",
 		}
 	}
 
@@ -2910,7 +2910,7 @@ var _ interface {
 	ErrorName() string
 } = RelationshipWriteRequestValidationError{}
 
-var _RelationshipWriteRequest_TenantId_Pattern = regexp.MustCompile("[a-zA-Z0-9-,]+")
+var _RelationshipWriteRequest_TenantId_Pattern = regexp.MustCompile("^([a-zA-Z0-9_\\-@\\.:+]{1,128}|\\*)$")
 
 // Validate checks the field values on RelationshipWriteRequestMetadata with
 // the rules defined in the proto definition for this message. If any rules
@@ -3059,17 +3059,17 @@ func (m *RelationshipReadRequest) Validate() error {
 		return nil
 	}
 
-	if len(m.GetTenantId()) > 64 {
+	if len(m.GetTenantId()) > 128 {
 		return RelationshipReadRequestValidationError{
 			field:  "TenantId",
-			reason: "value length must be at most 64 bytes",
+			reason: "value length must be at most 128 bytes",
 		}
 	}
 
 	if !_RelationshipReadRequest_TenantId_Pattern.MatchString(m.GetTenantId()) {
 		return RelationshipReadRequestValidationError{
 			field:  "TenantId",
-			reason: "value does not match regex pattern \"[a-zA-Z0-9-,]+\"",
+			reason: "value does not match regex pattern \"^([a-zA-Z0-9_\\\\-@\\\\.:+]{1,128}|\\\\*)$\"",
 		}
 	}
 
@@ -3181,7 +3181,7 @@ var _ interface {
 	ErrorName() string
 } = RelationshipReadRequestValidationError{}
 
-var _RelationshipReadRequest_TenantId_Pattern = regexp.MustCompile("[a-zA-Z0-9-,]+")
+var _RelationshipReadRequest_TenantId_Pattern = regexp.MustCompile("^([a-zA-Z0-9_\\-@\\.:+]{1,128}|\\*)$")
 
 // Validate checks the field values on RelationshipReadRequestMetadata with the
 // rules defined in the proto definition for this message. If any rules are
@@ -3345,17 +3345,17 @@ func (m *AttributeReadRequest) Validate() error {
 		return nil
 	}
 
-	if len(m.GetTenantId()) > 64 {
+	if len(m.GetTenantId()) > 128 {
 		return AttributeReadRequestValidationError{
 			field:  "TenantId",
-			reason: "value length must be at most 64 bytes",
+			reason: "value length must be at most 128 bytes",
 		}
 	}
 
 	if !_AttributeReadRequest_TenantId_Pattern.MatchString(m.GetTenantId()) {
 		return AttributeReadRequestValidationError{
 			field:  "TenantId",
-			reason: "value does not match regex pattern \"[a-zA-Z0-9-,]+\"",
+			reason: "value does not match regex pattern \"^([a-zA-Z0-9_\\\\-@\\\\.:+]{1,128}|\\\\*)$\"",
 		}
 	}
 
@@ -3467,7 +3467,7 @@ var _ interface {
 	ErrorName() string
 } = AttributeReadRequestValidationError{}
 
-var _AttributeReadRequest_TenantId_Pattern = regexp.MustCompile("[a-zA-Z0-9-,]+")
+var _AttributeReadRequest_TenantId_Pattern = regexp.MustCompile("^([a-zA-Z0-9_\\-@\\.:+]{1,128}|\\*)$")
 
 // Validate checks the field values on AttributeReadRequestMetadata with the
 // rules defined in the proto definition for this message. If any rules are
@@ -3631,17 +3631,17 @@ func (m *DataDeleteRequest) Validate() error {
 		return nil
 	}
 
-	if len(m.GetTenantId()) > 64 {
+	if len(m.GetTenantId()) > 128 {
 		return DataDeleteRequestValidationError{
 			field:  "TenantId",
-			reason: "value length must be at most 64 bytes",
+			reason: "value length must be at most 128 bytes",
 		}
 	}
 
 	if !_DataDeleteRequest_TenantId_Pattern.MatchString(m.GetTenantId()) {
 		return DataDeleteRequestValidationError{
 			field:  "TenantId",
-			reason: "value does not match regex pattern \"[a-zA-Z0-9-,]+\"",
+			reason: "value does not match regex pattern \"^([a-zA-Z0-9_\\\\-@\\\\.:+]{1,128}|\\\\*)$\"",
 		}
 	}
 
@@ -3738,7 +3738,7 @@ var _ interface {
 	ErrorName() string
 } = DataDeleteRequestValidationError{}
 
-var _DataDeleteRequest_TenantId_Pattern = regexp.MustCompile("[a-zA-Z0-9-,]+")
+var _DataDeleteRequest_TenantId_Pattern = regexp.MustCompile("^([a-zA-Z0-9_\\-@\\.:+]{1,128}|\\*)$")
 
 // Validate checks the field values on DataDeleteResponse with the rules
 // defined in the proto definition for this message. If any rules are
@@ -3817,17 +3817,17 @@ func (m *RelationshipDeleteRequest) Validate() error {
 		return nil
 	}
 
-	if len(m.GetTenantId()) > 64 {
+	if len(m.GetTenantId()) > 128 {
 		return RelationshipDeleteRequestValidationError{
 			field:  "TenantId",
-			reason: "value length must be at most 64 bytes",
+			reason: "value length must be at most 128 bytes",
 		}
 	}
 
 	if !_RelationshipDeleteRequest_TenantId_Pattern.MatchString(m.GetTenantId()) {
 		return RelationshipDeleteRequestValidationError{
 			field:  "TenantId",
-			reason: "value does not match regex pattern \"^[a-zA-Z0-9]+$\"",
+			reason: "value does not match regex pattern \"^([a-zA-Z0-9_\\\\-@\\\\.:+]{1,128}|\\\\*)$\"",
 		}
 	}
 
@@ -3900,7 +3900,7 @@ var _ interface {
 	ErrorName() string
 } = RelationshipDeleteRequestValidationError{}
 
-var _RelationshipDeleteRequest_TenantId_Pattern = regexp.MustCompile("^[a-zA-Z0-9]+$")
+var _RelationshipDeleteRequest_TenantId_Pattern = regexp.MustCompile("^([a-zA-Z0-9_\\-@\\.:+]{1,128}|\\*)$")
 
 // Validate checks the field values on RelationshipDeleteResponse with the
 // rules defined in the proto definition for this message. If any rules are
