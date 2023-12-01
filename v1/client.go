@@ -11,6 +11,7 @@ type Client struct {
 	Permission v1.PermissionClient
 	Schema     v1.SchemaClient
 	Data       v1.DataClient
+	Bundle     v1.BundleClient
 	Tenancy    v1.TenancyClient
 	Watch      v1.WatchClient
 }
@@ -35,6 +36,7 @@ func NewClient(c Config, opts ...grpc.DialOption) (*Client, error) {
 		Permission: v1.NewPermissionClient(conn),
 		Schema:     v1.NewSchemaClient(conn),
 		Data:       v1.NewDataClient(conn),
+		Bundle:     v1.NewBundleClient(conn),
 		Tenancy:    v1.NewTenancyClient(conn),
 		Watch:      v1.NewWatchClient(conn),
 	}, nil

@@ -3971,6 +3971,641 @@ var _ interface {
 	ErrorName() string
 } = RelationshipDeleteResponseValidationError{}
 
+// Validate checks the field values on BundleRunRequest with the rules defined
+// in the proto definition for this message. If any rules are violated, an
+// error is returned.
+func (m *BundleRunRequest) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if len(m.GetTenantId()) > 128 {
+		return BundleRunRequestValidationError{
+			field:  "TenantId",
+			reason: "value length must be at most 128 bytes",
+		}
+	}
+
+	if !_BundleRunRequest_TenantId_Pattern.MatchString(m.GetTenantId()) {
+		return BundleRunRequestValidationError{
+			field:  "TenantId",
+			reason: "value does not match regex pattern \"^([a-zA-Z0-9_\\\\-@\\\\.:+]{1,128}|\\\\*)$\"",
+		}
+	}
+
+	// no validation rules for Name
+
+	// no validation rules for Arguments
+
+	return nil
+}
+
+// BundleRunRequestValidationError is the validation error returned by
+// BundleRunRequest.Validate if the designated constraints aren't met.
+type BundleRunRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e BundleRunRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e BundleRunRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e BundleRunRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e BundleRunRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e BundleRunRequestValidationError) ErrorName() string { return "BundleRunRequestValidationError" }
+
+// Error satisfies the builtin error interface
+func (e BundleRunRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sBundleRunRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = BundleRunRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = BundleRunRequestValidationError{}
+
+var _BundleRunRequest_TenantId_Pattern = regexp.MustCompile("^([a-zA-Z0-9_\\-@\\.:+]{1,128}|\\*)$")
+
+// Validate checks the field values on BundleRunResponse with the rules defined
+// in the proto definition for this message. If any rules are violated, an
+// error is returned.
+func (m *BundleRunResponse) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for SnapToken
+
+	return nil
+}
+
+// BundleRunResponseValidationError is the validation error returned by
+// BundleRunResponse.Validate if the designated constraints aren't met.
+type BundleRunResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e BundleRunResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e BundleRunResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e BundleRunResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e BundleRunResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e BundleRunResponseValidationError) ErrorName() string {
+	return "BundleRunResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e BundleRunResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sBundleRunResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = BundleRunResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = BundleRunResponseValidationError{}
+
+// Validate checks the field values on BundleWriteRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *BundleWriteRequest) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if len(m.GetTenantId()) > 128 {
+		return BundleWriteRequestValidationError{
+			field:  "TenantId",
+			reason: "value length must be at most 128 bytes",
+		}
+	}
+
+	if !_BundleWriteRequest_TenantId_Pattern.MatchString(m.GetTenantId()) {
+		return BundleWriteRequestValidationError{
+			field:  "TenantId",
+			reason: "value does not match regex pattern \"^([a-zA-Z0-9_\\\\-@\\\\.:+]{1,128}|\\\\*)$\"",
+		}
+	}
+
+	for idx, item := range m.GetBundles() {
+		_, _ = idx, item
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return BundleWriteRequestValidationError{
+					field:  fmt.Sprintf("Bundles[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// BundleWriteRequestValidationError is the validation error returned by
+// BundleWriteRequest.Validate if the designated constraints aren't met.
+type BundleWriteRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e BundleWriteRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e BundleWriteRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e BundleWriteRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e BundleWriteRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e BundleWriteRequestValidationError) ErrorName() string {
+	return "BundleWriteRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e BundleWriteRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sBundleWriteRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = BundleWriteRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = BundleWriteRequestValidationError{}
+
+var _BundleWriteRequest_TenantId_Pattern = regexp.MustCompile("^([a-zA-Z0-9_\\-@\\.:+]{1,128}|\\*)$")
+
+// Validate checks the field values on BundleWriteResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *BundleWriteResponse) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	return nil
+}
+
+// BundleWriteResponseValidationError is the validation error returned by
+// BundleWriteResponse.Validate if the designated constraints aren't met.
+type BundleWriteResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e BundleWriteResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e BundleWriteResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e BundleWriteResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e BundleWriteResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e BundleWriteResponseValidationError) ErrorName() string {
+	return "BundleWriteResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e BundleWriteResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sBundleWriteResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = BundleWriteResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = BundleWriteResponseValidationError{}
+
+// Validate checks the field values on BundleReadRequest with the rules defined
+// in the proto definition for this message. If any rules are violated, an
+// error is returned.
+func (m *BundleReadRequest) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if len(m.GetTenantId()) > 128 {
+		return BundleReadRequestValidationError{
+			field:  "TenantId",
+			reason: "value length must be at most 128 bytes",
+		}
+	}
+
+	if !_BundleReadRequest_TenantId_Pattern.MatchString(m.GetTenantId()) {
+		return BundleReadRequestValidationError{
+			field:  "TenantId",
+			reason: "value does not match regex pattern \"^([a-zA-Z0-9_\\\\-@\\\\.:+]{1,128}|\\\\*)$\"",
+		}
+	}
+
+	// no validation rules for Name
+
+	return nil
+}
+
+// BundleReadRequestValidationError is the validation error returned by
+// BundleReadRequest.Validate if the designated constraints aren't met.
+type BundleReadRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e BundleReadRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e BundleReadRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e BundleReadRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e BundleReadRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e BundleReadRequestValidationError) ErrorName() string {
+	return "BundleReadRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e BundleReadRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sBundleReadRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = BundleReadRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = BundleReadRequestValidationError{}
+
+var _BundleReadRequest_TenantId_Pattern = regexp.MustCompile("^([a-zA-Z0-9_\\-@\\.:+]{1,128}|\\*)$")
+
+// Validate checks the field values on BundleReadResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *BundleReadResponse) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if v, ok := interface{}(m.GetBundle()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return BundleReadResponseValidationError{
+				field:  "Bundle",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	return nil
+}
+
+// BundleReadResponseValidationError is the validation error returned by
+// BundleReadResponse.Validate if the designated constraints aren't met.
+type BundleReadResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e BundleReadResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e BundleReadResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e BundleReadResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e BundleReadResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e BundleReadResponseValidationError) ErrorName() string {
+	return "BundleReadResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e BundleReadResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sBundleReadResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = BundleReadResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = BundleReadResponseValidationError{}
+
+// Validate checks the field values on BundleDeleteRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *BundleDeleteRequest) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if len(m.GetTenantId()) > 128 {
+		return BundleDeleteRequestValidationError{
+			field:  "TenantId",
+			reason: "value length must be at most 128 bytes",
+		}
+	}
+
+	if !_BundleDeleteRequest_TenantId_Pattern.MatchString(m.GetTenantId()) {
+		return BundleDeleteRequestValidationError{
+			field:  "TenantId",
+			reason: "value does not match regex pattern \"^([a-zA-Z0-9_\\\\-@\\\\.:+]{1,128}|\\\\*)$\"",
+		}
+	}
+
+	// no validation rules for Name
+
+	return nil
+}
+
+// BundleDeleteRequestValidationError is the validation error returned by
+// BundleDeleteRequest.Validate if the designated constraints aren't met.
+type BundleDeleteRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e BundleDeleteRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e BundleDeleteRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e BundleDeleteRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e BundleDeleteRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e BundleDeleteRequestValidationError) ErrorName() string {
+	return "BundleDeleteRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e BundleDeleteRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sBundleDeleteRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = BundleDeleteRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = BundleDeleteRequestValidationError{}
+
+var _BundleDeleteRequest_TenantId_Pattern = regexp.MustCompile("^([a-zA-Z0-9_\\-@\\.:+]{1,128}|\\*)$")
+
+// Validate checks the field values on BundleDeleteResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *BundleDeleteResponse) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Name
+
+	return nil
+}
+
+// BundleDeleteResponseValidationError is the validation error returned by
+// BundleDeleteResponse.Validate if the designated constraints aren't met.
+type BundleDeleteResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e BundleDeleteResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e BundleDeleteResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e BundleDeleteResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e BundleDeleteResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e BundleDeleteResponseValidationError) ErrorName() string {
+	return "BundleDeleteResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e BundleDeleteResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sBundleDeleteResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = BundleDeleteResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = BundleDeleteResponseValidationError{}
+
 // Validate checks the field values on TenantCreateRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, an error is returned.
