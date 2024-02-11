@@ -12,7 +12,7 @@
 # Installation
 
 ```shell
-go get github.com/Permify/permify-go
+go get github.com/Permify/permify-go/v1
 ```
 
 # How to use
@@ -20,13 +20,13 @@ go get github.com/Permify/permify-go
 ### Import Permify.
 
 ```go
-import permify "github.com/Permify/permify-go"
+import permify "github.com/Permify/permify-go/v1"
 ```
 
 ### Initialize the new Permify client.
 
 ```go
-import permify "github.com/Permify/permify-go"
+import permify "github.com/Permify/permify-go/v1"
 
 // generate new client
 client, err = permify.NewClient(
