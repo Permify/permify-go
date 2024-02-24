@@ -3,7 +3,7 @@
   "info": {
     "title": "Permify API",
     "description": "Permify is an open source authorization service for creating fine-grained and scalable authorization systems.",
-    "version": "v0.6.1",
+    "version": "v0.7.6",
     "contact": {
       "name": "API Support",
       "url": "https://github.com/Permify/permify/issues",
@@ -1053,6 +1053,58 @@
         ],
         "tags": [
           "Data"
+        ]
+      }
+    },
+    "/v1/tenants/{tenant_id}/schemas/list": {
+      "post": {
+        "summary": "list all authorization models",
+        "operationId": "schemas.list",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SchemaListResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant_id",
+            "description": "tenant_id is a string that identifies the tenant. It must match the pattern \"[a-zA-Z0-9-,]+\",\nbe a maximum of 64 bytes, and must not be empty.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "page_size": {
+                  "type": "integer",
+                  "format": "int64",
+                  "description": "page_size is the number of tenants to be returned in the response.\nThe value should be between 1 and 100."
+                },
+                "continuous_token": {
+                  "type": "string",
+                  "description": "continuous_token is an optional parameter used for pagination.\nIt should be the value received in the previous response."
+                }
+              },
+              "description": "SchemaListRequest is the request message for the List method in the Schema service.\nIt contains tenant_id for which the schemas are to be listed."
+            }
+          }
+        ],
+        "tags": [
+          "Schema"
         ]
       }
     },
@@ -2419,6 +2471,39 @@
       ],
       "default": "REFERENCE_UNSPECIFIED",
       "description": "The Reference enum helps distinguish whether a name corresponds to an entity or a rule."
+    },
+    "v1SchemaList": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "type": "string"
+        },
+        "created_at": {
+          "type": "string"
+        }
+      },
+      "title": "SchemaList provides a list of schema versions with their corresponding creation timestamps"
+    },
+    "v1SchemaListResponse": {
+      "type": "object",
+      "properties": {
+        "head": {
+          "type": "string",
+          "title": "head of the schemas is the latest version available for the tenant"
+        },
+        "schemas": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1SchemaList"
+          },
+          "title": "list of schema versions with creation timestamps"
+        },
+        "continuous_token": {
+          "type": "string",
+          "description": "continuous_token is a string that can be used to paginate and retrieve the next set of results."
+        }
+      },
+      "title": "SchemaListResponse is the response message for the List method in the Schema service.\nIt returns a paginated list of schemas"
     },
     "v1SchemaReadRequestMetadata": {
       "type": "object",

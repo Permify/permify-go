@@ -2489,6 +2489,258 @@ var _ interface {
 	ErrorName() string
 } = SchemaReadResponseValidationError{}
 
+// Validate checks the field values on SchemaListRequest with the rules defined
+// in the proto definition for this message. If any rules are violated, an
+// error is returned.
+func (m *SchemaListRequest) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if len(m.GetTenantId()) > 128 {
+		return SchemaListRequestValidationError{
+			field:  "TenantId",
+			reason: "value length must be at most 128 bytes",
+		}
+	}
+
+	if !_SchemaListRequest_TenantId_Pattern.MatchString(m.GetTenantId()) {
+		return SchemaListRequestValidationError{
+			field:  "TenantId",
+			reason: "value does not match regex pattern \"^([a-zA-Z0-9_\\\\-@\\\\.:+]{1,128}|\\\\*)$\"",
+		}
+	}
+
+	if m.GetPageSize() != 0 {
+
+		if val := m.GetPageSize(); val < 1 || val > 100 {
+			return SchemaListRequestValidationError{
+				field:  "PageSize",
+				reason: "value must be inside range [1, 100]",
+			}
+		}
+
+	}
+
+	if m.GetContinuousToken() != "" {
+
+	}
+
+	return nil
+}
+
+// SchemaListRequestValidationError is the validation error returned by
+// SchemaListRequest.Validate if the designated constraints aren't met.
+type SchemaListRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e SchemaListRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e SchemaListRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e SchemaListRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e SchemaListRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e SchemaListRequestValidationError) ErrorName() string {
+	return "SchemaListRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e SchemaListRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sSchemaListRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = SchemaListRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = SchemaListRequestValidationError{}
+
+var _SchemaListRequest_TenantId_Pattern = regexp.MustCompile("^([a-zA-Z0-9_\\-@\\.:+]{1,128}|\\*)$")
+
+// Validate checks the field values on SchemaListResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *SchemaListResponse) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Head
+
+	for idx, item := range m.GetSchemas() {
+		_, _ = idx, item
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return SchemaListResponseValidationError{
+					field:  fmt.Sprintf("Schemas[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	// no validation rules for ContinuousToken
+
+	return nil
+}
+
+// SchemaListResponseValidationError is the validation error returned by
+// SchemaListResponse.Validate if the designated constraints aren't met.
+type SchemaListResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e SchemaListResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e SchemaListResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e SchemaListResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e SchemaListResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e SchemaListResponseValidationError) ErrorName() string {
+	return "SchemaListResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e SchemaListResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sSchemaListResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = SchemaListResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = SchemaListResponseValidationError{}
+
+// Validate checks the field values on SchemaList with the rules defined in the
+// proto definition for this message. If any rules are violated, an error is returned.
+func (m *SchemaList) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Version
+
+	// no validation rules for CreatedAt
+
+	return nil
+}
+
+// SchemaListValidationError is the validation error returned by
+// SchemaList.Validate if the designated constraints aren't met.
+type SchemaListValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e SchemaListValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e SchemaListValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e SchemaListValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e SchemaListValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e SchemaListValidationError) ErrorName() string { return "SchemaListValidationError" }
+
+// Error satisfies the builtin error interface
+func (e SchemaListValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sSchemaList.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = SchemaListValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = SchemaListValidationError{}
+
 // Validate checks the field values on DataWriteRequest with the rules defined
 // in the proto definition for this message. If any rules are violated, an
 // error is returned.
