@@ -116,13 +116,13 @@ cr, err := client.Permission.Check(context.Background(), & v1.PermissionCheckReq
         Type: "user",
         Id: "3",
     },
-
-    if (cr.can === PermissionCheckResponse_Result.RESULT_ALLOWED) {
-        // RESULT_ALLOWED
-    } else {
-        // RESULT_DENIED
-    }
 })
+
+if (cr.can == PermissionCheckResponse_Result.RESULT_ALLOWED) {
+    // RESULT_ALLOWED
+} else {
+    // RESULT_DENIED
+}
 ```
 
 ### Streaming Calls
