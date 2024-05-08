@@ -66,7 +66,7 @@ sr, err: = client.Schema.Write(context.Background(), &v1.SchemaWriteRequest {
 
 ```go
 
-rr, err: = client.Relationship.Write(context.Background(), & v1.RelationshipWriteRequest {
+rr, err := client.Data.WriteRelationships(context.Background(), & v1.RelationshipWriteRequest {
     TenantId: "t1",
     Metadata: & v1.RelationshipWriteRequestMetadata {
         SchemaVersion: sr.SchemaVersion, // sr --> schema write response
@@ -100,7 +100,7 @@ rr, err: = client.Relationship.Write(context.Background(), & v1.RelationshipWrit
 ### Check
 
 ```go
-cr, err: = client.Permission.Check(context.Background(), & v1.PermissionCheckRequest {
+cr, err := client.Permission.Check(context.Background(), & v1.PermissionCheckRequest {
     TenantId: "t1",
 	Metadata: & v1.PermissionCheckRequestMetadata {
         SnapToken: rr.SnapToken, // rr --> relationship write response
@@ -128,7 +128,7 @@ cr, err: = client.Permission.Check(context.Background(), & v1.PermissionCheckReq
 ### Streaming Calls
 
 ```go
-str, err: = client.Permission.LookupEntityStream(context.Background(), & v1.PermissionLookupEntityRequest {
+str, err := client.Permission.LookupEntityStream(context.Background(), & v1.PermissionLookupEntityRequest {
     TenantId: "t1",
 	Metadata: & v1.PermissionLookupEntityRequestMetadata {
         SnapToken: rr.SnapToken, // rr --> relationship write response
