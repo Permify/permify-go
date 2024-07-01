@@ -444,17 +444,17 @@ func (m *PermissionExpandRequest) Validate() error {
 		return nil
 	}
 
-	if len(m.GetTenantId()) > 64 {
+	if len(m.GetTenantId()) > 128 {
 		return PermissionExpandRequestValidationError{
 			field:  "TenantId",
-			reason: "value length must be at most 64 bytes",
+			reason: "value length must be at most 128 bytes",
 		}
 	}
 
 	if !_PermissionExpandRequest_TenantId_Pattern.MatchString(m.GetTenantId()) {
 		return PermissionExpandRequestValidationError{
 			field:  "TenantId",
-			reason: "value does not match regex pattern \"[a-zA-Z0-9-,]+\"",
+			reason: "value does not match regex pattern \"^([a-zA-Z0-9_\\\\-@\\\\.:+]{1,128}|\\\\*)$\"",
 		}
 	}
 
@@ -594,7 +594,7 @@ var _ interface {
 	ErrorName() string
 } = PermissionExpandRequestValidationError{}
 
-var _PermissionExpandRequest_TenantId_Pattern = regexp.MustCompile("[a-zA-Z0-9-,]+")
+var _PermissionExpandRequest_TenantId_Pattern = regexp.MustCompile("^([a-zA-Z0-9_\\-@\\.:+]{1,128}|\\*)$")
 
 var _PermissionExpandRequest_Permission_Pattern = regexp.MustCompile("^[a-zA-Z_]{1,64}$")
 
@@ -1939,17 +1939,17 @@ func (m *WatchRequest) Validate() error {
 		return nil
 	}
 
-	if len(m.GetTenantId()) > 64 {
+	if len(m.GetTenantId()) > 128 {
 		return WatchRequestValidationError{
 			field:  "TenantId",
-			reason: "value length must be at most 64 bytes",
+			reason: "value length must be at most 128 bytes",
 		}
 	}
 
 	if !_WatchRequest_TenantId_Pattern.MatchString(m.GetTenantId()) {
 		return WatchRequestValidationError{
 			field:  "TenantId",
-			reason: "value does not match regex pattern \"[a-zA-Z0-9-,]+\"",
+			reason: "value does not match regex pattern \"^([a-zA-Z0-9_\\\\-@\\\\.:+]{1,128}|\\\\*)$\"",
 		}
 	}
 
@@ -2012,7 +2012,7 @@ var _ interface {
 	ErrorName() string
 } = WatchRequestValidationError{}
 
-var _WatchRequest_TenantId_Pattern = regexp.MustCompile("[a-zA-Z0-9-,]+")
+var _WatchRequest_TenantId_Pattern = regexp.MustCompile("^([a-zA-Z0-9_\\-@\\.:+]{1,128}|\\*)$")
 
 // Validate checks the field values on WatchResponse with the rules defined in
 // the proto definition for this message. If any rules are violated, an error
@@ -2242,6 +2242,262 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = SchemaWriteResponseValidationError{}
+
+// Validate checks the field values on SchemaPartialWriteRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *SchemaPartialWriteRequest) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if len(m.GetTenantId()) > 128 {
+		return SchemaPartialWriteRequestValidationError{
+			field:  "TenantId",
+			reason: "value length must be at most 128 bytes",
+		}
+	}
+
+	if !_SchemaPartialWriteRequest_TenantId_Pattern.MatchString(m.GetTenantId()) {
+		return SchemaPartialWriteRequestValidationError{
+			field:  "TenantId",
+			reason: "value does not match regex pattern \"^([a-zA-Z0-9_\\\\-@\\\\.:+]{1,128}|\\\\*)$\"",
+		}
+	}
+
+	if m.GetMetadata() == nil {
+		return SchemaPartialWriteRequestValidationError{
+			field:  "Metadata",
+			reason: "value is required",
+		}
+	}
+
+	if v, ok := interface{}(m.GetMetadata()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return SchemaPartialWriteRequestValidationError{
+				field:  "Metadata",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	for key, val := range m.GetPartials() {
+		_ = val
+
+		// no validation rules for Partials[key]
+
+		if v, ok := interface{}(val).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return SchemaPartialWriteRequestValidationError{
+					field:  fmt.Sprintf("Partials[%v]", key),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// SchemaPartialWriteRequestValidationError is the validation error returned by
+// SchemaPartialWriteRequest.Validate if the designated constraints aren't met.
+type SchemaPartialWriteRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e SchemaPartialWriteRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e SchemaPartialWriteRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e SchemaPartialWriteRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e SchemaPartialWriteRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e SchemaPartialWriteRequestValidationError) ErrorName() string {
+	return "SchemaPartialWriteRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e SchemaPartialWriteRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sSchemaPartialWriteRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = SchemaPartialWriteRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = SchemaPartialWriteRequestValidationError{}
+
+var _SchemaPartialWriteRequest_TenantId_Pattern = regexp.MustCompile("^([a-zA-Z0-9_\\-@\\.:+]{1,128}|\\*)$")
+
+// Validate checks the field values on SchemaPartialWriteRequestMetadata with
+// the rules defined in the proto definition for this message. If any rules
+// are violated, an error is returned.
+func (m *SchemaPartialWriteRequestMetadata) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for SchemaVersion
+
+	return nil
+}
+
+// SchemaPartialWriteRequestMetadataValidationError is the validation error
+// returned by SchemaPartialWriteRequestMetadata.Validate if the designated
+// constraints aren't met.
+type SchemaPartialWriteRequestMetadataValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e SchemaPartialWriteRequestMetadataValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e SchemaPartialWriteRequestMetadataValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e SchemaPartialWriteRequestMetadataValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e SchemaPartialWriteRequestMetadataValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e SchemaPartialWriteRequestMetadataValidationError) ErrorName() string {
+	return "SchemaPartialWriteRequestMetadataValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e SchemaPartialWriteRequestMetadataValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sSchemaPartialWriteRequestMetadata.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = SchemaPartialWriteRequestMetadataValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = SchemaPartialWriteRequestMetadataValidationError{}
+
+// Validate checks the field values on SchemaPartialWriteResponse with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *SchemaPartialWriteResponse) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for SchemaVersion
+
+	return nil
+}
+
+// SchemaPartialWriteResponseValidationError is the validation error returned
+// by SchemaPartialWriteResponse.Validate if the designated constraints aren't met.
+type SchemaPartialWriteResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e SchemaPartialWriteResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e SchemaPartialWriteResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e SchemaPartialWriteResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e SchemaPartialWriteResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e SchemaPartialWriteResponseValidationError) ErrorName() string {
+	return "SchemaPartialWriteResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e SchemaPartialWriteResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sSchemaPartialWriteResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = SchemaPartialWriteResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = SchemaPartialWriteResponseValidationError{}
 
 // Validate checks the field values on SchemaReadRequest with the rules defined
 // in the proto definition for this message. If any rules are violated, an

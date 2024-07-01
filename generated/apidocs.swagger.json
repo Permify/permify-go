@@ -3,7 +3,7 @@
   "info": {
     "title": "Permify API",
     "description": "Permify is an open source authorization service for creating fine-grained and scalable authorization systems.",
-    "version": "v0.7.6",
+    "version": "v0.9.5",
     "contact": {
       "name": "API Support",
       "url": "https://github.com/Permify/permify/issues",
@@ -46,7 +46,7 @@
   "paths": {
     "/v1/tenants/create": {
       "post": {
-        "summary": "create new tenant",
+        "summary": "create tenant",
         "operationId": "tenants.create",
         "responses": {
           "200": {
@@ -74,6 +74,23 @@
         ],
         "tags": [
           "Tenancy"
+        ],
+        "x-codeSamples": [
+          {
+            "label": "go",
+            "lang": "go",
+            "source": "rr, err: = client.Tenancy.Create(context.Background(), \u0026v1.TenantCreateRequest {\n    Id: \"\"\n    Name: \"\"\n})"
+          },
+          {
+            "label": "node",
+            "lang": "javascript",
+            "source": "client.tenancy.create({\n   id: \"\",\n   name: \"\"\n}).then((response) =\u003e {\n    // handle response\n})"
+          },
+          {
+            "label": "cURL",
+            "lang": "curl",
+            "source": "curl --location --request POST 'http://localhost:3476/v1/tenants/create' \\\n--header 'Content-Type: application/json' \\\n--data-raw '{\n    \"id\": \"\",\n    \"name\": \"\"\n}'"
+          }
         ]
       }
     },
@@ -107,6 +124,23 @@
         ],
         "tags": [
           "Tenancy"
+        ],
+        "x-codeSamples": [
+          {
+            "label": "go",
+            "lang": "go",
+            "source": "cr, err := client.Tenancy.List(context.Background(), \u0026v1.TenantListRequest{\n    PageSize: 20,\n    ContinuousToken: \"\",\n})"
+          },
+          {
+            "label": "node",
+            "lang": "javascript",
+            "source": "let res = client.tenancy.list({\n    pageSize: 20,\n    continuousToken: \"\",\n})"
+          },
+          {
+            "label": "cURL",
+            "lang": "curl",
+            "source": "curl --location --request POST 'localhost:3476/v1/tenants/list' \\\n--header 'Content-Type: application/json' \\\n--data-raw '{\n    \"page_size\": \"10\",\n    \"continuous_token\": \"\"\n}'"
+          }
         ]
       }
     },
@@ -139,6 +173,23 @@
         ],
         "tags": [
           "Tenancy"
+        ],
+        "x-codeSamples": [
+          {
+            "label": "go",
+            "lang": "go",
+            "source": "rr, err: = client.Tenancy.Delete(context.Background(), \u0026v1.TenantDeleteRequest {\n    Id: \"\"\n})"
+          },
+          {
+            "label": "node",
+            "lang": "javascript",
+            "source": "client.tenancy.delete({\n   id: \"\",\n}).then((response) =\u003e {\n    // handle response\n})"
+          },
+          {
+            "label": "cURL",
+            "lang": "curl",
+            "source": "curl --location --request DELETE 'http://localhost:3476/v1/tenants/t1'"
+          }
         ]
       }
     },
@@ -163,6 +214,7 @@
         "parameters": [
           {
             "name": "tenant_id",
+            "description": "Identifier of the tenant, if you are not using multi-tenancy (have only one tenant) use pre-inserted tenant \u003ccode\u003et1\u003c/code\u003e for this field. Required, and must match the pattern \\“[a-zA-Z0-9-,]+\\“, max 64 bytes.",
             "in": "path",
             "required": true,
             "type": "string"
@@ -184,6 +236,23 @@
         ],
         "tags": [
           "Bundle"
+        ],
+        "x-codeSamples": [
+          {
+            "label": "go",
+            "lang": "go",
+            "source": "rr, err: = client.Bundle.Delete(context.Background(), \u0026v1.BundleDeleteRequest{\n    TenantId: \"t1\",\n    Name:     \"organization_created\",\n})"
+          },
+          {
+            "label": "node",
+            "lang": "javascript",
+            "source": "client.bundle.delete({\n    tenantId: \"t1\",\n    name: \"organization_created\",\n}).then((response) =\u003e {\n    // handle response\n})"
+          },
+          {
+            "label": "cURL",
+            "lang": "curl",
+            "source": "curl --location --request POST 'localhost:3476/v1/tenants/{tenant_id}/bundle/delete' \\\n--header 'Content-Type: application/json' \\\n--data-raw '{\n    \"name\": \"organization_created\",\n}'"
+          }
         ]
       }
     },
@@ -208,6 +277,7 @@
         "parameters": [
           {
             "name": "tenant_id",
+            "description": "Identifier of the tenant, if you are not using multi-tenancy (have only one tenant) use pre-inserted tenant \u003ccode\u003et1\u003c/code\u003e for this field. Required, and must match the pattern \\“[a-zA-Z0-9-,]+\\“, max 64 bytes.",
             "in": "path",
             "required": true,
             "type": "string"
@@ -228,6 +298,23 @@
         ],
         "tags": [
           "Bundle"
+        ],
+        "x-codeSamples": [
+          {
+            "label": "go",
+            "lang": "go",
+            "source": "rr, err: = client.Bundle.Read(context.Background(), \u0026v1.BundleReadRequest{\n    TenantId: \"t1\",\n    Name:     \"organization_created\",\n})"
+          },
+          {
+            "label": "node",
+            "lang": "javascript",
+            "source": "client.bundle.read({\n    tenantId: \"t1\",\n    name: \"organization_created\",\n}).then((response) =\u003e {\n    // handle response\n})"
+          },
+          {
+            "label": "cURL",
+            "lang": "curl",
+            "source": "curl --location --request POST 'localhost:3476/v1/tenants/{tenant_id}/bundle/read' \\\n--header 'Content-Type: application/json' \\\n--data-raw '{\n    \"name\": \"organization_created\",\n}'"
+          }
         ]
       }
     },
@@ -252,6 +339,7 @@
         "parameters": [
           {
             "name": "tenant_id",
+            "description": "Identifier of the tenant, if you are not using multi-tenancy (have only one tenant) use pre-inserted tenant \u003ccode\u003et1\u003c/code\u003e for this field. Required, and must match the pattern \\“[a-zA-Z0-9-,]+\\“, max 64 bytes.",
             "in": "path",
             "required": true,
             "type": "string"
@@ -276,12 +364,29 @@
         ],
         "tags": [
           "Bundle"
+        ],
+        "x-codeSamples": [
+          {
+            "label": "go",
+            "lang": "go",
+            "source": "rr, err := client.Bundle.Write(context.Background(), \u0026v1.BundleWriteRequest{\n    TenantId: \"t1\",\n    Bundles: []*v1.DataBundle{\n        {\n            Name: \"organization_created\",\n            Arguments: []string{\n                \"creatorID\",\n                \"organizationID\",\n            },\n            Operations: []*v1.Operation{\n                {\n                    RelationshipsWrite: []string{\n                        \"organization:{{.organizationID}}#admin@user:{{.creatorID}}\",\n                        \"organization:{{.organizationID}}#manager@user:{{.creatorID}}\",\n                    },\n                    AttributesWrite: []string{\n                        \"organization:{{.organizationID}}$public|boolean:false\",\n                    },\n                },\n            },\n        },\n    },\n})"
+          },
+          {
+            "label": "node",
+            "lang": "javascript",
+            "source": "client.bundle.write({\n    tenantId: \"t1\",\n    bundles: [\n        {\n            name: \"organization_created\",\n            arguments: [\n                \"creatorID\",\n                \"organizationID\",\n            ],\n            operations: [\n                {\n                    relationships_write: [\n                        \"organization:{{.organizationID}}#admin@user:{{.creatorID}}\",\n                        \"organization:{{.organizationID}}#manager@user:{{.creatorID}}\",\n                    ],\n                    attributes_write: [\n                        \"organization:{{.organizationID}}$public|boolean:false\",\n                    ]\n                }\n            ]\n        }\n    ]\n}).then((response) =\u003e {\n    // handle response\n})"
+          },
+          {
+            "label": "cURL",
+            "lang": "curl",
+            "source": "curl --location --request POST 'localhost:3476/v1/tenants/{tenant_id}/bundle/write' \\\n--header 'Content-Type: application/json' \\\n--data-raw '{\n    \"bundles\": [\n        {\n            \"name\": \"organization_created\"\n            \"arguments\": [\n                \"creatorID\",\n                \"organizationID\"\n            ],\n            \"operations\": [\n                {\n                    \"relationships_write\": [\n                        \"organization:{{.organizationID}}#admin@user:{{.creatorID}}\",\n                        \"organization:{{.organizationID}}#manager@user:{{.creatorID}}\",\n                    ],\n                    \"attributes_write\": [\n                        \"organization:{{.organizationID}}$public|boolean:false\",\n                    ],\n                },\n            ],\n        },\n    ],\n}'"
+          }
         ]
       }
     },
     "/v1/tenants/{tenant_id}/data/attributes/read": {
       "post": {
-        "summary": "read attribute(s)",
+        "summary": "read attributes",
         "operationId": "data.attributes.read",
         "responses": {
           "200": {
@@ -300,7 +405,7 @@
         "parameters": [
           {
             "name": "tenant_id",
-            "description": "tenant_id represents the unique identifier of the tenant from which the attributes are being read.",
+            "description": "Identifier of the tenant, if you are not using multi-tenancy (have only one tenant) use pre-inserted tenant \u003ccode\u003et1\u003c/code\u003e for this field. Required, and must match the pattern \\“[a-zA-Z0-9-,]+\\“, max 64 bytes.",
             "in": "path",
             "required": true,
             "type": "string"
@@ -336,6 +441,23 @@
         ],
         "tags": [
           "Data"
+        ],
+        "x-codeSamples": [
+          {
+            "label": "go",
+            "lang": "go",
+            "source": "rr, err: = client.Data.ReadAttributes(context.Background(), \u0026 v1.Data.AttributeReadRequest {\n    TenantId: \"t1\",\n    Metadata: \u0026v1.Data.AttributeReadRequestMetadata {\n        SnapToken: \"\"\n    },\n    Filter: \u0026v1.AttributeFilter {\n        Entity: \u0026v1.EntityFilter {\n        Type: \"organization\",\n        Ids: []string {\"1\"} ,\n    },\n    Attributes: []string {\"private\"},\n})"
+          },
+          {
+            "label": "node",
+            "lang": "javascript",
+            "source": "client.data.readAttributes({\n  tenantId: \"t1\",\n  metadata: {\n     snap_token: \"\",\n  },\n  filter: {\n    entity: {\n      type: \"organization\",\n      ids: [\n        \"1\"\n      ]\n    },\n    attributes: [\n        \"private\"\n    ],\n  }\n}).then((response) =\u003e {\n    // handle response\n})"
+          },
+          {
+            "label": "cURL",
+            "lang": "curl",
+            "source": "curl --location --request POST 'localhost:3476/v1/tenants/{tenant_id}/data/attributes/read' \\\n--header 'Content-Type: application/json' \\\n--data-raw '{\n  metadata: {\n     snap_token: \"\",\n  },\n  filter: {\n    entity: {\n      type: \"organization\",\n      ids: [\n        \"1\"\n      ]\n    },\n    attributes: [\n        \"private\"\n      ],\n  }\n}'"
+          }
         ]
       }
     },
@@ -360,7 +482,7 @@
         "parameters": [
           {
             "name": "tenant_id",
-            "description": "tenant_id represents the unique identifier of the tenant from which the data will be deleted.",
+            "description": "Identifier of the tenant, if you are not using multi-tenancy (have only one tenant) use pre-inserted tenant \u003ccode\u003et1\u003c/code\u003e for this field. Required, and must match the pattern \\“[a-zA-Z0-9-,]+\\“, max 64 bytes.",
             "in": "path",
             "required": true,
             "type": "string"
@@ -387,12 +509,29 @@
         ],
         "tags": [
           "Data"
+        ],
+        "x-codeSamples": [
+          {
+            "label": "go",
+            "lang": "go",
+            "source": "rr, err: = client.Data.Delete(context.Background(), \u0026 v1.DataDeleteRequest {\n    TenantId: \"t1\",\n    Metadata: \u0026v1.DataDeleteRequestMetadata {\n        SnapToken: \"\"\n    },\n    TupleFilter: \u0026v1.TupleFilter {\n        Entity: \u0026v1.EntityFilter {\n        Type: \"organization\",\n        Ids: []string {\"1\"} ,\n    },\n    Relation: \"admin\",\n    Subject: \u0026v1.SubjectFilter {\n        Type: \"user\",\n        Id: []string {\"1\"},\n        Relation: \"\"\n    }}\n})"
+          },
+          {
+            "label": "node",
+            "lang": "javascript",
+            "source": "client.data.delete({\n  tenantId: \"t1\",\n  metadata: {\n     snap_token: \"\",\n  },\n  tupleFilter: {\n    entity: {\n      type: \"organization\",\n      ids: [\n        \"1\"\n      ]\n    },\n    relation: \"admin\",\n    subject: {\n      type: \"user\",\n      ids: [\n        \"1\"\n      ],\n      relation: \"\"\n    }\n  }\n}).then((response) =\u003e {\n    // handle response\n})"
+          },
+          {
+            "label": "cURL",
+            "lang": "curl",
+            "source": "curl --location --request POST 'localhost:3476/v1/tenants/{tenant_id}/data/delete' \\\n--header 'Content-Type: application/json' \\\n--data-raw '{\n  \"tupleFilter\": {\n    \"entity\": {\n      \"type\": \"organization\",\n      \"ids\": [\n        \"1\"\n      ]\n    },\n    \"relation\": \"admin\",\n    \"subject\": {\n      \"type\": \"user\",\n      \"ids\": [\n        \"1\"\n      ],\n      \"relation\": \"\"\n    }\n  },\n}'"
+          }
         ]
       }
     },
     "/v1/tenants/{tenant_id}/data/relationships/read": {
       "post": {
-        "summary": "read relation tuple(s)",
+        "summary": "read relationships",
         "operationId": "data.relationships.read",
         "responses": {
           "200": {
@@ -411,7 +550,7 @@
         "parameters": [
           {
             "name": "tenant_id",
-            "description": "tenant_id represents the unique identifier of the tenant for which relationships are read.",
+            "description": "Identifier of the tenant, if you are not using multi-tenancy (have only one tenant) use pre-inserted tenant \u003ccode\u003et1\u003c/code\u003e for this field. Required, and must match the pattern \\“[a-zA-Z0-9-,]+\\“, max 64 bytes.",
             "in": "path",
             "required": true,
             "type": "string"
@@ -447,6 +586,23 @@
         ],
         "tags": [
           "Data"
+        ],
+        "x-codeSamples": [
+          {
+            "label": "go",
+            "lang": "go",
+            "source": "rr, err: = client.Data.ReadRelationships(context.Background(), \u0026 v1.Data.RelationshipReadRequest {\n    TenantId: \"t1\",\n    Metadata: \u0026v1.Data.RelationshipReadRequestMetadata {\n        SnapToken: \"\"\n    },\n    Filter: \u0026v1.TupleFilter {\n        Entity: \u0026v1.EntityFilter {\n        Type: \"organization\",\n        Ids: []string {\"1\"} ,\n    },\n    Relation: \"member\",\n    Subject: \u0026v1.SubjectFilter {\n        Type: \"\",\n        Id: []string {\"\"},\n        Relation: \"\"\n    }}\n})"
+          },
+          {
+            "label": "node",
+            "lang": "javascript",
+            "source": "client.data.readRelationships({\n  tenantId: \"t1\",\n  metadata: {\n     snap_token: \"\",\n  },\n  filter: {\n    entity: {\n      type: \"organization\",\n      ids: [\n        \"1\"\n      ]\n    },\n    relation: \"member\",\n    subject: {\n      type: \"\",\n      ids: [],\n      relation: \"\"\n    }\n  }\n}).then((response) =\u003e {\n    // handle response\n})"
+          },
+          {
+            "label": "cURL",
+            "lang": "curl",
+            "source": "curl --location --request POST 'localhost:3476/v1/tenants/{tenant_id}/data/relationships/read' \\\n--header 'Content-Type: application/json' \\\n--data-raw '{\n  metadata: {\n     snap_token: \"\",\n  },\n  filter: {\n    entity: {\n      type: \"organization\",\n      ids: [\n        \"1\"\n      ]\n    },\n    relation: \"member\",\n    subject: {\n      type: \"\",\n      ids: [],\n      relation: \"\"\n    }\n  }\n}'"
+          }
         ]
       }
     },
@@ -471,6 +627,7 @@
         "parameters": [
           {
             "name": "tenant_id",
+            "description": "Identifier of the tenant, if you are not using multi-tenancy (have only one tenant) use pre-inserted tenant \u003ccode\u003et1\u003c/code\u003e for this field. Required, and must match the pattern \\“[a-zA-Z0-9-,]+\\“, max 64 bytes.",
             "in": "path",
             "required": true,
             "type": "string"
@@ -500,12 +657,29 @@
         ],
         "tags": [
           "Data"
+        ],
+        "x-codeSamples": [
+          {
+            "label": "go",
+            "lang": "go",
+            "source": "rr, err: = client.Data.RunBundle(context.Background(), \u0026v1.BundleRunRequest{\n    TenantId: \"t1\",\n    Name:     \"organization_created\",\n    Arguments: map[string]string{\n        \"creatorID\":      \"564\",\n        \"organizationID\": \"789\",\n    },\n})"
+          },
+          {
+            "label": "node",
+            "lang": "javascript",
+            "source": "client.data.runBundle({\n    tenantId: \"t1\",\n    name: \"organization_created\",\n    arguments: {\n        creatorID: \"564\",\n        organizationID: \"789\",\n    }\n}).then((response) =\u003e {\n    // handle response\n})"
+          },
+          {
+            "label": "cURL",
+            "lang": "curl",
+            "source": "curl --location --request POST 'localhost:3476/v1/tenants/{tenant_id}/data/run-bundle' \\\n--header 'Content-Type: application/json' \\\n--data-raw '{\n    \"name\": \"organization_created\",\n    \"arguments\": {\n        \"creatorID\": \"564\",\n        \"organizationID\": \"789\",\n    }\n}'"
+          }
         ]
       }
     },
     "/v1/tenants/{tenant_id}/data/write": {
       "post": {
-        "summary": "create data",
+        "summary": "write data",
         "operationId": "data.write",
         "responses": {
           "200": {
@@ -524,7 +698,7 @@
         "parameters": [
           {
             "name": "tenant_id",
-            "description": "tenant_id represents the unique identifier of the tenant for which data is written.",
+            "description": "Identifier of the tenant, if you are not using multi-tenancy (have only one tenant) use pre-inserted tenant \u003ccode\u003et1\u003c/code\u003e for this field. Required, and must match the pattern \\“[a-zA-Z0-9-,]+\\“, max 64 bytes.",
             "in": "path",
             "required": true,
             "type": "string"
@@ -561,12 +735,29 @@
         ],
         "tags": [
           "Data"
+        ],
+        "x-codeSamples": [
+          {
+            "label": "go",
+            "lang": "go",
+            "source": "// Convert the wrapped attribute value into Any proto message\nvalue, err := anypb.New(\u0026v1.BooleanValue{\n    Data: true,\n})\nif err != nil {\n    // Handle error\n}\n\ncr, err := client.Data.Write(context.Background(), \u0026v1.DataWriteRequest{\n    TenantId: \"t1\",,\n    Metadata: \u0026v1.DataWriteRequestMetadata{\n        SchemaVersion: \"\",\n    },\n    Tuples: []*v1.Attribute{\n        {\n            Entity: \u0026v1.Entity{\n                Type: \"document\",\n                Id:   \"1\",\n            },\n            Relation: \"editor\",\n            Subject:  \u0026v1.Subject{\n                Type: \"user\",\n                Id:   \"1\",\n                Relation: \"\",\n            },\n        },\n    },\n    Attributes: []*v1.Attribute{\n        {\n            Entity: \u0026v1.Entity{\n                Type: \"document\",\n                Id:   \"1\",\n            },\n            Attribute: \"is_private\",\n            Value:     value,\n        },\n    },\n})"
+          },
+          {
+            "label": "node",
+            "lang": "javascript",
+            "source": "const booleanValue = BooleanValue.fromJSON({ data: true });\n\nconst value = Any.fromJSON({\n    typeUrl: 'type.googleapis.com/base.v1.BooleanValue',\n    value: BooleanValue.encode(booleanValue).finish()\n});\n\nclient.data.write({\n    tenantId: \"t1\",\n    metadata: {\n        schemaVersion: \"\"\n    },\n    tuples: [{\n        entity: {\n            type: \"document\",\n            id: \"1\"\n        },\n        relation: \"editor\",\n        subject: {\n            type: \"user\",\n            id: \"1\"\n        }\n    }],\n    attributes: [{\n        entity: {\n            type: \"document\",\n            id: \"1\"\n        },\n        attribute: \"is_private\",\n        value: value,\n    }]\n}).then((response) =\u003e {\n    // handle response\n})"
+          },
+          {
+            "label": "cURL",
+            "lang": "curl",
+            "source": "curl --location --request POST 'localhost:3476/v1/tenants/{tenant_id}/data/write' \\\n--header 'Content-Type: application/json' \\\n--data-raw '{\n{\n    \"metadata\": {\n        \"schema_version\": \"\"\n    },\n    \"tuples\": [\n      {\n        \"entity\": {\n          \"type\": \"document\",\n          \"id\": \"1\"\n        },\n        \"relation\": \"editor\",\n        \"subject\": {\n          \"type\": \"user\",\n          \"id\": \"1\"\n        }\n    }\n    ],\n    \"attributes\": [\n        {\n            \"entity\": {\n                \"type\": \"document\",\n                \"id\": \"1\"\n            },\n            \"attribute\": \"is_private\",\n            \"value\": {\n                \"@type\": \"type.googleapis.com/base.v1.BooleanValue\",\n                \"data\": true\n            }\n        }\n    ]\n}\n}'"
+          }
         ]
       }
     },
     "/v1/tenants/{tenant_id}/permissions/check": {
       "post": {
-        "summary": "This method returns a decision about whether user can perform an permission on a certain resource.",
+        "summary": "check api",
         "operationId": "permissions.check",
         "responses": {
           "200": {
@@ -585,7 +776,7 @@
         "parameters": [
           {
             "name": "tenant_id",
-            "description": "Identifier of the tenant, required, and must match the pattern \"[a-zA-Z0-9-,]+\", max 64 bytes.",
+            "description": "Identifier of the tenant, if you are not using multi-tenancy (have only one tenant) use pre-inserted tenant \u003ccode\u003et1\u003c/code\u003e for this field. Required, and must match the pattern \\“[a-zA-Z0-9-,]+\\“, max 64 bytes.",
             "in": "path",
             "required": true,
             "type": "string"
@@ -603,11 +794,12 @@
                 },
                 "entity": {
                   "$ref": "#/definitions/v1Entity",
+                  "example": "repository:1",
                   "description": "Entity on which the permission needs to be checked, required."
                 },
                 "permission": {
                   "type": "string",
-                  "description": "Name of the permission or relation, required, must start with a letter and can include alphanumeric and underscore, max 64 bytes."
+                  "description": "The action the user wants to perform on the resource"
                 },
                 "subject": {
                   "$ref": "#/definitions/v1Subject",
@@ -615,7 +807,7 @@
                 },
                 "context": {
                   "$ref": "#/definitions/v1Context",
-                  "description": "Context associated with this request."
+                  "description": "Contextual data that can be dynamically added to permission check requests. See details on [Contextual Data](../../operations/contextual-tuples)"
                 },
                 "arguments": {
                   "type": "array",
@@ -631,12 +823,29 @@
         ],
         "tags": [
           "Permission"
+        ],
+        "x-codeSamples": [
+          {
+            "label": "go",
+            "lang": "go",
+            "source": "cr, err := client.Permission.Check(context.Background(), \u0026v1.PermissionCheckRequest {\n    TenantId: \"t1\",\n    Metadata: \u0026v1.PermissionCheckRequestMetadata {\n        SnapToken: \"\",\n        SchemaVersion: \"\",\n        Depth: 20,\n    },\n    Entity: \u0026v1.Entity {\n        Type: \"repository\",\n        Id: \"1\",\n    },\n    Permission: \"edit\",\n    Subject: \u0026v1.Subject {\n        Type: \"user\",\n        Id: \"1\",\n    },\n\n    if (cr.can === PermissionCheckResponse_Result.RESULT_ALLOWED) {\n        // RESULT_ALLOWED\n    } else {\n        // RESULT_DENIED\n    }\n})"
+          },
+          {
+            "label": "node",
+            "lang": "javascript",
+            "source": "client.permission.check({\n    tenantId: \"t1\", \n    metadata: {\n        snapToken: \"\",\n        schemaVersion: \"\",\n        depth: 20\n    },\n    entity: {\n        type: \"repository\",\n        id: \"1\"\n    },\n    permission: \"edit\",\n    subject: {\n        type: \"user\",\n        id: \"1\"\n    }\n}).then((response) =\u003e {\n    if (response.can === PermissionCheckResponse_Result.RESULT_ALLOWED) {\n        console.log(\"RESULT_ALLOWED\")\n    } else {\n        console.log(\"RESULT_DENIED\")\n    }\n})"
+          },
+          {
+            "label": "cURL",
+            "lang": "curl",
+            "source": "curl --location --request POST 'localhost:3476/v1/tenants/{tenant_id}/permissions/check' \\\n--header 'Content-Type: application/json' \\\n--data-raw '{\n  \"metadata\":{\n    \"snap_token\": \"\",\n    \"schema_version\": \"\",\n    \"depth\": 20\n  },\n  \"entity\": {\n    \"type\": \"repository\",\n    \"id\": \"1\"\n  },\n  \"permission\": \"edit\",\n  \"subject\": {\n    \"type\": \"user\",\n    \"id\": \"1\",\n    \"relation\": \"\"\n  },\n}'"
+          }
         ]
       }
     },
     "/v1/tenants/{tenant_id}/permissions/expand": {
       "post": {
-        "summary": "expand relationships according to schema",
+        "summary": "expand api",
         "operationId": "permissions.expand",
         "responses": {
           "200": {
@@ -655,7 +864,7 @@
         "parameters": [
           {
             "name": "tenant_id",
-            "description": "Identifier of the tenant, required, and must match the pattern \"[a-zA-Z0-9-,]+\", max 64 bytes.",
+            "description": "Identifier of the tenant, if you are not using multi-tenancy (have only one tenant) use pre-inserted tenant \u003ccode\u003et1\u003c/code\u003e for this field. Required, and must match the pattern \\“[a-zA-Z0-9-,]+\\“, max 64 bytes.",
             "in": "path",
             "required": true,
             "type": "string"
@@ -697,12 +906,29 @@
         ],
         "tags": [
           "Permission"
+        ],
+        "x-codeSamples": [
+          {
+            "label": "go",
+            "lang": "go",
+            "source": "cr, err: = client.Permission.Expand(context.Background(), \u0026v1.PermissionExpandRequest{\n    TenantId: \"t1\",\n    Metadata: \u0026v1.PermissionExpandRequestMetadata{\n        SnapToken: \"\",\n        SchemaVersion: \"\",\n    },\n    Entity: \u0026v1.Entity{\n        Type: \"repository\",\n        Id: \"1\",\n    },\n    Permission: \"push\",\n})"
+          },
+          {
+            "label": "node",
+            "lang": "javascript",
+            "source": "client.permission.expand({\n  tenantId: \"t1\",\n  metadata: {\n        snapToken: \"\",\n        schemaVersion: \"\"\n    },\n    entity: {\n        type: \"repository\",\n        id: \"1\"\n    },\n    permission: \"push\",\n})"
+          },
+          {
+            "label": "cURL",
+            "lang": "curl",
+            "source": "curl --location --request POST 'localhost:3476/v1/tenants/{tenant_id}/permissions/expand' \\\n--header 'Content-Type: application/json' \\\n--data-raw '{\n  \"metadata\": {\n    \"schema_version\": \"\",\n    \"snap_token\": \"\"\n  },\n  \"entity\": {\n    \"type\": \"repository\",\n    \"id\": \"1\"\n  },\n  \"permission\": \"push\"\n}'"
+          }
         ]
       }
     },
     "/v1/tenants/{tenant_id}/permissions/lookup-entity": {
       "post": {
-        "summary": "Retrieve an entity by its identifier.",
+        "summary": "lookup entity",
         "operationId": "permissions.lookupEntity",
         "responses": {
           "200": {
@@ -721,7 +947,7 @@
         "parameters": [
           {
             "name": "tenant_id",
-            "description": "Identifier of the tenant, required, and must match the pattern \"[a-zA-Z0-9-,]+\", max 64 bytes.",
+            "description": "Identifier of the tenant, if you are not using multi-tenancy (have only one tenant) use pre-inserted tenant \u003ccode\u003et1\u003c/code\u003e for this field. Required, and must match the pattern \\“[a-zA-Z0-9-,]+\\“, max 64 bytes.",
             "in": "path",
             "required": true,
             "type": "string"
@@ -760,12 +986,29 @@
         ],
         "tags": [
           "Permission"
+        ],
+        "x-codeSamples": [
+          {
+            "label": "go",
+            "lang": "go",
+            "source": "cr, err: = client.Permission.LookupEntity(context.Background(), \u0026 v1.PermissionLookupEntityRequest {\n    TenantId: \"t1\",\n    Metadata: \u0026 v1.PermissionLookupEntityRequestMetadata {\n        SnapToken: \"\"\n        SchemaVersion: \"\"\n        Depth: 20,\n    },\n    EntityType: \"document\",\n    Permission: \"edit\",\n    Subject: \u0026 v1.Subject {\n        Type: \"user\",\n        Id: \"1\",\n    }\n})"
+          },
+          {
+            "label": "node",
+            "lang": "javascript",
+            "source": "client.permission.lookupEntity({\n    tenantId: \"t1\",\n    metadata: {\n        snapToken: \"\",\n        schemaVersion: \"\",\n        depth: 20\n    },\n    entity_type: \"document\",\n    permission: \"edit\",\n    subject: {\n        type: \"user\",\n        id: \"1\"\n    }\n}).then((response) =\u003e {\n    console.log(response.entity_ids)\n})"
+          },
+          {
+            "label": "cURL",
+            "lang": "curl",
+            "source": "curl --location --request POST 'localhost:3476/v1/tenants/{tenant_id}/permissions/lookup-entity' \\\n--header 'Content-Type: application/json' \\\n--data-raw '{\n  \"metadata\":{\n    \"snap_token\": \"\",\n    \"schema_version\": \"\",\n    \"depth\": 20\n  },\n  \"entity_type\": \"document\",\n  \"permission\": \"edit\",\n  \"subject\": {\n    \"type\":\"user\",\n    \"id\":\"1\"\n  }\n}'"
+          }
         ]
       }
     },
     "/v1/tenants/{tenant_id}/permissions/lookup-entity-stream": {
       "post": {
-        "summary": "Stream entities by their identifiers.",
+        "summary": "lookup entity stream",
         "operationId": "permissions.lookupEntityStream",
         "responses": {
           "200": {
@@ -793,7 +1036,7 @@
         "parameters": [
           {
             "name": "tenant_id",
-            "description": "Identifier of the tenant, required, and must match the pattern \"[a-zA-Z0-9-,]+\", max 64 bytes.",
+            "description": "Identifier of the tenant, if you are not using multi-tenancy (have only one tenant) use pre-inserted tenant \u003ccode\u003et1\u003c/code\u003e for this field. Required, and must match the pattern \\“[a-zA-Z0-9-,]+\\“, max 64 bytes.",
             "in": "path",
             "required": true,
             "type": "string"
@@ -832,12 +1075,24 @@
         ],
         "tags": [
           "Permission"
+        ],
+        "x-codeSamples": [
+          {
+            "label": "go",
+            "lang": "go",
+            "source": "str, err: = client.Permission.LookupEntityStream(context.Background(), \u0026v1.PermissionLookupEntityRequest {\n    Metadata: \u0026v1.PermissionLookupEntityRequestMetadata {\n        SnapToken: \"\", \n        SchemaVersion: \"\" \n        Depth: 50,\n    },\n    EntityType: \"document\",\n    Permission: \"view\",\n    Subject: \u0026v1.Subject {\n        Type: \"user\",\n        Id: \"1\",\n    },\n})\n\n// handle stream response\nfor {\n    res, err: = str.Recv()\n\n    if err == io.EOF {\n        break\n    }\n\n    // res.EntityId\n}"
+          },
+          {
+            "label": "node",
+            "lang": "javascript",
+            "source": "const permify = require(\"@permify/permify-node\");\nconst {PermissionLookupEntityStreamResponse} = require(\"@permify/permify-node/dist/src/grpc/generated/base/v1/service\");\n\nfunction main() {\n    const client = new permify.grpc.newClient({\n        endpoint: \"localhost:3478\",\n    })\n\n    let res = client.permission.lookupEntityStream({\n        metadata: {\n            snapToken: \"\",\n            schemaVersion: \"\",\n            depth: 20\n        },\n        entityType: \"document\",\n        permission: \"view\",\n        subject: {\n            type: \"user\",\n            id: \"1\"\n        }\n    })\n\n    handle(res)\n}\n\nasync function handle(res: AsyncIterable\u003cPermissionLookupEntityStreamResponse\u003e) {\n    for await (const response of res) {\n        // response.entityId\n    }\n}"
+          }
         ]
       }
     },
     "/v1/tenants/{tenant_id}/permissions/lookup-subject": {
       "post": {
-        "summary": "Retrieve a subject by its identifier.",
+        "summary": "lookup-subject",
         "operationId": "permissions.lookupSubject",
         "responses": {
           "200": {
@@ -856,7 +1111,7 @@
         "parameters": [
           {
             "name": "tenant_id",
-            "description": "Identifier of the tenant, required, and must match the pattern \"[a-zA-Z0-9-,]+\", max 64 bytes.",
+            "description": "Identifier of the tenant, if you are not using multi-tenancy (have only one tenant) use pre-inserted tenant \u003ccode\u003et1\u003c/code\u003e for this field. Required, and must match the pattern \\“[a-zA-Z0-9-,]+\\“, max 64 bytes.",
             "in": "path",
             "required": true,
             "type": "string"
@@ -895,12 +1150,29 @@
         ],
         "tags": [
           "Permission"
+        ],
+        "x-codeSamples": [
+          {
+            "label": "go",
+            "lang": "go",
+            "source": "cr, err: = client.Permission.LookupSubject(context.Background(), \u0026v1.PermissionLookupSubjectRequest {\n    TenantId: \"t1\",\n    Metadata: \u0026v1.PermissionLookupSubjectRequestMetadata{\n        SnapToken: \"\",\n        SchemaVersion: \"\",\n        Depth: 20,\n    },\n    Entity: \u0026v1.Entity{\n        Type: \"document\",\n        Id: \"1\",\n    },\n    Permission: \"edit\",\n    SubjectReference: \u0026v1.RelationReference{\n        Type: \"user\",\n        Relation: \"\",\n    }\n})"
+          },
+          {
+            "label": "node",
+            "lang": "javascript",
+            "source": "client.permission.lookupSubject({\n    tenantId: \"t1\",\n    metadata: {\n        snapToken: \"\",\n        schemaVersion: \"\"\n        depth: 20,\n    },\n    Entity: {\n        Type: \"document\",\n        Id: \"1\",\n    },\n    permission: \"edit\",\n    subject_reference: {\n        type: \"user\",\n        relation: \"\"\n    }\n}).then((response) =\u003e {\n    console.log(response.subject_ids)\n})"
+          },
+          {
+            "label": "cURL",
+            "lang": "curl",
+            "source": "curl --location --request POST 'localhost:3476/v1/tenants/{tenant_id}/permissions/lookup-subject' \\\n--header 'Content-Type: application/json' \\\n--data-raw '{\n  \"metadata\":{\n    \"snap_token\": \"\",\n    \"schema_version\": \"\"\n    \"depth\": 20,\n  },\n  \"entity\": {\n    type: \"document\",\n    id: \"1'\n  },\n  \"permission\": \"edit\",\n  \"subject_reference\": {\n    \"type\": \"user\",\n    \"relation\": \"\"\n  }\n}'"
+          }
         ]
       }
     },
     "/v1/tenants/{tenant_id}/permissions/subject-permission": {
       "post": {
-        "summary": "Retrieve permissions related to a specific subject.",
+        "summary": "subject permission",
         "operationId": "permissions.subjectPermission",
         "responses": {
           "200": {
@@ -919,7 +1191,7 @@
         "parameters": [
           {
             "name": "tenant_id",
-            "description": "Identifier of the tenant, required, and must match the pattern \"[a-zA-Z0-9-,]+\", max 64 bytes.",
+            "description": "Identifier of the tenant, if you are not using multi-tenancy (have only one tenant) use pre-inserted tenant \u003ccode\u003et1\u003c/code\u003e for this field. Required, and must match the pattern \\“[a-zA-Z0-9-,]+\\“, max 64 bytes.",
             "in": "path",
             "required": true,
             "type": "string"
@@ -954,6 +1226,23 @@
         ],
         "tags": [
           "Permission"
+        ],
+        "x-codeSamples": [
+          {
+            "label": "go",
+            "lang": "go",
+            "source": "cr, err: = client.Permission.SubjectPermission(context.Background(), \u0026v1.PermissionSubjectPermissionRequest {\n    TenantId: \"t1\",\n    Metadata: \u0026v1.PermissionSubjectPermissionRequestMetadata {\n        SnapToken: \"\",\n        SchemaVersion: \"\",\n        OnlyPermission: false,\n        Depth: 20,\n    },\n    Entity: \u0026v1.Entity {\n        Type: \"repository\",\n        Id: \"1\",\n    },\n    Subject: \u0026v1.Subject {\n        Type: \"user\",\n        Id: \"1\",\n    },\n})"
+          },
+          {
+            "label": "node",
+            "lang": "javascript",
+            "source": "client.permission.subjectPermission({\n    tenantId: \"t1\", \n    metadata: {\n        snapToken: \"\",\n        schemaVersion: \"\",\n        onlyPermission: true,\n        depth: 20\n    },\n    entity: {\n        type: \"repository\",\n        id: \"1\"\n    },\n    subject: {\n        type: \"user\",\n        id: \"1\"\n    }\n}).then((response) =\u003e {\n    console.log(response);\n})"
+          },
+          {
+            "label": "cURL",
+            "lang": "curl",
+            "source": "curl --location --request POST 'localhost:3476/v1/tenants/{tenant_id}/permissions/subject-permission' \\\n--header 'Content-Type: application/json' \\\n--data-raw '{\n  \"metadata\":{\n    \"snap_token\": \"\",\n    \"schema_version\": \"\",\n    \"only_permission\": true,\n    \"depth\": 20\n  },\n  \"entity\": {\n    \"type\": \"repository\",\n    \"id\": \"1\"\n  },\n  \"subject\": {\n    \"type\": \"user\",\n    \"id\": \"1\",\n    \"relation\": \"\"\n  },\n}'"
+          }
         ]
       }
     },
@@ -978,6 +1267,7 @@
         "parameters": [
           {
             "name": "tenant_id",
+            "description": "Identifier of the tenant, if you are not using multi-tenancy (have only one tenant) use pre-inserted tenant \u003ccode\u003et1\u003c/code\u003e for this field. Required, and must match the pattern \\“[a-zA-Z0-9-,]+\\“, max 64 bytes.",
             "in": "path",
             "required": true,
             "type": "string"
@@ -1004,7 +1294,7 @@
     },
     "/v1/tenants/{tenant_id}/relationships/write": {
       "post": {
-        "summary": "create new relationships",
+        "summary": "write relationships",
         "operationId": "relationships.write",
         "responses": {
           "200": {
@@ -1023,7 +1313,7 @@
         "parameters": [
           {
             "name": "tenant_id",
-            "description": "Unique identifier for the tenant with specific constraints.",
+            "description": "Identifier of the tenant, if you are not using multi-tenancy (have only one tenant) use pre-inserted tenant \u003ccode\u003et1\u003c/code\u003e for this field. Required, and must match the pattern \\“[a-zA-Z0-9-,]+\\“, max 64 bytes.",
             "in": "path",
             "required": true,
             "type": "string"
@@ -1058,7 +1348,7 @@
     },
     "/v1/tenants/{tenant_id}/schemas/list": {
       "post": {
-        "summary": "list all authorization models",
+        "summary": "list schema",
         "operationId": "schemas.list",
         "responses": {
           "200": {
@@ -1077,7 +1367,7 @@
         "parameters": [
           {
             "name": "tenant_id",
-            "description": "tenant_id is a string that identifies the tenant. It must match the pattern \"[a-zA-Z0-9-,]+\",\nbe a maximum of 64 bytes, and must not be empty.",
+            "description": "Identifier of the tenant, if you are not using multi-tenancy (have only one tenant) use pre-inserted tenant \u003ccode\u003et1\u003c/code\u003e for this field. Required, and must match the pattern \\“[a-zA-Z0-9-,]+\\“, max 64 bytes.",
             "in": "path",
             "required": true,
             "type": "string"
@@ -1105,18 +1395,35 @@
         ],
         "tags": [
           "Schema"
+        ],
+        "x-codeSamples": [
+          {
+            "label": "go",
+            "lang": "go",
+            "source": "sr, err: = client.Schema.List(context.Background(), \u0026v1.SchemaListRequest {\n    TenantId: \"t1\",\n    PageSize: \"10\",\n    ContinuousToken: \"\",\n})"
+          },
+          {
+            "label": "node",
+            "lang": "javascript",
+            "source": "let res = client.schema.list({\n    tenantId: \"t1\",\n    continuousToken: \"\"\n})"
+          },
+          {
+            "label": "cURL",
+            "lang": "curl",
+            "source": "curl --location --request POST 'localhost:3476/v1/tenants/{tenant_id}/schemas/read' \\\n--header 'Content-Type: application/json' \\\n--data-raw '{\n    \"page_size\": \"10\",\n    \"continuous_token\": \"\"\n}'"
+          }
         ]
       }
     },
-    "/v1/tenants/{tenant_id}/schemas/read": {
-      "post": {
-        "summary": "read your authorization model",
-        "operationId": "schemas.read",
+    "/v1/tenants/{tenant_id}/schemas/partial-write": {
+      "patch": {
+        "summary": "partially update your authorization model",
+        "operationId": "schemas.partial-write",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1SchemaReadResponse"
+              "$ref": "#/definitions/v1SchemaPartialWriteResponse"
             }
           },
           "default": {
@@ -1142,6 +1449,60 @@
               "type": "object",
               "properties": {
                 "metadata": {
+                  "$ref": "#/definitions/v1SchemaPartialWriteRequestMetadata",
+                  "description": "metadata is the additional information needed for the Partial Write request."
+                },
+                "partials": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/definitions/v1Partials"
+                  },
+                  "title": "Map of entity name with the values needed to be updated"
+                }
+              },
+              "title": "It contains the tenant_id to identify the tenant and metadata of the schema to be edited,\nwith the corresponding edits to various entities"
+            }
+          }
+        ],
+        "tags": [
+          "Schema"
+        ]
+      }
+    },
+    "/v1/tenants/{tenant_id}/schemas/read": {
+      "post": {
+        "summary": "read schema",
+        "operationId": "schemas.read",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SchemaReadResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant_id",
+            "description": "Identifier of the tenant, if you are not using multi-tenancy (have only one tenant) use pre-inserted tenant \u003ccode\u003et1\u003c/code\u003e for this field. Required, and must match the pattern \\“[a-zA-Z0-9-,]+\\“, max 64 bytes.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "metadata": {
                   "$ref": "#/definitions/v1SchemaReadRequestMetadata",
                   "description": "metadata is the additional information needed for the Read request."
                 }
@@ -1152,12 +1513,29 @@
         ],
         "tags": [
           "Schema"
+        ],
+        "x-codeSamples": [
+          {
+            "label": "go",
+            "lang": "go",
+            "source": "sr, err: = client.Schema.Read(context.Background(), \u0026v1.SchemaReadRequest {\n    TenantId: \"t1\",\n    Metadata: \u0026v1.SchemaReadRequestMetadata{\n        SchemaVersion: \"cnbe6se5fmal18gpc66g\",\n    },\n})"
+          },
+          {
+            "label": "node",
+            "lang": "javascript",
+            "source": "let res = client.schema.read({\n    tenantId: \"t1\",\n    metadata: {\n    schemaVersion: swResponse.schemaVersion,\n    },\n    })"
+          },
+          {
+            "label": "cURL",
+            "lang": "curl",
+            "source": "curl --location --request POST 'localhost:3476/v1/tenants/{tenant_id}/schemas/read' \\\n--header 'Content-Type: application/json' \\\n--data-raw '{\n    \"metadata\": {\n        \"schema_version\": \"cnbe6se5fmal18gpc66g\"\n    }\n}'"
+          }
         ]
       }
     },
     "/v1/tenants/{tenant_id}/schemas/write": {
       "post": {
-        "summary": "write your authorization model",
+        "summary": "write schema",
         "operationId": "schemas.write",
         "responses": {
           "200": {
@@ -1176,7 +1554,7 @@
         "parameters": [
           {
             "name": "tenant_id",
-            "description": "tenant_id is a string that identifies the tenant. It must match the pattern \"[a-zA-Z0-9-,]+\",\nbe a maximum of 64 bytes, and must not be empty.",
+            "description": "Identifier of the tenant, if you are not using multi-tenancy (have only one tenant) use pre-inserted tenant \u003ccode\u003et1\u003c/code\u003e for this field. Required, and must match the pattern \\“[a-zA-Z0-9-,]+\\“, max 64 bytes.",
             "in": "path",
             "required": true,
             "type": "string"
@@ -1199,11 +1577,29 @@
         ],
         "tags": [
           "Schema"
+        ],
+        "x-codeSamples": [
+          {
+            "label": "go",
+            "lang": "go",
+            "source": "sr, err: = client.Schema.Write(context.Background(), \u0026v1.SchemaWriteRequest {\n    TenantId: \"t1\",\n    Schema: `\n    \"entity user {}\\n\\n    entity organization {\\n\\n        relation admin @user\\n        relation member @user\\n\\n        action create_repository = (admin or member)\\n        action delete = admin\\n    }\\n\\n    entity repository {\\n\\n        relation owner @user\\n        relation parent @organization\\n\\n        action push = owner\\n        action read = (owner and (parent.admin and parent.member))\\n        action delete = (parent.member and (parent.admin or owner))\\n    }\"\n    `,\n})"
+          },
+          {
+            "label": "node",
+            "lang": "javascript",
+            "source": "client.schema.write({\n    tenantId: \"t1\",\n    schema: `\n    \"entity user {}\\n\\n    entity organization {\\n\\n        relation admin @user\\n        relation member @user\\n\\n        action create_repository = (admin or member)\\n        action delete = admin\\n    }\\n\\n    entity repository {\\n\\n        relation owner @user\\n        relation parent @organization\\n\\n        action push = owner\\n        action read = (owner and (parent.admin and parent.member))\\n        action delete = (parent.member and (parent.admin or owner))\\n    }\"\n    `\n}).then((response) =\u003e {\n    // handle response\n})"
+          },
+          {
+            "label": "cURL",
+            "lang": "curl",
+            "source": "curl --location --request POST 'localhost:3476/v1/tenants/{tenant_id}/schemas/write' \\\n--header 'Content-Type: application/json' \\\n--data-raw '{\n    \"schema\": \"entity user {}\\n\\n    entity organization {\\n\\n        relation admin @user\\n        relation member @user\\n\\n        action create_repository = (admin or member)\\n        action delete = admin\\n    }\\n\\n    entity repository {\\n\\n        relation owner @user\\n        relation parent @organization\\n\\n        action push = owner\\n        action read = (owner and (parent.admin and parent.member))\\n        action delete = (parent.member and (parent.admin or owner))\\n }\"\n}'"
+          }
         ]
       }
     },
     "/v1/tenants/{tenant_id}/watch": {
       "post": {
+        "summary": "watch changes",
         "operationId": "watch.watch",
         "responses": {
           "200": {
@@ -1231,7 +1627,7 @@
         "parameters": [
           {
             "name": "tenant_id",
-            "description": "Identifier of the tenant, required, and must match the pattern \"[a-zA-Z0-9-,]+\", max 64 bytes.",
+            "description": "Identifier of the tenant, if you are not using multi-tenancy (have only one tenant) use pre-inserted tenant \u003ccode\u003et1\u003c/code\u003e for this field. Required, and must match the pattern \\“[a-zA-Z0-9-,]+\\“, max 64 bytes.",
             "in": "path",
             "required": true,
             "type": "string"
@@ -1245,7 +1641,7 @@
               "properties": {
                 "snap_token": {
                   "type": "string",
-                  "description": "Snap token to be used for watching."
+                  "description": "The snap token to avoid stale cache, see more details on [Snap Tokens](../../operations/snap-tokens)."
                 }
               },
               "description": "WatchRequest is the request message for the Watch RPC. It contains the\ndetails needed to establish a watch stream."
@@ -1254,6 +1650,18 @@
         ],
         "tags": [
           "Watch"
+        ],
+        "x-codeSamples": [
+          {
+            "label": "go",
+            "lang": "go",
+            "source": "cr, err := client.Watch.Watch(context.Background(), \u0026v1.WatchRequest{\n    TenantId:  \"t1\",\n    SnapToken: \"\",\n})\n// handle stream response\nfor {\n    res, err := cr.Recv()\n\n    if err == io.EOF {\n        break\n    }\n\n    // res.Changes\n}\n"
+          },
+          {
+            "label": "node",
+            "lang": "javascript",
+            "source": "const permify = require(\"@permify/permify-node\");\nconst {WatchResponse} = require(\"@permify/permify-node/dist/src/grpc/generated/base/v1/service\");\n\nfunction main() {\n    const client = new permify.grpc.newClient({\n        endpoint: \"localhost:3478\",\n    })\n\n    let res = client.watch.watch({\n          tenantId: \"t1\",\n        snapToken: \"\"\n    })\n\n    handle(res)\n}\n\nasync function handle(res: AsyncIterable\u003cWatchResponse\u003e) {\n    for await (const response of res) {\n        // response.changes\n    }\n}\n"
+          }
         ]
       }
     }
@@ -1695,7 +2103,7 @@
       "properties": {
         "snap_token": {
           "type": "string",
-          "description": "snap_token represents a specific state or \"snapshot\" of the database."
+          "description": "The snap token to avoid stale cache, see more details on [Snap Tokens](../../operations/snap-tokens)"
         }
       },
       "description": "AttributeReadRequestMetadata defines the structure for the metadata of an attribute read request.\nIt includes the snap_token associated with a particular state of the database."
@@ -1753,7 +2161,8 @@
       "type": "object",
       "properties": {
         "snap_token": {
-          "type": "string"
+          "type": "string",
+          "description": "The snap token to avoid stale cache, see more details on [Snap Tokens](../../operations/snap-tokens)"
         }
       },
       "description": "BundleRunResponse is the response for a BundleRunRequest.\nIt includes a snap_token, which may be used for tracking the execution or its results."
@@ -1913,7 +2322,7 @@
       "properties": {
         "snap_token": {
           "type": "string",
-          "description": "snap_token represents the state of the database after the requested deletions."
+          "description": "The snap token to avoid stale cache, see more details on [Snap Tokens](../../operations/snap-tokens)"
         }
       },
       "description": "DataDeleteResponse defines the structure of the response to a data delete request.\nIt includes a snap_token representing the state of the database after the deletion."
@@ -1933,7 +2342,7 @@
       "properties": {
         "snap_token": {
           "type": "string",
-          "description": "snap_token is the token generated after the data write operation, representing a snapshot of the data."
+          "description": "The snap token to avoid stale cache, see more details on [Snap Tokens](../../operations/snap-tokens)."
         }
       },
       "description": "DataWriteResponse defines the structure of the response after writing data.\nIt contains the snap_token generated after the write operation."
@@ -2109,6 +2518,30 @@
       },
       "description": "Leaf represents a leaf node in the permission tree."
     },
+    "v1Partials": {
+      "type": "object",
+      "properties": {
+        "write": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "delete": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "update": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "title": "Partials contains the write, update and delete definitions"
+    },
     "v1PermissionCheckRequestMetadata": {
       "type": "object",
       "properties": {
@@ -2118,15 +2551,15 @@
         },
         "snap_token": {
           "type": "string",
-          "description": "Token associated with the snap."
+          "description": "The snap token to avoid stale cache, see more details on [Snap Tokens](../../operations/snap-tokens)"
         },
         "depth": {
           "type": "integer",
           "format": "int32",
-          "description": "Depth of the check, must be greater than or equal to 3."
+          "description": "Query limit when if recursive database queries got in loop"
         }
       },
-      "description": "PermissionCheckRequestMetadata is the metadata associated with a PermissionCheckRequest."
+      "description": "PermissionCheckRequestMetadata metadata for the PermissionCheckRequest."
     },
     "v1PermissionCheckResponse": {
       "type": "object",
@@ -2151,7 +2584,7 @@
           "description": "The count of the checks performed."
         }
       },
-      "description": "PermissionCheckResponseMetadata is the metadata associated with a PermissionCheckResponse."
+      "description": "PermissionCheckResponseMetadata metadata for the PermissionCheckResponse."
     },
     "v1PermissionDefinition": {
       "type": "object",
@@ -2176,10 +2609,10 @@
         },
         "snap_token": {
           "type": "string",
-          "description": "Token associated with the snap."
+          "description": "The snap token to avoid stale cache, see more details on [Snap Tokens](../../operations/snap-tokens)."
         }
       },
-      "description": "PermissionExpandRequestMetadata is the metadata associated with a PermissionExpandRequest."
+      "description": "PermissionExpandRequestMetadata metadata for the PermissionExpandRequest."
     },
     "v1PermissionExpandResponse": {
       "type": "object",
@@ -2200,15 +2633,15 @@
         },
         "snap_token": {
           "type": "string",
-          "description": "Token associated with the snap."
+          "description": "The snap token to avoid stale cache, see more details on [Snap Tokens](../../operations/snap-tokens)."
         },
         "depth": {
           "type": "integer",
           "format": "int32",
-          "description": "Depth of lookup, required, must be greater or equal to 3."
+          "description": "Query limit when if recursive database queries got in loop."
         }
       },
-      "description": "PermissionLookupEntityRequestMetadata is the metadata associated with a PermissionLookupEntityRequest."
+      "description": "PermissionLookupEntityRequestMetadata metadata for the PermissionLookupEntityRequest."
     },
     "v1PermissionLookupEntityResponse": {
       "type": "object",
@@ -2242,15 +2675,15 @@
         },
         "snap_token": {
           "type": "string",
-          "description": "Token associated with the snap."
+          "description": "The snap token to avoid stale cache, see more details on [Snap Tokens](../../operations/snap-tokens)."
         },
         "depth": {
           "type": "integer",
           "format": "int32",
-          "description": "Depth of the check, must be greater than or equal to 3."
+          "description": "Query limit when if recursive database queries got in loop."
         }
       },
-      "description": "PermissionLookupSubjectRequestMetadata is the metadata associated with a PermissionLookupSubjectRequest."
+      "description": "PermissionLookupSubjectRequestMetadata metadata for the PermissionLookupSubjectRequest."
     },
     "v1PermissionLookupSubjectResponse": {
       "type": "object",
@@ -2274,7 +2707,7 @@
         },
         "snap_token": {
           "type": "string",
-          "description": "Token associated with the snap."
+          "description": "The snap token to avoid stale cache, see more details on [Snap Tokens](../../operations/snap-tokens)."
         },
         "only_permission": {
           "type": "boolean",
@@ -2283,10 +2716,10 @@
         "depth": {
           "type": "integer",
           "format": "int32",
-          "description": "Depth of the check, must be greater than or equal to 3."
+          "description": "Query limit when if recursive database queries got in loop."
         }
       },
-      "description": "PermissionSubjectPermissionRequestMetadata is the metadata associated with a PermissionSubjectPermissionRequest."
+      "description": "PermissionSubjectPermissionRequestMetadata metadata for the PermissionSubjectPermissionRequest."
     },
     "v1PermissionSubjectPermissionResponse": {
       "type": "object",
@@ -2336,7 +2769,8 @@
       "type": "object",
       "properties": {
         "snap_token": {
-          "type": "string"
+          "type": "string",
+          "description": "The snap token to avoid stale cache, see more details on [Snap Tokens](../../operations/snap-tokens)"
         }
       },
       "title": "RelationshipDeleteResponse"
@@ -2346,7 +2780,7 @@
       "properties": {
         "snap_token": {
           "type": "string",
-          "description": "snap_token represents a specific state or \"snapshot\" of the database."
+          "description": "The snap token to avoid stale cache, see more details on [Snap Tokens](../../operations/snap-tokens)"
         }
       },
       "description": "RelationshipReadRequestMetadata defines the structure of the metadata for a read request focused on relationships.\nIt includes the snap_token associated with a particular state of the database."
@@ -2381,7 +2815,8 @@
       "type": "object",
       "properties": {
         "snap_token": {
-          "type": "string"
+          "type": "string",
+          "description": "The snap token to avoid stale cache, see more details on [Snap Tokens](../../operations/snap-tokens)"
         }
       },
       "title": "RelationshipWriteResponse"
@@ -2504,6 +2939,26 @@
         }
       },
       "title": "SchemaListResponse is the response message for the List method in the Schema service.\nIt returns a paginated list of schemas"
+    },
+    "v1SchemaPartialWriteRequestMetadata": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "type": "string",
+          "description": "schema_version is the string that identifies the version of the schema to be read."
+        }
+      },
+      "description": "SchemaPartialWriteRequestMetadata provides additional information for the Schema Partial Write request.\nIt contains schema_version to specify which version of the schema should be read."
+    },
+    "v1SchemaPartialWriteResponse": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "type": "string",
+          "description": "schema_version is the string that identifies the version of the written schema."
+        }
+      },
+      "description": "SchemaPartialWriteResponse is the response message for the Parietal Write method in the Schema service.\nIt returns the requested schema."
     },
     "v1SchemaReadRequestMetadata": {
       "type": "object",
