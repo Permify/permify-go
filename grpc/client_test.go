@@ -1,4 +1,4 @@
-package permifygotest
+package permifygrpc
 
 import (
 	"context"
@@ -13,7 +13,7 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 
-	v1 "github.com/Permify/permify-go/generated/base/v1"
+	pservice "buf.build/gen/go/permifyco/permify/protocolbuffers/go/base/v1"
 )
 
 func TestClient(t *testing.T) {
@@ -37,7 +37,7 @@ var _ = Describe("Client Test", func() {
 
 	Context("Check request", func() {
 		It("document schema", func() {
-			wr, err := client.Schema.Write(context.Background(), &v1.SchemaWriteRequest{
+			wr, err := client.Schema.Write(context.Background(), &pservice.SchemaWriteRequest{
 				TenantId: "t1",
 				Schema: `
             entity user {}
@@ -51,32 +51,32 @@ var _ = Describe("Client Test", func() {
 
 			Expect(err).ShouldNot(HaveOccurred())
 
-			cr, err := client.Permission.Check(context.Background(), &v1.PermissionCheckRequest{
+			cr, err := client.Permission.Check(context.Background(), &pservice.PermissionCheckRequest{
 				TenantId: "t1",
-				Metadata: &v1.PermissionCheckRequestMetadata{
+				Metadata: &pservice.PermissionCheckRequestMetadata{
 					SnapToken:     "",
 					SchemaVersion: wr.SchemaVersion,
 					Depth:         50,
 				},
-				Entity: &v1.Entity{
+				Entity: &pservice.Entity{
 					Type: "document",
 					Id:   "1",
 				},
 				Permission: "view",
-				Subject: &v1.Subject{
+				Subject: &pservice.Subject{
 					Type: "user",
 					Id:   "3",
 				},
 			})
 
 			Expect(err).ShouldNot(HaveOccurred())
-			Expect(cr.Can).Should(Equal(v1.CheckResult_CHECK_RESULT_DENIED))
+			Expect(cr.Can).Should(Equal(pservice.CheckResult_CHECK_RESULT_DENIED))
 		})
 	})
 
 	Context("Write Data", func() {
 		It("abac schema", func() {
-			wr, err := client.Schema.Write(context.Background(), &v1.SchemaWriteRequest{
+			wr, err := client.Schema.Write(context.Background(), &pservice.SchemaWriteRequest{
 				TenantId: "instagram",
 				Schema: `
 					entity user {}
@@ -96,21 +96,21 @@ var _ = Describe("Client Test", func() {
 			Expect(err).ShouldNot(HaveOccurred())
 
 			// Convert the wrapped attribute value into Any proto message
-			value, err := anypb.New(&v1.BooleanValue{
+			value, err := anypb.New(&pservice.BooleanValue{
 				Data: true,
 			})
 			if err != nil {
 				Expect(err).ShouldNot(HaveOccurred())
 			}
 
-			cr, err := client.Data.Write(context.Background(), &v1.DataWriteRequest{
+			cr, err := client.Data.Write(context.Background(), &pservice.DataWriteRequest{
 				TenantId: "instagram",
-				Metadata: &v1.DataWriteRequestMetadata{
+				Metadata: &pservice.DataWriteRequestMetadata{
 					SchemaVersion: wr.SchemaVersion,
 				},
-				Attributes: []*v1.Attribute{
+				Attributes: []*pservice.Attribute{
 					{
-						Entity: &v1.Entity{
+						Entity: &pservice.Entity{
 							Type: "account",
 							Id:   "1",
 						},
@@ -127,7 +127,7 @@ var _ = Describe("Client Test", func() {
 
 	Context("Lookup", func() {
 		It("Lookup entity request", func() {
-			wr, err := client.Schema.Write(context.Background(), &v1.SchemaWriteRequest{
+			wr, err := client.Schema.Write(context.Background(), &pservice.SchemaWriteRequest{
 				TenantId: "t1",
 				Schema: `
 				entity user {}
@@ -139,41 +139,41 @@ var _ = Describe("Client Test", func() {
 				}`,
 			})
 
-			rr, err := client.Data.WriteRelationships(context.Background(), &v1.RelationshipWriteRequest{
+			rr, err := client.Data.WriteRelationships(context.Background(), &pservice.RelationshipWriteRequest{
 				TenantId: "t1",
-				Metadata: &v1.RelationshipWriteRequestMetadata{
+				Metadata: &pservice.RelationshipWriteRequestMetadata{
 					SchemaVersion: wr.SchemaVersion,
 				},
-				Tuples: []*v1.Tuple{
+				Tuples: []*pservice.Tuple{
 					{
-						Entity: &v1.Entity{
+						Entity: &pservice.Entity{
 							Type: "document",
 							Id:   "1",
 						},
 						Relation: "viewer",
-						Subject: &v1.Subject{
+						Subject: &pservice.Subject{
 							Type: "user",
 							Id:   "1",
 						},
 					},
 					{
-						Entity: &v1.Entity{
+						Entity: &pservice.Entity{
 							Type: "document",
 							Id:   "3",
 						},
 						Relation: "viewer",
-						Subject: &v1.Subject{
+						Subject: &pservice.Subject{
 							Type: "user",
 							Id:   "1",
 						},
 					},
 					{
-						Entity: &v1.Entity{
+						Entity: &pservice.Entity{
 							Type: "document",
 							Id:   "4",
 						},
 						Relation: "viewer",
-						Subject: &v1.Subject{
+						Subject: &pservice.Subject{
 							Type: "user",
 							Id:   "1",
 						},
@@ -183,16 +183,16 @@ var _ = Describe("Client Test", func() {
 
 			Expect(err).ShouldNot(HaveOccurred())
 
-			cr, err := client.Permission.LookupEntityStream(context.Background(), &v1.PermissionLookupEntityRequest{
+			cr, err := client.Permission.LookupEntityStream(context.Background(), &pservice.PermissionLookupEntityRequest{
 				TenantId: "t1",
-				Metadata: &v1.PermissionLookupEntityRequestMetadata{
+				Metadata: &pservice.PermissionLookupEntityRequestMetadata{
 					SnapToken:     rr.SnapToken,
 					SchemaVersion: wr.SchemaVersion,
 					Depth:         50,
 				},
 				EntityType: "document",
 				Permission: "view",
-				Subject: &v1.Subject{
+				Subject: &pservice.Subject{
 					Type: "user",
 					Id:   "1",
 				},

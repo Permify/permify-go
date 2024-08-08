@@ -15,6 +15,13 @@ require (
 )
 
 require (
+	buf.build/gen/go/envoyproxy/protoc-gen-validate/protocolbuffers/go v1.34.2-20221025150516-6607b10f00ed.2 // indirect
+	buf.build/gen/go/grpc-ecosystem/grpc-gateway/protocolbuffers/go v1.34.2-20221127060915-a1ecdc58eccd.2 // indirect
+	buf.build/gen/go/permifyco/permify/protocolbuffers/go v1.34.2-20240722150440-5ee7aa4c5fb5.2 // indirect
+)
+
+require (
+	buf.build/gen/go/permifyco/permify/grpc/go v1.5.1-20240722150440-5ee7aa4c5fb5.1
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
 	github.com/google/go-cmp v0.6.0 // indirect
 	github.com/iancoleman/strcase v0.3.0 // indirect
