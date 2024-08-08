@@ -23,7 +23,7 @@ go get github.com/Permify/permify-go
 ```go
 import (
 	permify_payload "buf.build/gen/go/permifyco/permify/protocolbuffers/go/base/v1"
-	permify_grpc "github.com/permify/permify-go/grpc"
+	permify_grpc "github.com/Permify/permify-go/grpc"
 )
 ```
 
