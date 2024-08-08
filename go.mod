@@ -1,6 +1,6 @@
 module github.com/Permify/permify-go
 
-go 1.21
+go 1.22.6
 
 require (
 	github.com/envoyproxy/protoc-gen-validate v1.1.0
