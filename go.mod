@@ -1,6 +1,7 @@
 module github.com/Permify/permify-go
 
 go 1.22.6
+toolchain go1.23.7
 
 require (
 	buf.build/gen/go/permifyco/permify/protocolbuffers/go v1.36.5-20250227074021-e09780cbd796.1
@@ -23,9 +24,9 @@ require (
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
 	github.com/google/go-cmp v0.6.0 // indirect
 	github.com/nxadm/tail v1.4.8 // indirect
-	golang.org/x/net v0.33.0 // indirect
-	golang.org/x/sys v0.28.0 // indirect
-	golang.org/x/text v0.21.0 // indirect
+	golang.org/x/net v0.36.0 // indirect
+	golang.org/x/sys v0.30.0 // indirect
+	golang.org/x/text v0.22.0 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20241202173237-19429a94021a // indirect
 	gopkg.in/tomb.v1 v1.0.0-20141024135613-dd632973f1e7 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
