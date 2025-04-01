@@ -1,13 +1,14 @@
 module github.com/Permify/permify-go
 
 go 1.22.6
+toolchain go1.24.1
 
 require (
 	buf.build/gen/go/permifyco/permify/protocolbuffers/go v1.36.5-20250227074021-e09780cbd796.1
 	github.com/onsi/ginkgo v1.16.5
 	github.com/onsi/gomega v1.36.2
 	google.golang.org/grpc v1.70.0
-	google.golang.org/protobuf v1.36.5
+	google.golang.org/protobuf v1.36.6
 )
 
 require (
