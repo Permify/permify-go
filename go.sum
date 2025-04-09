@@ -1,11 +1,11 @@
-buf.build/gen/go/envoyproxy/protoc-gen-validate/protocolbuffers/go v1.36.5-20221025150516-6607b10f00ed.1 h1:Bbgxg5iK7yWT3wMcHG96bbeO7tpUgf+AwTTv9xmYxcU=
-buf.build/gen/go/envoyproxy/protoc-gen-validate/protocolbuffers/go v1.36.5-20221025150516-6607b10f00ed.1/go.mod h1:FMS2qrBdIZFeCx5wwReLwgGAWct8yTeTIZkS4Jfmk+E=
-buf.build/gen/go/grpc-ecosystem/grpc-gateway/protocolbuffers/go v1.36.5-20221127060915-a1ecdc58eccd.1 h1:uV7dwQi0qh+brouTvpyZrjdnZSQZk3jvNW2mwovLXos=
-buf.build/gen/go/grpc-ecosystem/grpc-gateway/protocolbuffers/go v1.36.5-20221127060915-a1ecdc58eccd.1/go.mod h1:LAznaLI+eD1SNx+1NfEgrWtuPofvpEP1NTSuCWp3SBw=
+buf.build/gen/go/envoyproxy/protoc-gen-validate/protocolbuffers/go v1.36.6-20221025150516-6607b10f00ed.1 h1:gFyd2yeJuW3GZbreEJcKBTG3py3hx0Lk/EKNt76nxZo=
+buf.build/gen/go/envoyproxy/protoc-gen-validate/protocolbuffers/go v1.36.6-20221025150516-6607b10f00ed.1/go.mod h1:TGU+CZGmncsoDNQKI2goWD/VymFxFU9z9+pH5nlrvGM=
+buf.build/gen/go/grpc-ecosystem/grpc-gateway/protocolbuffers/go v1.36.6-20221127060915-a1ecdc58eccd.1 h1:1qr8f/GDLvs9kQwtECwd54hufmJqCkbkK5gsSSv3yso=
+buf.build/gen/go/grpc-ecosystem/grpc-gateway/protocolbuffers/go v1.36.6-20221127060915-a1ecdc58eccd.1/go.mod h1:TV9HU6+2Qe0EYQCSVjdfi1wr1LUGWXdLKhR+tNHwsz8=
 buf.build/gen/go/permifyco/permify/grpc/go v1.5.1-20250313072736-92bacc2b9af3.2 h1:rivypzKzs+s4BEAn9dqp33yPsA0mz/Vcm/cFfZ1oY14=
 buf.build/gen/go/permifyco/permify/grpc/go v1.5.1-20250313072736-92bacc2b9af3.2/go.mod h1:skQTNEM4vncDzncdnuNVyGGdyUCzPknWw87ulJWbQGI=
-buf.build/gen/go/permifyco/permify/protocolbuffers/go v1.36.5-20250227074021-e09780cbd796.1 h1:i7bxZayZ4hJuKfd9dm4jzwNe6x27PusNWWgiz/kQxDM=
-buf.build/gen/go/permifyco/permify/protocolbuffers/go v1.36.5-20250227074021-e09780cbd796.1/go.mod h1:wtacIMFA6bJ/KYZ/7vGIRa4oTxWnZlAGjHqkhi5H/Jo=
+buf.build/gen/go/permifyco/permify/protocolbuffers/go v1.36.6-20250313072736-92bacc2b9af3.1 h1:b5df3ftw0RBaQ9bOACNvdYfL9dWLGhx+Duc75WGWl+M=
+buf.build/gen/go/permifyco/permify/protocolbuffers/go v1.36.6-20250313072736-92bacc2b9af3.1/go.mod h1:dC9DqRZEyrfEOStXN9A1uypWsTOflQlYx/EWuSjk81Y=
 github.com/creack/pty v1.1.9/go.mod h1:oKZEueFk5CKHvIhNR5MUki03XCEU+Q6VDXinZuGJ33E=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
