@@ -56,7 +56,7 @@ ct, err := client.Tenancy.Create(context.Background(), &permify_payload.TenantCr
 ### Write Schema
 
 ```go
-sr, err: = client.Schema.Write(context.Background(), &permify_payload.SchemaWriteRequest {
+sr, err := client.Schema.Write(context.Background(), &permify_payload.SchemaWriteRequest {
     TenantId: "t1",
     Schema: `
         entity user {}
@@ -99,7 +99,7 @@ rr, err := client.Data.WriteRelationships(context.Background(), & permify_payloa
                 Type: "user",
                 Id: "1",
             },
-        }
+        },
     },
 })
 ```
@@ -125,7 +125,7 @@ cr, err := client.Permission.Check(context.Background(), & permify_payload.Permi
     },
 })
 
-if (cr.can == PermissionCheckResponse_Result.RESULT_ALLOWED) {
+if (cr.Can == permify_payload.CheckResult_CHECK_RESULT_ALLOWED) {
     // RESULT_ALLOWED
 } else {
     // RESULT_DENIED
@@ -152,7 +152,7 @@ str, err := client.Permission.LookupEntityStream(context.Background(), & permify
 
 // handle stream response
 for {
-    res, err: = str.Recv()
+    res, err := str.Recv()
 
     if err == io.EOF {
         break
