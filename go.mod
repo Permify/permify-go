@@ -5,7 +5,7 @@ go 1.23.0
 toolchain go1.24.1
 
 require (
-	buf.build/gen/go/permifyco/permify/protocolbuffers/go v1.36.8-20250821104952-d45a0df11d45.1
+	buf.build/gen/go/permifyco/permify/protocolbuffers/go v1.36.9-20250909115910-bf55f1c31821.1
 	github.com/onsi/ginkgo v1.16.5
 	github.com/onsi/gomega v1.38.2
 	google.golang.org/grpc v1.75.1
@@ -13,8 +13,8 @@ require (
 )
 
 require (
-	buf.build/gen/go/envoyproxy/protoc-gen-validate/protocolbuffers/go v1.36.8-20221025150516-6607b10f00ed.1 // indirect
-	buf.build/gen/go/grpc-ecosystem/grpc-gateway/protocolbuffers/go v1.36.8-20221127060915-a1ecdc58eccd.1 // indirect
+	buf.build/gen/go/envoyproxy/protoc-gen-validate/protocolbuffers/go v1.36.9-20221025150516-6607b10f00ed.1 // indirect
+	buf.build/gen/go/grpc-ecosystem/grpc-gateway/protocolbuffers/go v1.36.9-20221127060915-a1ecdc58eccd.1 // indirect
 	github.com/kr/pretty v0.3.1 // indirect
 	go.yaml.in/yaml/v3 v3.0.4 // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20250707201910-8d1bb00bc6a7 // indirect
