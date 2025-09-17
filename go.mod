@@ -8,7 +8,7 @@ require (
 	buf.build/gen/go/permifyco/permify/protocolbuffers/go v1.36.8-20250821104952-d45a0df11d45.1
 	github.com/onsi/ginkgo v1.16.5
 	github.com/onsi/gomega v1.38.2
-	google.golang.org/grpc v1.75.0
+	google.golang.org/grpc v1.75.1
 	google.golang.org/protobuf v1.36.9
 )
 
