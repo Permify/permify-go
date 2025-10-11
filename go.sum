@@ -2,8 +2,8 @@ buf.build/gen/go/envoyproxy/protoc-gen-validate/protocolbuffers/go v1.36.9-20221
 buf.build/gen/go/envoyproxy/protoc-gen-validate/protocolbuffers/go v1.36.9-20221025150516-6607b10f00ed.1/go.mod h1:vtPbhPMOmon88npL1XZkLzqNbHHMkiveQrAMrfTQ7yo=
 buf.build/gen/go/grpc-ecosystem/grpc-gateway/protocolbuffers/go v1.36.9-20221127060915-a1ecdc58eccd.1 h1:t7tIUGiHD5cWmFdxLc6B2AAKJFAp0UgyR3i1tP5i044=
 buf.build/gen/go/grpc-ecosystem/grpc-gateway/protocolbuffers/go v1.36.9-20221127060915-a1ecdc58eccd.1/go.mod h1:cyGdcqucRZliu5beS9fw4NIPM0Rb22Jvy5IFLNox2Qs=
-buf.build/gen/go/permifyco/permify/grpc/go v1.5.1-20250909115910-bf55f1c31821.2 h1:hRhJvN9lPtM23E/uMqaqsv65mPC0KB8fcxigRaTxjEE=
-buf.build/gen/go/permifyco/permify/grpc/go v1.5.1-20250909115910-bf55f1c31821.2/go.mod h1:Tx7Bm/f2hJSQ+1XSwTNkZBjjmFscO7p50FSTAcOZUR4=
+buf.build/gen/go/permifyco/permify/grpc/go v1.5.1-20251010095909-e243758af2d8.2 h1:m6sCHQWf5q2sxHj/dCARK/T5AsDSw/YZ+M+wtwXWsBY=
+buf.build/gen/go/permifyco/permify/grpc/go v1.5.1-20251010095909-e243758af2d8.2/go.mod h1:4B2EFNHYYn1zppHuou9UGJR4yRS58bLjh8V9T4wCF38=
 buf.build/gen/go/permifyco/permify/protocolbuffers/go v1.36.9-20250909115910-bf55f1c31821.1 h1:xiePCeoOTnnC4NNxU7TOoTZwIN9ZEjudjdR4ncQ2Uss=
 buf.build/gen/go/permifyco/permify/protocolbuffers/go v1.36.9-20250909115910-bf55f1c31821.1/go.mod h1:5gE2yxooCNbqsOrh1rbvHv2ziAelUa8e3qEZsI3pWr8=
 github.com/Masterminds/semver/v3 v3.4.0 h1:Zog+i5UMtVoCU8oKka5P7i9q9HgrJeGzI9SA1Xbatp0=
