@@ -5,7 +5,7 @@ go 1.24.0
 toolchain go1.24.1
 
 require (
-	buf.build/gen/go/permifyco/permify/protocolbuffers/go v1.36.10-20251010095909-e243758af2d8.1
+	buf.build/gen/go/permifyco/permify/protocolbuffers/go v1.36.10-20251022084910-7f6d21e1e4a9.1
 	github.com/onsi/ginkgo v1.16.5
 	github.com/onsi/gomega v1.38.2
 	google.golang.org/grpc v1.76.0
