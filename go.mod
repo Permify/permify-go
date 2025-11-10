@@ -22,7 +22,7 @@ require (
 )
 
 require (
-	buf.build/gen/go/permifyco/permify/grpc/go v1.5.1-20251022084910-7f6d21e1e4a9.2
+	buf.build/gen/go/permifyco/permify/grpc/go v1.5.1-20251103093708-d86d36fe3266.2
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
 	github.com/google/go-cmp v0.7.0 // indirect
 	github.com/nxadm/tail v1.4.8 // indirect
