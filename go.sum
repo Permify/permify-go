@@ -4,8 +4,8 @@ buf.build/gen/go/grpc-ecosystem/grpc-gateway/protocolbuffers/go v1.36.10-2024122
 buf.build/gen/go/grpc-ecosystem/grpc-gateway/protocolbuffers/go v1.36.10-20241220201140-4c5ba75caaf8.1/go.mod h1:Dkpdum4mgWWBTG5nDVJPCDdaqFh34tucP6RulxhdOjs=
 buf.build/gen/go/permifyco/permify/grpc/go v1.5.1-20251103093708-d86d36fe3266.2 h1:FnCxZYZD3sFGkKSuS21Tz7iehiq++nrx1jYNQ6PhLBA=
 buf.build/gen/go/permifyco/permify/grpc/go v1.5.1-20251103093708-d86d36fe3266.2/go.mod h1:H/ZVZL+0cORiUDb9OEjWGlznzV/8NmcYbJ5+c7sC4sw=
-buf.build/gen/go/permifyco/permify/protocolbuffers/go v1.36.10-20251022084910-7f6d21e1e4a9.1 h1:5qP7hqDqyPRuIkVdrzP6ceKTDYPayb/D/M7OeB4xd94=
-buf.build/gen/go/permifyco/permify/protocolbuffers/go v1.36.10-20251022084910-7f6d21e1e4a9.1/go.mod h1:rd83ZLYouLoCkkkayczBp+VAoiJbYFBhVJvY3aJCY2g=
+buf.build/gen/go/permifyco/permify/protocolbuffers/go v1.36.10-20251103093708-d86d36fe3266.1 h1:Dn5TYzbuuLo024HwgP3l7MP9yJSZS8QmfvPO8PcdE/o=
+buf.build/gen/go/permifyco/permify/protocolbuffers/go v1.36.10-20251103093708-d86d36fe3266.1/go.mod h1:rd83ZLYouLoCkkkayczBp+VAoiJbYFBhVJvY3aJCY2g=
 github.com/Masterminds/semver/v3 v3.4.0 h1:Zog+i5UMtVoCU8oKka5P7i9q9HgrJeGzI9SA1Xbatp0=
 github.com/Masterminds/semver/v3 v3.4.0/go.mod h1:4V+yj/TJE1HU9XfppCwVMZq3I84lprf4nC11bSS5beM=
 github.com/creack/pty v1.1.9/go.mod h1:oKZEueFk5CKHvIhNR5MUki03XCEU+Q6VDXinZuGJ33E=
