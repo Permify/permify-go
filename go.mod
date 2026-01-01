@@ -7,7 +7,7 @@ toolchain go1.24.1
 require (
 	buf.build/gen/go/permifyco/permify/protocolbuffers/go v1.36.10-20251103093708-d86d36fe3266.1
 	github.com/onsi/ginkgo v1.16.5
-	github.com/onsi/gomega v1.38.2
+	github.com/onsi/gomega v1.38.3
 	google.golang.org/grpc v1.76.0
 	google.golang.org/protobuf v1.36.10
 )
